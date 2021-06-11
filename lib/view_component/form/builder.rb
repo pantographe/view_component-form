@@ -1,0 +1,110 @@
+# frozen_string_literal: true
+
+require "action_view"
+
+module ViewComponent
+  module Form
+    class Builder < ActionView::Helpers::FormBuilder
+      class Error < StandardError; end
+
+      class NotImplementedComponentError < Error; end
+
+      class << self
+        attr_accessor :components_namespace
+      end
+
+      self.components_namespace = "Form"
+
+      (field_helpers - %i[label check_box radio_button fields_for fields hidden_field file_field]).each do |selector|
+        class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
+          def #{selector}(method, options = {}) # def text_field(method, options = {})
+            render_component(                   #   render_component(
+              :#{selector},                     #     :text_field,
+              self,                             #     self,
+              @object_name,                     #     @object_name,
+              method,                           #     method,
+              objectify_options(options),       #     objectify_options(options),
+            )                                   #   )
+          end                                   # end
+        RUBY_EVAL
+      end
+
+      # See: https://github.com/rails/rails/blob/33d60cb02dcac26d037332410eabaeeb0bdc384c/actionview/lib/action_view/helpers/form_helper.rb#L2280
+      def label(method, text = nil, options = {}, &block)
+        render_component(:label, self, @object_name, method, text, objectify_options(options), &block)
+      end
+
+      def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
+        render_component(
+          :check_box, self, @object_name, method, checked_value, unchecked_value, objectify_options(options)
+        )
+      end
+
+      # def radio_button(method, tag_value, options = {})
+      # end
+
+      # def file_field(method, options = {})
+      # end
+
+      def submit(value = nil, options = {})
+        if value.is_a?(Hash)
+          options = value
+          value = nil
+        end
+        value ||= submit_default_value
+        render_component(:submit, self, @object_name, value, options)
+      end
+
+      # def button(value = nil, options = {}, &block)
+      # end
+
+      # SELECTORS.each do |selector|
+      #   class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
+      #     def #{selector}(*args)
+      #       render_component(
+      #         :#{selector},
+      #         *args,
+      #         super,
+      #       )
+      #     end
+      #   RUBY_EVAL
+      # end
+
+      # See: https://github.com/rails/rails/blob/fe76a95b0d252a2d7c25e69498b720c96b243ea2/actionview/lib/action_view/helpers/form_options_helper.rb
+      def select(method, choices = nil, options = {}, html_options = {}, &block)
+        render_component(
+          :select, self, @object_name, method, choices, objectify_options(options),
+          @default_html_options.merge(html_options), &block
+        )
+      end
+
+      # rubocop:disable Metrics/ParameterLists
+      def collection_select(method, collection, value_method, text_method, options = {}, html_options = {})
+        render_component(
+          :collection_select, self, @object_name, method, collection, value_method, text_method,
+          objectify_options(options), @default_html_options.merge(html_options)
+        )
+      end
+      # rubocop:enable Metrics/ParameterLists
+
+      private
+
+      def render_component(component_name, *args, &block)
+        component_klassname = "#{self.class.components_namespace}::#{component_name.to_s.camelize}Component"
+        component_klass     = component_klassname.safe_constantize
+
+        unless component_klass.is_a?(Class) && component_klass < ViewComponent::Base
+          raise NotImplementedComponentError, "Component #{component_klassname} doesn't exist" \
+            " or is not a ViewComponent::Base class"
+        end
+
+        component = component_klass.new(*args)
+        component.render_in(@template, &block)
+      end
+
+      def objectify_options(options)
+        @default_options.merge(options.merge(object: @object))
+      end
+    end
+  end
+end
