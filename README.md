@@ -27,14 +27,17 @@ Then call your helpers as usual:
 
 ```rb
 = form_for @user, builder: ViewComponent::Form::Builder do |f|
-  = f.label :first_name      # renders a ViewComponent::Form::LabelComponent
-  = f.text_field :first_name # renders a ViewComponent::Form::TextFieldComponent
+  = f.label :first_name         # renders a ViewComponent::Form::LabelComponent
+  = f.text_field :first_name    # renders a ViewComponent::Form::TextFieldComponent
 
-  = f.label :last_name       # renders a ViewComponent::Form::LabelComponent
-  = f.text_field :last_name  # renders a ViewComponent::Form::TextFieldComponent
+  = f.label :last_name          # renders a ViewComponent::Form::LabelComponent
+  = f.text_field :last_name     # renders a ViewComponent::Form::TextFieldComponent
 
-  = f.label :email           # renders a ViewComponent::Form::LabelComponent
-  = f.email_field :email     # renders a ViewComponent::Form::EmailFieldComponent
+  = f.label :email              # renders a ViewComponent::Form::LabelComponent
+  = f.email_field :email        # renders a ViewComponent::Form::EmailFieldComponent
+
+  = f.label :password           # renders a ViewComponent::Form::LabelComponent
+  = f.password_field :password  # renders a ViewComponent::Form::PasswordFieldComponent
 ```
 
 It should work out of the box, but does nothing particularly interesting for now.
@@ -60,27 +63,54 @@ It should work out of the box, but does nothing particularly interesting for now
 </form>
 ```
 
-:warning: **Everything below this line describes the future usage. It does not work yet as the gem is still under heavy development.**
+The `ViewComponent::Form::*` components are included in the gem.
 
-Let's generate your own components to customize the rendering.
+# Customizing the `FormBuilder` and the components
 
+:warning: **Everything below this line describes the future usage and is subject to change. It does not work yet as the gem is still under heavy development.**
+
+First, generate your own `FormBuilder`:
 
 ```console
-bin/rails generate form:component Form::TextField
+bin/rails generate vcf:builder CustomFormBuilder
+
+      create  lib/custom_form_builder.rb
+```
+
+This allows you to pick the namespace your components will be loaded from.
+
+```rb
+class CustomFormBuilder < ViewComponent::Form::Builder
+  # Set the namespace you want to use for your own components
+  self.components_namespace = "Form"
+end
+```
+
+Now let's generate your own components to customize the rendering.
+
+```console
+bin/rails generate vcf:component Form::TextField
 
       invoke  test_unit
       create  test/components/form/text_field_component_test.rb
-      create  app/components/text_field_component.rb
-      create  app/components/text_field_component.html.erb
+      create  app/components/form/text_field_component.rb
+      create  app/components/form/text_field_component.html.erb
 ```
 
-You can then customize the behavior of your `TextFieldComponent`:
+Change your forms to use your new builder:
+
+```diff
+- = form_for @user do |f|
++ = form_for @user, builder: CustomFormBuilder do |f|
+```
+
+You can then customize the behavior of your `Form::TextFieldComponent`:
 
 ```rb
-# app/components/text_field_component.rb
+# app/components/form/text_field_component.rb
 
 module Form
-  class TextFieldComponent < FieldComponent
+  class TextFieldComponent < ViewComponent::Form::TextFieldComponent
     self.tag_klass = ActionView::Helpers::Tags::TextField
 
     def html_class
