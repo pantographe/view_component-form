@@ -67,7 +67,7 @@ It should work out of the box, but does nothing particularly interesting for now
 
 The `ViewComponent::Form::*` components are included in the gem.
 
-# Customizing the `FormBuilder` and the components
+### Customizing the `FormBuilder` and the components
 
 :warning: **Everything below this line describes the future usage and is subject to change. It does not work yet as the gem is still under heavy development.**
 
