@@ -13,7 +13,7 @@ module ViewComponent
         attr_accessor :components_namespace
       end
 
-      self.components_namespace = "Form"
+      self.components_namespace = "ViewComponent::Form"
 
       (field_helpers - %i[label check_box radio_button fields_for fields hidden_field file_field]).each do |selector|
         class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
