@@ -1,8 +1,6 @@
 # ViewComponent::Form
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/view_component/form`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+**ViewComponent::Form** provides a `FormBuilder` with the same interface as `ActionView::Helpers::FormBuilder`, but using ViewComponents for rendering the fields. It's a starting point for writing your own custom ViewComponents.
 
 ## Installation
 
@@ -16,13 +14,87 @@ And then execute:
 
     $ bundle install
 
-Or install it yourself as:
-
-    $ gem install view_component-form
-
 ## Usage
 
-TODO: Write usage instructions here
+Add a `builder` param to your `form_for` of `form_with`:
+
+```diff
+- = form_for @user do |f|
++ = form_for @user, builder: ViewComponent::Form::Builder do |f|
+```
+
+Then call your helpers as usual:
+
+```rb
+= form_for @user, builder: ViewComponent::Form::Builder do |f|
+  = f.label :first_name      # renders a ViewComponent::Form::LabelComponent
+  = f.text_field :first_name # renders a ViewComponent::Form::TextFieldComponent
+
+  = f.label :last_name       # renders a ViewComponent::Form::LabelComponent
+  = f.text_field :last_name  # renders a ViewComponent::Form::TextFieldComponent
+
+  = f.label :email           # renders a ViewComponent::Form::LabelComponent
+  = f.email_field :email     # renders a ViewComponent::Form::EmailFieldComponent
+```
+
+It should work out of the box, but does nothing particularly interesting for now.
+
+```html
+# app/views/users/_form.html.slim
+
+<form class="edit_user" id="edit_user_1" action="/users/1" accept-charset="UTF-8" method="post">
+  <input type="hidden" name="_method" value="patch" />
+  <input type="hidden" name="authenticity_token" value="[...]" />
+
+  <label for="user_first_name">First name</label>
+  <input type="text" value="John" name="user[first_name]" id="user_first_name" />
+
+  <label for="user_last_name">Last name</label>
+  <input type="text" value="Doe" name="user[last_name]" id="user_last_name" />
+  
+  <label for="user_email">E-mail</label>
+  <input type="email" value="john.doe@example.com" name="user[email]" id="user_email" />
+  
+  <label for="user_password">Password</label>
+  <input type="password" name="user[password]" id="user_password" />
+</form>
+```
+
+:warning: **Everything below this line describes the future usage. It does not work yet as the gem is still under heavy development.**
+
+Let's generate your own components to customize the rendering.
+
+
+```console
+bin/rails generate form:component Form::TextField
+
+      invoke  test_unit
+      create  test/components/form/text_field_component_test.rb
+      create  app/components/text_field_component.rb
+      create  app/components/text_field_component.html.erb
+```
+
+You can then customize the behavior of your `TextFieldComponent`:
+
+```rb
+# app/components/text_field_component.rb
+
+module Form
+  class TextFieldComponent < FieldComponent
+    self.tag_klass = ActionView::Helpers::Tags::TextField
+
+    def html_class
+      class_names("text-field", "border-error": method_errors?)
+    end
+  end
+end
+```
+
+The generated form field with now have your class names:
+
+```html
+<input class="text-field" type="text" value="John" name="user[first_name]" id="user_first_name">
+```
 
 ## Development
 
