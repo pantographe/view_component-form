@@ -19,8 +19,8 @@ And then execute:
 Add a `builder` param to your `form_for` of `form_with`:
 
 ```diff
-- = form_for @user do |f|
-+ = form_for @user, builder: ViewComponent::Form::Builder do |f|
+- <%= form_for @user do |f| %>
++ <%= form_for @user, builder: ViewComponent::Form::Builder do |f| %>
 ```
 
 You can also define a default FormBuilder at the controller level using [default_form_builder](https://api.rubyonrails.org/classes/ActionController/FormBuilder.html#method-i-default_form_builder).
@@ -102,8 +102,8 @@ bin/rails generate vcf:component Form::TextField
 Change your forms to use your new builder:
 
 ```diff
-- = form_for @user do |f|
-+ = form_for @user, builder: CustomFormBuilder do |f|
+- <%= form_for @user, builder: ViewComponent::Form::Builder do |f| %>
++ <%= form_for @user, builder: CustomFormBuilder do |f| %>
 ```
 
 You can then customize the behavior of your `Form::TextFieldComponent`:
