@@ -1,6 +1,6 @@
 # ViewComponent::Form
 
-**ViewComponent::Form** provides a `FormBuilder` with the same interface as `ActionView::Helpers::FormBuilder`, but using ViewComponents for rendering the fields. It's a starting point for writing your own custom ViewComponents.
+**ViewComponent::Form** provides a `FormBuilder` with the same interface as [`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html), but using ViewComponents for rendering the fields. It's a starting point for writing your own custom ViewComponents.
 
 ## Installation
 
