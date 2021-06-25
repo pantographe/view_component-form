@@ -26,10 +26,6 @@ module ViewComponent
 
         Tags::Label.new(object_name, method_name, form, content_or_options, options).render
       end
-
-      def html_class
-        class_names("form-label text-label") if content.blank?
-      end
     end
   end
 end
