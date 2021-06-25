@@ -3,7 +3,7 @@
 module ViewComponent
   module Form
     class TimeFieldComponent < FieldComponent
-      self.tag_klass = Tags::TimeField
+      self.tag_klass = ActionView::Helpers::Tags::TimeField
     end
   end
 end

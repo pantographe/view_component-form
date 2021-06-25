@@ -3,7 +3,7 @@
 module ViewComponent
   module Form
     class RangeFieldComponent < FieldComponent
-      self.tag_klass = Tags::RangeField
+      self.tag_klass = ActionView::Helpers::Tags::RangeField
     end
   end
 end

@@ -3,7 +3,7 @@
 module ViewComponent
   module Form
     class DateFieldComponent < FieldComponent
-      self.tag_klass = Tags::DateField
+      self.tag_klass = ActionView::Helpers::Tags::DateField
     end
   end
 end

@@ -3,7 +3,7 @@
 module ViewComponent
   module Form
     class TextFieldComponent < FieldComponent
-      self.tag_klass = Tags::TextField
+      self.tag_klass = ActionView::Helpers::Tags::TextField
     end
   end
 end

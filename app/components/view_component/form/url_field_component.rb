@@ -3,7 +3,7 @@
 module ViewComponent
   module Form
     class UrlFieldComponent < FieldComponent
-      self.tag_klass = Tags::UrlField
+      self.tag_klass = ActionView::Helpers::Tags::UrlField
     end
   end
 end

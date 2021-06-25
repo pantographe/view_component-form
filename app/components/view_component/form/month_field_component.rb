@@ -3,7 +3,7 @@
 module ViewComponent
   module Form
     class MonthFieldComponent < FieldComponent
-      self.tag_klass = Tags::MonthField
+      self.tag_klass = ActionView::Helpers::Tags::MonthField
     end
   end
 end

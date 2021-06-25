@@ -3,7 +3,7 @@
 module ViewComponent
   module Form
     class ColorFieldComponent < FieldComponent
-      self.tag_klass = Tags::ColorField
+      self.tag_klass = ActionView::Helpers::Tags::ColorField
     end
   end
 end

@@ -3,7 +3,7 @@
 module ViewComponent
   module Form
     class WeekFieldComponent < FieldComponent
-      self.tag_klass = Tags::WeekField
+      self.tag_klass = ActionView::Helpers::Tags::WeekField
     end
   end
 end

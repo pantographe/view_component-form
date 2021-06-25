@@ -3,7 +3,7 @@
 module ViewComponent
   module Form
     class TelephoneFieldComponent < FieldComponent
-      self.tag_klass = Tags::TelField
+      self.tag_klass = ActionView::Helpers::Tags::TelField
     end
   end
 end
