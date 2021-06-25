@@ -23,28 +23,30 @@ Add a `builder` param to your `form_for` of `form_with`:
 + = form_for @user, builder: ViewComponent::Form::Builder do |f|
 ```
 
+You can also define a default FormBuilder at the controller level using [default_form_builder](https://api.rubyonrails.org/classes/ActionController/FormBuilder.html#method-i-default_form_builder).
+
 Then call your helpers as usual:
 
-```rb
-= form_for @user, builder: ViewComponent::Form::Builder do |f|
-  = f.label :first_name         # renders a ViewComponent::Form::LabelComponent
-  = f.text_field :first_name    # renders a ViewComponent::Form::TextFieldComponent
+```erb
+<%# app/views/users/_form.html.erb %>
+<%= form_for @user, builder: ViewComponent::Form::Builder do |f| %>
+  <%= f.label :first_name %>        <%# renders a ViewComponent::Form::LabelComponent %>
+  <%= f.text_field :first_name %>   <%# renders a ViewComponent::Form::TextFieldComponent %>
 
-  = f.label :last_name          # renders a ViewComponent::Form::LabelComponent
-  = f.text_field :last_name     # renders a ViewComponent::Form::TextFieldComponent
+  <%= f.label :last_name %>         <%# renders a ViewComponent::Form::LabelComponent %>
+  <%= f.text_field :last_name %>    <%# renders a ViewComponent::Form::TextFieldComponent %>
 
-  = f.label :email              # renders a ViewComponent::Form::LabelComponent
-  = f.email_field :email        # renders a ViewComponent::Form::EmailFieldComponent
+  <%= f.label :email %>             <%# renders a ViewComponent::Form::LabelComponent %>
+  <%= f.email_field :email %>       <%# renders a ViewComponent::Form::EmailFieldComponent %>
 
-  = f.label :password           # renders a ViewComponent::Form::LabelComponent
-  = f.password_field :password  # renders a ViewComponent::Form::PasswordFieldComponent
+  <%= f.label :password %>          <%# renders a ViewComponent::Form::LabelComponent %>
+  <%= f.password_field :password %> <%# renders a ViewComponent::Form::PasswordFieldComponent %>
+<% end %>
 ```
 
 It should work out of the box, but does nothing particularly interesting for now.
 
 ```html
-# app/views/users/_form.html.slim
-
 <form class="edit_user" id="edit_user_1" action="/users/1" accept-charset="UTF-8" method="post">
   <input type="hidden" name="_method" value="patch" />
   <input type="hidden" name="authenticity_token" value="[...]" />
