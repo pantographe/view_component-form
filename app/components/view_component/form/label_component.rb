@@ -24,11 +24,7 @@ module ViewComponent
 
         content_or_options = content || attribute_content if content.present? || attribute_content.present?
 
-        Tags::Label.new(object_name, method_name, form, content_or_options, options).render
-      end
-
-      def html_class
-        class_names("form-label text-label") if content.blank?
+        ActionView::Helpers::Tags::Label.new(object_name, method_name, form, content_or_options, options).render
       end
     end
   end
