@@ -5,7 +5,7 @@ module ViewComponent
     class ButtonComponent < BaseComponent
       attr_reader :value
 
-      def initialize(form, object_name, value, options = {}, &block)
+      def initialize(form, object_name, value, options = {})
         @value = value
 
         super(form, object_name, options)
