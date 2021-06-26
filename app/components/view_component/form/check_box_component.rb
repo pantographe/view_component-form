@@ -12,7 +12,7 @@ module ViewComponent
         super(form, object_name, method_name, options)
       end
 
-      def call # rubocop:disable Metrics/AbcSize
+      def call # rubocop:disable Metrics/AbcSize Metrics/MethodLength
         if options[:label] == false
           ActionView::Helpers::Tags::CheckBox.new(
             object_name,
