@@ -19,10 +19,6 @@ module Form
 
     protected
 
-    def combine_options!
-      @options = (self.class.default_options || {}).deep_merge(options)
-    end
-
     def set_html_options!
       @html_options[:class] = class_names(html_options[:class], html_class)
     end
