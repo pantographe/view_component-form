@@ -15,7 +15,15 @@ module ViewComponent
       end
 
       def call
-        ActionView::Helpers::Tags::Select.new(object_name, method_name, form, choices, options, html_options, &content).render
+        ActionView::Helpers::Tags::Select.new(
+          object_name,
+          method_name,
+          form,
+          choices,
+          options,
+          html_options,
+          &content
+        ).render
       end
 
       protected
