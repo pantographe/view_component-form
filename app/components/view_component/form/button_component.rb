@@ -8,15 +8,11 @@ module ViewComponent
       def initialize(form, object_name, value, options = {}, &block)
         @value = value
 
-        if block_given?
-          value = capture { yield(value) }
-        end
-
         super(form, object_name, options)
       end
 
       def call
-        button_tag(value, options)
+        button_tag(content || value, options)
       end
     end
   end
