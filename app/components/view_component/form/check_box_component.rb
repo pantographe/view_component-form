@@ -14,9 +14,16 @@ module ViewComponent
 
       def call # rubocop:disable Metrics/AbcSize
         if options[:label] == false
-          ActionView::Helpers::Tags::CheckBox.new(object_name, method_name, form, checked_value, unchecked_value, options).render
+          ActionView::Helpers::Tags::CheckBox.new(
+            object_name,
+            method_name,
+            form,
+            checked_value,
+            unchecked_value,
+            options
+          ).render
         else
-          render(ViewComponent::Form::LabelComponent.new(form, object_name, method_name, class: "form-checkbox")) do
+          render(ViewComponent::Form::LabelComponent.new(form, object_name, method_name)) do
             concat ActionView::Helpers::Tags::CheckBox.new(
               object_name,
               method_name,
@@ -25,7 +32,7 @@ module ViewComponent
               unchecked_value,
               options
             ).render
-            concat tag.span(check_box_text, class: "form-checkbox__label")
+            concat tag.span(check_box_text)
           end
         end
       end
