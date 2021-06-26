@@ -7,16 +7,12 @@ module ViewComponent
         attr_accessor :tag_klass
       end
 
-      # validates :method_name, presence: true
-
       attr_reader :method_name
 
       def initialize(form, object_name, method_name, options = {})
         @method_name = method_name
 
         super(form, object_name, options)
-
-        options[:placeholder] ||= object.class.human_attribute_name(method_name) if theme == :inline
       end
 
       def call

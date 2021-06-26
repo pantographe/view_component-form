@@ -2,17 +2,12 @@
 
 module ViewComponent
   module Form
-    class BaseComponent < ApplicationComponent
+    class BaseComponent < ViewComponent::Base
       class << self
         attr_accessor :default_options
       end
 
-      # include Components::Validations
-
-      # validates :form, presence: true
-      # validates :object_name, presence: true
-
-      attr_reader :form, :object_name, :options, :theme
+      attr_reader :form, :object_name, :options
 
       delegate :object, to: :form
       delegate :errors, to: :object, prefix: true
@@ -20,7 +15,6 @@ module ViewComponent
       def initialize(form, object_name, options = {})
         @form         = form
         @object_name  = object_name
-        @theme        = options.delete(:theme)
         @options      = options
 
         super()
