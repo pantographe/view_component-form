@@ -44,7 +44,7 @@ module ViewComponent
 
       def combine_options!
         @options = (self.class.default_options.deep_dup || {}).deep_merge(options).tap do |opts|
-          opts[:class] = class_names(options[:class], html_class) if (html_class || options[:class]).present?
+          # opts[:class] = class_names(options[:class], html_class) if (html_class || options[:class]).present?
         end
       end
     end
