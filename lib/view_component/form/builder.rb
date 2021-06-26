@@ -55,8 +55,14 @@ module ViewComponent
         render_component(:submit, self, value, options)
       end
 
-      # def button(value = nil, options = {}, &block)
-      # end
+      def button(value = nil, options = {}, &block)
+        if value.is_a?(Hash)
+          options = value
+          value = nil
+        end
+        value ||= submit_default_value
+        render_component(:button, self, @object_name, value, options, &block)
+      end
 
       # SELECTORS.each do |selector|
       #   class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
