@@ -5,10 +5,11 @@ module ViewComponent
     class SubmitComponent < BaseComponent
       attr_reader :value
 
-      def initialize(form, object_name, value, options = {})
+      def initialize(form, value, options = {})
         @value = value
+        @options = options
 
-        super(form, object_name, options)
+        super(form, nil, options)
       end
 
       def call
