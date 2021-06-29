@@ -4,15 +4,27 @@ on: [push,pull_request]
 
 jobs:
   build:
+    name: Ruby ${{ matrix.versions.ruby }}, Rails ${{ matrix.versions.rails }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        versions:
+          - { ruby: "2.7", rails: "6.0.x" }
+          - { ruby: "3.0", rails: "6.0.x" }
+          - { ruby: "2.7", rails: "6.1.x" }
+          - { ruby: "3.0", rails: "6.1.x" }
+
+    env:
+      BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.versions.rails }}.gemfile
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.0.0
-    - name: Run the default task
+        ruby-version: ${{ matrix.versions.ruby }}
+        bundler-cache: true
+
+    - name: Test with Rake
       run: |
-        gem install bundler -v 2.2.9
-        bundle install
         bundle exec rake
