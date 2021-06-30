@@ -7,7 +7,6 @@ module ViewComponent
 
       def initialize(form, value, options = {})
         @value = value
-        @options = options
 
         super(form, nil, options)
       end
