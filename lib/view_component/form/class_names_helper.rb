@@ -4,6 +4,8 @@
 module ViewComponent
   module Form
     module ClassNamesHelper
+      # rubocop:disable Metrics/CyclomaticComplexity
+      # rubocop:disable Metrics/MethodLength
       def build_tag_values(*args)
         tag_values = []
 
@@ -22,6 +24,8 @@ module ViewComponent
 
         tag_values
       end
+      # rubocop:enable Metrics/CyclomaticComplexity
+      # rubocop:enable Metrics/MethodLength
 
       def class_names(*args)
         tokens = build_tag_values(*args).flat_map { |value| value.to_s.split(/\s+/) }.uniq
