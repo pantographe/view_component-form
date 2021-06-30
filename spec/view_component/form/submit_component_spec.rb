@@ -4,8 +4,9 @@ RSpec.describe ViewComponent::Form::SubmitComponent, type: :component do
   let(:object)  { OpenStruct.new }
   let(:form)    { form_with(object) }
   let(:options) { {} }
+  let(:value) { "" }
 
-  let(:component) { render_inline(described_class.new(form, "", options)) }
+  let(:component) { render_inline(described_class.new(form, value, options)) }
   let(:component_html_attributes) { component.css("input").first.attributes }
 
   context "with simple args" do
