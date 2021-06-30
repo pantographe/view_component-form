@@ -16,6 +16,16 @@ RSpec.describe ViewComponent::Form::SubmitComponent, type: :component do
     end
   end
 
+  context "with value" do
+    let(:component) { render_inline(described_class.new(form, "Save", options)) }
+
+    it do
+      expect(component.to_html).to eq(
+        %(<input type="submit" name="commit" value="Save" data-disable-with="Save">)
+      )
+    end
+  end
+
   include_examples "component with custom html classes"
   include_examples "component with custom data attributes"
 end
