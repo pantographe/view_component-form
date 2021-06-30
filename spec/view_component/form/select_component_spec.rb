@@ -6,16 +6,23 @@ RSpec.describe ViewComponent::Form::SelectComponent, type: :component do
   let(:options) { {} }
   let(:html_options) { {} }
 
-  let(:component) { render_inline(described_class.new(form, object_name, :role, [["Admin", :admin], ["Manager", :manager]], options, html_options)) }
+  let(:component) do
+    render_inline(described_class.new(
+                    form,
+                    object_name,
+                    :role,
+                    [["Admin", :admin], ["Manager", :manager]],
+                    options,
+                    html_options
+                  ))
+  end
   let(:component_html_attributes) { component.css("select").first.attributes }
 
   context "with simple args" do
     it do
       expect(component.to_html).to eq(
-        %(<select name="user[role]" id="user_role">) +
-          %(<option value="admin">Admin</option>\n) +
-          %(<option value="manager">Manager</option>) +
-        %(</select>)
+        "<select name=\"user[role]\" id=\"user_role\"><option value=\"admin\">Admin</option>\n" \
+        "<option value=\"manager\">Manager</option></select>"
       )
     end
   end
