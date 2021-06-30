@@ -30,6 +30,7 @@ module ViewComponent
 
       def set_html_options!
         @html_options[:class] = class_names(html_options[:class], html_class)
+        @html_options.delete(:class) if @html_options[:class].blank?
       end
     end
   end
