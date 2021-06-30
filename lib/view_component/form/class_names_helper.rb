@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Backport of https://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-class_names
 module ViewComponent
   module Form

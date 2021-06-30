@@ -7,7 +7,7 @@ module ViewComponent
         attr_accessor :default_options
       end
 
-      include ClassNamesHelper if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("6.1")
+      include ClassNamesHelper if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new("6.1")
 
       attr_reader :form, :object_name, :options
 
