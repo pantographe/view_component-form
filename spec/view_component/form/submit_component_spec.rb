@@ -18,7 +18,7 @@ RSpec.describe ViewComponent::Form::SubmitComponent, type: :component do
   end
 
   context "with value" do
-    let(:component) { render_inline(described_class.new(form, "Save", options)) }
+    let(:value) { "Save" }
 
     it do
       expect(component.to_html).to eq(
