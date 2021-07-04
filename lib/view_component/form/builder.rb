@@ -107,6 +107,13 @@ module ViewComponent
         )
       end
 
+      def time_select(method, options = {}, html_options = {})
+        render_component(
+          :time_select, self, @object_name, method,
+          objectify_options(options), @default_html_options.merge(html_options)
+        )
+      end
+
       private
 
       def render_component(component_name, *args, &block)
