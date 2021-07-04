@@ -5,7 +5,7 @@ module ViewComponent
     class TimeZoneSelectComponent < FieldComponent
       attr_reader :priority_zones, :html_options
 
-      def initialize(form, object_name, method_name, priority_zones, options = {}, html_options = {})
+      def initialize(form, object_name, method_name, priority_zones, options = {}, html_options = {}) # rubocop:disable Metrics/ParameterLists
         @priority_zones = priority_zones
         @html_options = html_options
 
