@@ -2,7 +2,7 @@
 
 module ViewComponent
   module Form
-    class DateTimeSelectComponent < FieldComponent
+    class DatetimeSelectComponent < FieldComponent
       attr_reader :html_options
 
       def initialize(form, object_name, method_name, options = {}, html_options = {})
@@ -14,7 +14,7 @@ module ViewComponent
       end
 
       def call
-        ActionView::Helpers::Tags::DateSelect.new(
+        ActionView::Helpers::Tags::DatetimeSelect.new(
           object_name,
           method_name,
           form,
