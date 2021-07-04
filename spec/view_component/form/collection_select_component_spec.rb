@@ -9,15 +9,15 @@ RSpec.describe ViewComponent::Form::CollectionSelectComponent, type: :component 
 
   let(:component) do
     render_inline(described_class.new(
-      form,
-      object_name,
-      :country,
-      collection,
-      :code,
-      :name,
-      options,
-      html_options
-    ))
+                    form,
+                    object_name,
+                    :country,
+                    collection,
+                    :code,
+                    :name,
+                    options,
+                    html_options
+                  ))
   end
   let(:component_html_attributes) { component.css("select").last.attributes }
 

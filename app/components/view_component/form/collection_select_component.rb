@@ -5,7 +5,16 @@ module ViewComponent
     class CollectionSelectComponent < FieldComponent
       attr_reader :collection, :value_method, :text_method, :html_options
 
-      def initialize(form, object_name, method_name, collection, value_method, text_method, options = {}, html_options = {}) # rubocop:disable Metrics/ParameterLists
+      def initialize( # rubocop:disable Metrics/ParameterLists
+        form,
+        object_name,
+        method_name,
+        collection,
+        value_method,
+        text_method,
+        options = {},
+        html_options = {}
+      )
         @collection = collection
         @value_method = value_method
         @text_method = text_method
