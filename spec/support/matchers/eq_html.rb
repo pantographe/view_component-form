@@ -5,6 +5,8 @@ RSpec::Matchers.define :eq_html do |expected|
     actual == expected.chomp
   end
 
+  diffable
+
   failure_message do |actual|
     "expected: #{actual}\n     got: #{expected}"
   end
