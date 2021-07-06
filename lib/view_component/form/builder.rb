@@ -61,7 +61,7 @@ module ViewComponent
           value = nil
         end
         value ||= submit_default_value
-        render_component(:button, self, @object_name, value, options, &block)
+        render_component(:button, self, value, options, &block)
       end
 
       # SELECTORS.each do |selector|

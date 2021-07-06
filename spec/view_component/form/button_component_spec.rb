@@ -6,7 +6,7 @@ RSpec.describe ViewComponent::Form::ButtonComponent, type: :component do
   let(:options) { {} }
   let(:value) { "Send" }
 
-  let(:component) { render_inline(described_class.new(form, object_name, value, options)) }
+  let(:component) { render_inline(described_class.new(form, value, options)) }
   let(:component_html_attributes) { component.css("button").first.attributes }
 
   context "with simple args" do
