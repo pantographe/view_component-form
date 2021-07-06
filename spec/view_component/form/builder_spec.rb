@@ -5,7 +5,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   let(:form)    { form_with(object) }
   let(:options) { {} }
 
-  context "standard helpers" do
+  context "with standard helpers" do
     it { expect(form).to respond_to(:button).with(0..2).arguments }
     it { expect(form).to respond_to(:check_box).with(1..4).arguments }
     it { expect(form).to respond_to(:collection_check_boxes).with(4..6).arguments }
