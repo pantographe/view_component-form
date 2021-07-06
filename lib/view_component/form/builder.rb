@@ -15,7 +15,6 @@ module ViewComponent
 
       self.components_namespace = "ViewComponent::Form"
 
-      # TODO: remove file_field?
       (field_helpers - %i[label check_box radio_button fields_for fields hidden_field file_field]).each do |selector|
         class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
           def #{selector}(method, options = {}) # def text_field(method, options = {})
@@ -44,9 +43,9 @@ module ViewComponent
       # def radio_button(method, tag_value, options = {})
       # end
 
-      # TODO: remove this method?
-      # def file_field(method, options = {})
-      # end
+      def file_field(method, options = {})
+        render_component(:file_field, self, @object_name, method, objectify_options(options))
+      end
 
       def submit(value = nil, options = {})
         if value.is_a?(Hash)
