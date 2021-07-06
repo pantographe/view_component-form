@@ -5,6 +5,8 @@ require "action_view"
 module ViewComponent
   module Form
     class Builder < ActionView::Helpers::FormBuilder
+      include ActionView::Helpers::FormTagHelper
+
       class Error < StandardError; end
 
       class NotImplementedComponentError < Error; end
@@ -106,6 +108,13 @@ module ViewComponent
           :grouped_collection_select, self, @object_name, method, collection, group_method,
           group_label_method, option_key_method, option_value_method,
           objectify_options(options), @default_html_options.merge(html_options)
+        )
+      end
+
+      def collection_check_boxes(method, collection, value_method, text_method, options = {}, html_options = {}, &block)
+        render_component(
+          :collection_check_boxes, self, @object_name, method, collection, value_method, text_method,
+          objectify_options(options), @default_html_options.merge(html_options), &block
         )
       end
       # rubocop:enable Metrics/ParameterLists
