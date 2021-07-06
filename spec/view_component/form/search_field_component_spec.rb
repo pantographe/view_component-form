@@ -10,9 +10,9 @@ RSpec.describe ViewComponent::Form::SearchFieldComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq(
-        %(<input type="search" name="user[query]" id="user_query">)
-      )
+      expect(component.to_html).to eq_html <<~HTML
+        <input type="search" name="user[query]" id="user_query">
+      HTML
     end
   end
 

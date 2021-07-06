@@ -12,9 +12,9 @@ RSpec.describe ViewComponent::Form::ButtonComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq(
-        %(<button name="button" type="submit">Send</button>)
-      )
+      expect(component.to_html).to eq_html <<~HTML
+        <button name="button" type="submit">Send</button>
+      HTML
     end
   end
 
@@ -26,9 +26,9 @@ RSpec.describe ViewComponent::Form::ButtonComponent, type: :component do
     end
 
     it do
-      expect(component.to_html).to eq(
-        %(<button name="button" type="submit">Send <strong>now</strong>!</button>)
-      )
+      expect(component.to_html).to eq_html <<~HTML
+        <button name="button" type="submit">Send <strong>now</strong>!</button>
+      HTML
     end
   end
 
