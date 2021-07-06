@@ -156,6 +156,10 @@ module ViewComponent
         )
       end
 
+      def rich_text_area(method, options = {})
+        render_component(:rich_text_area, self, @object_name, method, objectify_options(options))
+      end
+
       private
 
       def render_component(component_name, *args, &block)
