@@ -30,15 +30,6 @@ RSpec.describe ViewComponent::Form::CollectionSelectComponent, type: :component 
     end
   end
 
-  context "with custom html classes" do
-    let(:html_options) { { class: "custom-css-class" } }
-
-    it { expect(component_html_attributes["class"].to_s).to include("custom-css-class") }
-  end
-
-  context "with custom data attributes" do
-    let(:html_options) { { data: { key: "value" } } }
-
-    it { expect(component_html_attributes["data-key"].to_s).to include("value") }
-  end
+  include_examples "component with custom html classes", :html_options
+  include_examples "component with custom data attributes", :html_options
 end
