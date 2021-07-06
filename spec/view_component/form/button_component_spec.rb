@@ -17,6 +17,20 @@ RSpec.describe ViewComponent::Form::ButtonComponent, type: :component do
     end
   end
 
+  context "with a block" do
+    let(:component) do
+      render_inline(
+        described_class.new(form, value, options) { "Send <strong>now</strong>!" }
+      )
+    end
+
+    it do
+      expect(component.to_html).to eq(
+        %(<button name="button" type="submit">Send <strong>now</strong>!</button>)
+      )
+    end
+  end
+
   include_examples "component with custom html classes"
   include_examples "component with custom data attributes"
 end
