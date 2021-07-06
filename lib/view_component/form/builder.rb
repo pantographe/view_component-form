@@ -117,6 +117,13 @@ module ViewComponent
           objectify_options(options), @default_html_options.merge(html_options), &block
         )
       end
+
+      def collection_radio_buttons(method, collection, value_method, text_method, options = {}, html_options = {}, &block)
+        render_component(
+          :collection_radio_buttons, self, @object_name, method, collection, value_method, text_method,
+          objectify_options(options), @default_html_options.merge(html_options), &block
+        )
+      end
       # rubocop:enable Metrics/ParameterLists
 
       def date_select(method, options = {}, html_options = {})
