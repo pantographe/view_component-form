@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :eq_html do |expected|
   match do |actual|
     actual == expected.chomp
