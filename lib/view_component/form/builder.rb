@@ -52,7 +52,7 @@ module ViewComponent
           value = nil
         end
         value ||= submit_default_value
-        render_component(:submit, self, @object_name, value, options)
+        render_component(:submit, self, value, options)
       end
 
       # def button(value = nil, options = {}, &block)
