@@ -7,7 +7,7 @@ RSpec.describe ViewComponent::Form::ButtonComponent, type: :component do
   let(:value)   { "Send" }
   let(:block)   { nil }
 
-  let(:component) { render_inline(described_class.new(form, value, options, &block)) }
+  let(:component) { render_inline(described_class.new(form, value, options), &block) }
   let(:component_html_attributes) { component.css("button").first.attributes }
 
   context "with simple args" do
@@ -21,7 +21,7 @@ RSpec.describe ViewComponent::Form::ButtonComponent, type: :component do
   context "with a block" do
     let(:block) do
       proc do
-        "Send <strong>now</strong>!"
+        "Send <strong>now</strong>!".html_safe
       end
     end
 
