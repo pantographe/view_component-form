@@ -5,8 +5,6 @@ require "action_view"
 module ViewComponent
   module Form
     class Builder < ActionView::Helpers::FormBuilder
-      include ActionView::Helpers::FormTagHelper
-
       class Error < StandardError; end
 
       class NotImplementedComponentError < Error; end
