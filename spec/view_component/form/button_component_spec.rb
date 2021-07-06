@@ -4,9 +4,10 @@ RSpec.describe ViewComponent::Form::ButtonComponent, type: :component do
   let(:object)  { OpenStruct.new }
   let(:form)    { form_with(object) }
   let(:options) { {} }
-  let(:value) { "Send" }
+  let(:value)   { "Send" }
+  let(:block)   { nil }
 
-  let(:component) { render_inline(described_class.new(form, value, options)) }
+  let(:component) { render_inline(described_class.new(form, value, options, &block)) }
   let(:component_html_attributes) { component.css("button").first.attributes }
 
   context "with simple args" do
@@ -18,10 +19,10 @@ RSpec.describe ViewComponent::Form::ButtonComponent, type: :component do
   end
 
   context "with a block" do
-    let(:component) do
-      render_inline(
-        described_class.new(form, value, options) { "Send <strong>now</strong>!" }
-      )
+    let(:block) do
+      proc do
+        "Send <strong>now</strong>!"
+      end
     end
 
     it do
