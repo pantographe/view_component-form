@@ -59,7 +59,8 @@ RSpec.describe ViewComponent::Form::LabelComponent, type: :component do
   # context "with a block and builder param" do
   #   let(:block) do
   #     proc do |builder|
-  #       "<span class=\"translated-label #{"has-error" if builder.object.errors.include?(:first_name)}\">#{builder.translation}</span>".html_safe
+  #       "<span class=\"translated-label #{"has-error" if builder.object.errors.include?(:first_name)}\">" \
+  #       "#{builder.translation}</span>".html_safe
   #     end
   #   end
 
