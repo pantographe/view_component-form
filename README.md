@@ -69,8 +69,6 @@ The `ViewComponent::Form::*` components are included in the gem.
 
 ### Customizing the `FormBuilder` and the components
 
-:warning: **Everything below this line describes the future usage and is subject to change. It does not work yet as the gem is still under heavy development.**
-
 First, generate your own `FormBuilder`:
 
 ```console
@@ -82,11 +80,30 @@ bin/rails generate vcf:builder CustomFormBuilder
 This allows you to pick the namespace your components will be loaded from.
 
 ```rb
+# lib/custom_form_builder.rb
 class CustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
   self.components_namespace = "Form"
 end
 ```
+
+You can change the default namespace and path:
+
+```console
+bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace Forms::Components --path app/forms
+
+      create  app/forms/another_custom_form_builder.rb
+```
+
+```rb
+# app/forms/another_custom_form_builder.rb
+class AnotherCustomFormBuilder < ViewComponent::Form::Builder
+  # Set the namespace you want to use for your own components
+  self.components_namespace = "Forms::Components"
+end
+```
+
+:warning: **Everything below this line describes the future usage and is subject to change. It does not work yet as the gem is still under heavy development.**
 
 Now let's generate your own components to customize the rendering.
 
