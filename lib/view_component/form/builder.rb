@@ -96,6 +96,18 @@ module ViewComponent
           objectify_options(options), @default_html_options.merge(html_options)
         )
       end
+
+      def grouped_collection_select(
+        method, collection,
+        group_method, group_label_method, option_key_method, option_value_method,
+        options = {}, html_options = {}
+      )
+        render_component(
+          :grouped_collection_select, self, @object_name, method, collection, group_method,
+          group_label_method, option_key_method, option_value_method,
+          objectify_options(options), @default_html_options.merge(html_options)
+        )
+      end
       # rubocop:enable Metrics/ParameterLists
 
       def date_select(method, options = {}, html_options = {})
