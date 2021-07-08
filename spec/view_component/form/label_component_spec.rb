@@ -51,7 +51,7 @@ RSpec.describe ViewComponent::Form::LabelComponent, type: :component do
 
     it do
       expect(component.to_html).to eq(
-        %(<label for="user_first_name">Your <strong>First name</strong></label>)
+        %(<label for="user_first_name"><span class="translated-label">First name</span></label>)
       )
     end
   end
@@ -66,7 +66,7 @@ RSpec.describe ViewComponent::Form::LabelComponent, type: :component do
 
     it do
       expect(component.to_html).to eq(
-        %(<label for="user_first_name">Your <strong>First name</strong></label>)
+        %(<label for="user_first_name"><span class="translated-label has-error">First name</span></label>)
       )
     end
   end
