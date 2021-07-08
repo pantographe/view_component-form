@@ -40,8 +40,11 @@ module ViewComponent
         )
       end
 
-      # def radio_button(method, tag_value, options = {})
-      # end
+      def radio_button(method, tag_value, options = {})
+        render_component(
+          :radio_button, self, @object_name, method, tag_value, objectify_options(options)
+        )
+      end
 
       def file_field(method, options = {})
         self.multipart = true
