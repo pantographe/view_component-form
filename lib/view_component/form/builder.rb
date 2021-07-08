@@ -43,8 +43,10 @@ module ViewComponent
       # def radio_button(method, tag_value, options = {})
       # end
 
-      # def file_field(method, options = {})
-      # end
+      def file_field(method, options = {})
+        self.multipart = true
+        render_component(:file_field, self, @object_name, method, objectify_options(options))
+      end
 
       def submit(value = nil, options = {})
         if value.is_a?(Hash)
