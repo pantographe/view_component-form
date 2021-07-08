@@ -44,6 +44,7 @@ module ViewComponent
       # end
 
       def file_field(method, options = {})
+        self.multipart = true
         render_component(:file_field, self, @object_name, method, objectify_options(options))
       end
 
