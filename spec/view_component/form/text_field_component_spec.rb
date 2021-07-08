@@ -10,9 +10,9 @@ RSpec.describe ViewComponent::Form::TextFieldComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq(
-        %(<input type="text" name="user[email]" id="user_email">)
-      )
+      expect(component.to_html).to eq_html <<~HTML
+        <input type="text" name="user[email]" id="user_email">
+      HTML
     end
   end
 
