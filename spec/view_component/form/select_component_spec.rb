@@ -20,7 +20,7 @@ RSpec.describe ViewComponent::Form::SelectComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq_html <<~HTML
+      expect(component).to eq_html <<~HTML
         <select name="user[role]" id="user_role"><option value="admin">Admin</option>
         <option value="manager">Manager</option></select>
       HTML
@@ -31,7 +31,7 @@ RSpec.describe ViewComponent::Form::SelectComponent, type: :component do
     let(:options) { { selected: "manager" } }
 
     it do
-      expect(component.to_html).to eq_html <<~HTML
+      expect(component).to eq_html <<~HTML
         <select name="user[role]" id="user_role"><option value="admin">Admin</option>
         <option selected value="manager">Manager</option></select>
       HTML
@@ -42,7 +42,7 @@ RSpec.describe ViewComponent::Form::SelectComponent, type: :component do
     let(:html_options) { { multiple: true } }
 
     it do
-      expect(component.to_html).to eq_html <<~HTML
+      expect(component).to eq_html <<~HTML
         <input name="user[role][]" type="hidden" value=""><select multiple name="user[role][]" id="user_role"><option value="admin">Admin</option>
         <option value="manager">Manager</option></select>
       HTML

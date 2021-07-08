@@ -12,7 +12,7 @@ RSpec.describe ViewComponent::Form::ButtonComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq_html <<~HTML
+      expect(component).to eq_html <<~HTML
         <button name="button" type="submit">Send</button>
       HTML
     end
@@ -26,7 +26,7 @@ RSpec.describe ViewComponent::Form::ButtonComponent, type: :component do
     end
 
     it do
-      expect(component.to_html).to eq_html <<~HTML
+      expect(component).to eq_html <<~HTML
         <button name="button" type="submit">Send <strong>now</strong>!</button>
       HTML
     end

@@ -10,7 +10,7 @@ RSpec.describe ViewComponent::Form::TextAreaComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq_html <<~HTML
+      expect(component).to eq_html <<~HTML
         <textarea name="user[bio]" id="user_bio">
         </textarea>
       HTML

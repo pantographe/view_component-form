@@ -11,7 +11,7 @@ RSpec.describe ViewComponent::Form::SubmitComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq_html <<~HTML
+      expect(component).to eq_html <<~HTML
         <input type="submit" name="commit" value="" data-disable-with="">
       HTML
     end
@@ -21,7 +21,7 @@ RSpec.describe ViewComponent::Form::SubmitComponent, type: :component do
     let(:value) { "Save" }
 
     it do
-      expect(component.to_html).to eq_html <<~HTML
+      expect(component).to eq_html <<~HTML
         <input type="submit" name="commit" value="Save" data-disable-with="Save">
       HTML
     end

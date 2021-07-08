@@ -10,7 +10,7 @@ RSpec.describe ViewComponent::Form::CheckBoxComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq_html <<~HTML
+      expect(component).to eq_html <<~HTML
         <input name="user[admin]" type="hidden" value="0"><input type="checkbox" value="1" name="user[admin]" id="user_admin">
       HTML
     end
