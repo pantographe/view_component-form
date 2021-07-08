@@ -18,4 +18,5 @@ RSpec.describe ViewComponent::Form::TextFieldComponent, type: :component do
 
   include_examples "component with custom html classes"
   include_examples "component with custom data attributes"
+  include_examples "component with custom value"
 end

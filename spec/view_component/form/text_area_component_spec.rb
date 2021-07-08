@@ -16,6 +16,12 @@ RSpec.describe ViewComponent::Form::TextAreaComponent, type: :component do
     end
   end
 
+  context "with custom value" do
+    let(:options) { { value: "Hello World" } }
+
+    it { expect(component.css("textarea").first.content).to include("Hello World") }
+  end
+
   include_examples "component with custom html classes"
   include_examples "component with custom data attributes"
 end
