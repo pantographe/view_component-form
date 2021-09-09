@@ -40,14 +40,14 @@ RSpec.describe ViewComponent::Form::GroupedCollectionSelectComponent, type: :com
   let(:component_html_attributes) { component.css("select").last.attributes }
 
   context "with simple args" do
-    it do # rubocop:disable RSpec/ExampleLength
-      expect(component.to_html).to eq(
-        "<select name=\"user[country]\" id=\"user_country\"><optgroup label=\"Europe\">\n" \
-        "<option value=\"BE\">Belgium</option>\n" \
-        "<option value=\"FR\">France</option>\n" \
-        "</optgroup>\n" \
-        "<optgroup label=\"Asia\"><option value=\"JP\">Japan</option></optgroup></select>"
-      )
+    it do
+      expect(component).to eq_html <<~HTML
+        <select name="user[country]" id="user_country"><optgroup label="Europe">
+        <option value="BE">Belgium</option>
+        <option value="FR">France</option>
+        </optgroup>
+        <optgroup label="Asia"><option value="JP">Japan</option></optgroup></select>
+      HTML
     end
   end
 

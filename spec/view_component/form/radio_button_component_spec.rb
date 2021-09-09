@@ -10,9 +10,9 @@ RSpec.describe ViewComponent::Form::RadioButtonComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq(
-        %(<input type="radio" value="mrs" name="user[civility]" id="user_civility_mrs">)
-      )
+      expect(component).to eq_html <<~HTML
+        <input type="radio" value="mrs" name="user[civility]" id="user_civility_mrs">
+      HTML
     end
   end
 

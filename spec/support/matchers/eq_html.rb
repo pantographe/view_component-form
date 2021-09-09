@@ -15,15 +15,15 @@ module ComponentMatchers
 
       @actual = html_fragment
 
-      @actual.include?(expected_formatted)
+      @actual == expected_formatted
     end
 
     def failure_message
-      "expected that HTML fragment contain #{expected_formatted}"
+      "expected: #{actual}\n\n     got: #{expected}"
     end
 
     def failure_message_when_negated
-      "expected that HTML fragment not contain #{expected_formatted}"
+      "expected: value != #{actual}\n\n     got: #{expected}"
     end
 
     def description
@@ -31,7 +31,7 @@ module ComponentMatchers
     end
 
     def diffable?
-      false
+      true
     end
 
     private

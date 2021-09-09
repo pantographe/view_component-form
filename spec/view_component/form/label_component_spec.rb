@@ -11,7 +11,7 @@ RSpec.describe ViewComponent::Form::LabelComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq_html <<~HTML
+      expect(component).to eq_html <<~HTML
         <label for="user_first_name">First name</label>
       HTML
     end
@@ -50,9 +50,9 @@ RSpec.describe ViewComponent::Form::LabelComponent, type: :component do
     end
 
     it do
-      expect(component.to_html).to eq(
-        %(<label for="user_first_name"><span class="translated-label">First name</span></label>)
-      )
+      expect(component).to eq_html <<~HTML
+        <label for="user_first_name"><span class="translated-label">First name</span></label>
+      HTML
     end
   end
 
@@ -65,9 +65,9 @@ RSpec.describe ViewComponent::Form::LabelComponent, type: :component do
     end
 
     it do
-      expect(component.to_html).to eq(
-        %(<label for="user_first_name"><span class="translated-label">First name</span></label>)
-      )
+      expect(component).to eq_html <<~HTML
+        <label for="user_first_name"><span class="translated-label">First name</span></label>
+      HTML
     end
   end
 
