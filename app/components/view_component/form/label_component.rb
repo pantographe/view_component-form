@@ -35,7 +35,7 @@ module ViewComponent
           ActionView::Helpers::Tags::Label::LabelBuilder.new(form, object_name, method_name, object, tag_value)
         end
       end
-      alias translation builder
+      delegate :translation, to: :builder
     end
   end
 end

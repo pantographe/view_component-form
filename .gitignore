@@ -7,5 +7,9 @@
 /spec/reports/
 /tmp/
 
+# appraisal
+/gemfiles/*.gemfile.lock
+/gemfiles/.bundle/
+
 # rspec failure tracking
 .rspec_status
