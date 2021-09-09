@@ -26,6 +26,16 @@ module ViewComponent
 
         ActionView::Helpers::Tags::Label.new(object_name, method_name, form, content_or_options, options).render
       end
+
+      # See: https://github.com/rails/rails/blob/83217025a171593547d1268651b446d3533e2019/actionview/lib/action_view/helpers/tags/label.rb#L48
+      def builder
+        @builder ||= begin
+          tag_value = options.delete("value")
+
+          ActionView::Helpers::Tags::Label::LabelBuilder.new(form, object_name, method_name, object, tag_value)
+        end
+      end
+      delegate :translation, to: :builder
     end
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe ViewComponent::Form::LabelComponent, type: :component do
-  let(:object)  { OpenStruct.new }
+  let(:object)  { OpenStruct.new(errors: []) }
   let(:form)    { form_with(object) }
   let(:options) { {} }
   let(:block)   { nil }
@@ -42,34 +42,34 @@ RSpec.describe ViewComponent::Form::LabelComponent, type: :component do
     end
   end
 
-  # context "with a block and translation param" do
-  #   let(:block) do
-  #     proc do |translation|
-  #       "<span class=\"translated-label\">#{translation}</span>".html_safe
-  #     end
-  #   end
+  context "with a block and translation param" do
+    let(:block) do
+      proc do |component|
+        "<span class=\"translated-label\">#{component.translation}</span>".html_safe
+      end
+    end
 
-  #   it do
-  #     expect(component.to_html).to eq(
-  #       %(<label for="user_first_name">Your <strong>First name</strong></label>)
-  #     )
-  #   end
-  # end
+    it do
+      expect(component.to_html).to eq(
+        %(<label for="user_first_name"><span class="translated-label">First name</span></label>)
+      )
+    end
+  end
 
-  # context "with a block and builder param" do
-  #   let(:block) do
-  #     proc do |builder|
-  #       "<span class=\"translated-label #{"has-error" if builder.object.errors.include?(:first_name)}\">" \
-  #       "#{builder.translation}</span>".html_safe
-  #     end
-  #   end
+  context "with a block and builder param" do
+    let(:block) do
+      proc do |component|
+        "<span class=\"translated-label#{" has-error" if component.builder.object.errors.include?(:first_name)}\">" \
+        "#{component.builder.translation}</span>".html_safe
+      end
+    end
 
-  #   it do
-  #     expect(component.to_html).to eq(
-  #       %(<label for="user_first_name">Your <strong>First name</strong></label>)
-  #     )
-  #   end
-  # end
+    it do
+      expect(component.to_html).to eq(
+        %(<label for="user_first_name"><span class="translated-label">First name</span></label>)
+      )
+    end
+  end
 
   include_examples "component with custom html classes"
   include_examples "component with custom data attributes"

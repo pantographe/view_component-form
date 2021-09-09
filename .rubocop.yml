@@ -7,6 +7,10 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   TargetRubyVersion: 2.7
   NewCops: enable
+  Exclude:
+    - lib/generators/**/templates/**/*
+    - gemfiles/**/*
+    - vendor/**/*
 
 Style/StringLiterals:
   Enabled: true

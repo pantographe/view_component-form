@@ -18,9 +18,11 @@ module ViewComponent
       delegate :errors, to: :object, prefix: true
 
       def initialize(form, object_name, options = {})
-        @form         = form
-        @object_name  = object_name
-        @options      = options
+        @form = form
+
+        # See: https://github.com/rails/rails/blob/83217025a171593547d1268651b446d3533e2019/actionview/lib/action_view/helpers/tags/base.rb#L13
+        @object_name = object_name.to_s.dup
+        @options     = options
 
         super()
       end

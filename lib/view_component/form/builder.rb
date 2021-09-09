@@ -146,7 +146,7 @@ module ViewComponent
 
         unless component_klass.is_a?(Class) && component_klass < ViewComponent::Base
           raise NotImplementedComponentError, "Component #{component_klassname} doesn't exist" \
-            " or is not a ViewComponent::Base class"
+                                              " or is not a ViewComponent::Base class"
         end
 
         component = component_klass.new(*args)

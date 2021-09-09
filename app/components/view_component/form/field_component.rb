@@ -10,7 +10,8 @@ module ViewComponent
       attr_reader :method_name
 
       def initialize(form, object_name, method_name, options = {})
-        @method_name = method_name
+        # See: https://github.com/rails/rails/blob/83217025a171593547d1268651b446d3533e2019/actionview/lib/action_view/helpers/tags/base.rb#L13
+        @method_name = method_name.to_s.dup
 
         super(form, object_name, options)
       end
