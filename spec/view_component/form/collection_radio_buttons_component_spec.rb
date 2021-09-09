@@ -23,8 +23,8 @@ RSpec.describe ViewComponent::Form::CollectionRadioButtonsComponent, type: :comp
 
   context "with simple args" do
     it do
-      expect(component).not_to eq_html <<~HTML
-        <input type="hidden" name="user[nationalities]" value=""><input type="radio" value="BE" name="user[nationalities]" id="user_nationalities_be"><label for="user_nationalities_be">Belgium</label><input type="radio" value="FR" name="user[nationalities]" id="user_nationalities_fr"><label for="user_nationalities_fr">France</label>"
+      expect(component).to eq_html <<~HTML
+        <input type="hidden" name="user[nationalities]" value=""><input type="radio" value="BE" name="user[nationalities]" id="user_nationalities_be"><label for="user_nationalities_be">Belgium</label><input type="radio" value="FR" name="user[nationalities]" id="user_nationalities_fr"><label for="user_nationalities_fr">France</label>
       HTML
     end
   end
