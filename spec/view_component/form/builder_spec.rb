@@ -34,6 +34,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     it { expect(form).to respond_to(:select).with(1..4).arguments }
     it { expect(form).to respond_to(:submit).with(0..2).arguments }
     it { expect(form).to respond_to(:telephone_field).with(1..2).arguments }
+    it { expect(form).to respond_to(:rich_text_area).with(1..2).arguments }
     it { expect(form).to respond_to(:text_area).with(1..2).arguments }
     it { expect(form).to respond_to(:text_field).with(1..2).arguments }
     it { expect(form).to respond_to(:time_field).with(1..2).arguments }
