@@ -156,8 +156,10 @@ module ViewComponent
         )
       end
 
-      def rich_text_area(method, options = {})
-        render_component(:rich_text_area, self, @object_name, method, objectify_options(options))
+      if defined?(ActionView::Helpers::Tags::ActionText)
+        def rich_text_area(method, options = {})
+          render_component(:rich_text_area, self, @object_name, method, objectify_options(options))
+        end
       end
 
       private
