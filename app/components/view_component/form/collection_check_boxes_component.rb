@@ -29,7 +29,7 @@ module ViewComponent
         ActionView::Helpers::Tags::CollectionCheckBoxes.new(
           object_name,
           method_name,
-          form,
+          @view_context,
           collection,
           value_method,
           text_method,

@@ -20,7 +20,6 @@ module ViewComponent
           def #{selector}(method, options = {}) # def text_field(method, options = {})
             render_component(                   #   render_component(
               :#{selector},                     #     :text_field,
-              self,                             #     self,
               @object_name,                     #     @object_name,
               method,                           #     method,
               objectify_options(options),       #     objectify_options(options),
@@ -31,24 +30,24 @@ module ViewComponent
 
       # See: https://github.com/rails/rails/blob/33d60cb02dcac26d037332410eabaeeb0bdc384c/actionview/lib/action_view/helpers/form_helper.rb#L2280
       def label(method, text = nil, options = {}, &block)
-        render_component(:label, self, @object_name, method, text, objectify_options(options), &block)
+        render_component(:label, @object_name, method, text, objectify_options(options), &block)
       end
 
       def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
         render_component(
-          :check_box, self, @object_name, method, checked_value, unchecked_value, objectify_options(options)
+          :check_box, @object_name, method, checked_value, unchecked_value, objectify_options(options)
         )
       end
 
       def radio_button(method, tag_value, options = {})
         render_component(
-          :radio_button, self, @object_name, method, tag_value, objectify_options(options)
+          :radio_button, @object_name, method, tag_value, objectify_options(options)
         )
       end
 
       def file_field(method, options = {})
         self.multipart = true
-        render_component(:file_field, self, @object_name, method, objectify_options(options))
+        render_component(:file_field, @object_name, method, objectify_options(options))
       end
 
       def submit(value = nil, options = {})
@@ -57,7 +56,7 @@ module ViewComponent
           value = nil
         end
         value ||= submit_default_value
-        render_component(:submit, self, value, options)
+        render_component(:submit, value, options)
       end
 
       def button(value = nil, options = {}, &block)
@@ -66,7 +65,7 @@ module ViewComponent
           value = nil
         end
         value ||= submit_default_value
-        render_component(:button, self, value, options, &block)
+        render_component(:button, value, options, &block)
       end
 
       # SELECTORS.each do |selector|
@@ -84,7 +83,7 @@ module ViewComponent
       # See: https://github.com/rails/rails/blob/fe76a95b0d252a2d7c25e69498b720c96b243ea2/actionview/lib/action_view/helpers/form_options_helper.rb
       def select(method, choices = nil, options = {}, html_options = {}, &block)
         render_component(
-          :select, self, @object_name, method, choices, objectify_options(options),
+          :select, @object_name, method, choices, objectify_options(options),
           @default_html_options.merge(html_options), &block
         )
       end
@@ -92,7 +91,7 @@ module ViewComponent
       # rubocop:disable Metrics/ParameterLists
       def collection_select(method, collection, value_method, text_method, options = {}, html_options = {})
         render_component(
-          :collection_select, self, @object_name, method, collection, value_method, text_method,
+          :collection_select, @object_name, method, collection, value_method, text_method,
           objectify_options(options), @default_html_options.merge(html_options)
         )
       end
@@ -103,7 +102,7 @@ module ViewComponent
         options = {}, html_options = {}
       )
         render_component(
-          :grouped_collection_select, self, @object_name, method, collection, group_method,
+          :grouped_collection_select, @object_name, method, collection, group_method,
           group_label_method, option_key_method, option_value_method,
           objectify_options(options), @default_html_options.merge(html_options)
         )
@@ -111,14 +110,19 @@ module ViewComponent
 
       def collection_check_boxes(method, collection, value_method, text_method, options = {}, html_options = {}, &block)
         render_component(
-          :collection_check_boxes, self, @object_name, method, collection, value_method, text_method,
+          :collection_check_boxes, @object_name, method, collection, value_method, text_method,
           objectify_options(options), @default_html_options.merge(html_options), &block
         )
       end
 
-      def collection_radio_buttons(method, collection, value_method, text_method, options = {}, html_options = {}, &block)
+      def collection_radio_buttons(
+        method, collection,
+        value_method, text_method,
+        options = {}, html_options = {},
+        &block
+      )
         render_component(
-          :collection_radio_buttons, self, @object_name, method, collection, value_method, text_method,
+          :collection_radio_buttons, @object_name, method, collection, value_method, text_method,
           objectify_options(options), @default_html_options.merge(html_options), &block
         )
       end
@@ -126,28 +130,28 @@ module ViewComponent
 
       def date_select(method, options = {}, html_options = {})
         render_component(
-          :date_select, self, @object_name, method,
+          :date_select, @object_name, method,
           objectify_options(options), @default_html_options.merge(html_options)
         )
       end
 
       def datetime_select(method, options = {}, html_options = {})
         render_component(
-          :datetime_select, self, @object_name, method,
+          :datetime_select, @object_name, method,
           objectify_options(options), @default_html_options.merge(html_options)
         )
       end
 
       def time_select(method, options = {}, html_options = {})
         render_component(
-          :time_select, self, @object_name, method,
+          :time_select, @object_name, method,
           objectify_options(options), @default_html_options.merge(html_options)
         )
       end
 
       def time_zone_select(method, options = {}, html_options = {})
         render_component(
-          :time_zone_select, self, @object_name, method,
+          :time_zone_select, @object_name, method,
           objectify_options(options), @default_html_options.merge(html_options)
         )
       end
@@ -163,7 +167,7 @@ module ViewComponent
                                               " or is not a ViewComponent::Base class"
         end
 
-        component = component_klass.new(*args)
+        component = component_klass.new(self, *args)
         component.render_in(@template, &block)
       end
 

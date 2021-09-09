@@ -17,7 +17,7 @@ module ViewComponent
         ActionView::Helpers::Tags::TimeSelect.new(
           object_name,
           method_name,
-          form,
+          @view_context,
           options,
           html_options
         ).render

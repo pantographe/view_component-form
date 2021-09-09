@@ -35,7 +35,7 @@ module ViewComponent
         ActionView::Helpers::Tags::GroupedCollectionSelect.new(
           object_name,
           method_name,
-          form,
+          @view_context,
           collection,
           group_method,
           group_label_method,

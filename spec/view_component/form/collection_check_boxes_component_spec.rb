@@ -22,13 +22,13 @@ RSpec.describe ViewComponent::Form::CollectionCheckBoxesComponent, type: :compon
   let(:component_html_attributes) { component.css("input").last.attributes }
 
   context "with simple args" do
-    it do
+    it do # rubocop:disable RSpec/ExampleLength
       expect(component.to_html).to eq(
         "<input type=\"hidden\" name=\"user[nationalities][]\" value=\"\">" \
-        "<input type=\"checkbox\" value=\"BE\" name=\"user[user]\" id=\"user_nationalities_be\">" \
+        "<input type=\"checkbox\" value=\"BE\" name=\"user[nationalities][]\" id=\"user_nationalities_be\">" \
         "<label for=\"user_nationalities_be\">Belgium</label>" \
-        "<input type=\"checkbox\" value=\"FR\" name=\"user[user]\" id=\"user_nationalities_fr\">" \
-        "<label for=\"user_nationalities_fr\">France</label>\n"
+        "<input type=\"checkbox\" value=\"FR\" name=\"user[nationalities][]\" id=\"user_nationalities_fr\">" \
+        "<label for=\"user_nationalities_fr\">France</label>"
       )
     end
   end

@@ -17,7 +17,7 @@ module ViewComponent
         ActionView::Helpers::Tags::RadioButton.new(
           object_name,
           method_name,
-          form,
+          @view_context,
           value,
           options
         ).render

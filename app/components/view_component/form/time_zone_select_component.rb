@@ -18,7 +18,7 @@ module ViewComponent
         ActionView::Helpers::Tags::TimeZoneSelect.new(
           object_name,
           method_name,
-          form,
+          @view_context,
           priority_zones,
           options,
           html_options

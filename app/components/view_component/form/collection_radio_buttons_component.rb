@@ -29,7 +29,7 @@ module ViewComponent
         ActionView::Helpers::Tags::CollectionRadioButtons.new(
           object_name,
           method_name,
-          form,
+          @view_context,
           collection,
           value_method,
           text_method,
