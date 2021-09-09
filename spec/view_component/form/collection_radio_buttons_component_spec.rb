@@ -22,14 +22,10 @@ RSpec.describe ViewComponent::Form::CollectionRadioButtonsComponent, type: :comp
   let(:component_html_attributes) { component.css("input").last.attributes }
 
   context "with simple args" do
-    it do # rubocop:disable RSpec/ExampleLength
-      expect(component.to_html).to eq(
-        "<input type=\"hidden\" name=\"user[nationalities]\" value=\"\">" \
-        "<input type=\"radio\" value=\"BE\" name=\"user[nationalities]\" id=\"user_nationalities_be\">" \
-        "<label for=\"user_nationalities_be\">Belgium</label>" \
-        "<input type=\"radio\" value=\"FR\" name=\"user[nationalities]\" id=\"user_nationalities_fr\">" \
-        "<label for=\"user_nationalities_fr\">France</label>"
-      )
+    it do
+      expect(component).to eq_html <<~HTML
+        <input type="hidden" name="user[nationalities]" value=""><input type="radio" value="BE" name="user[nationalities]" id="user_nationalities_be"><label for="user_nationalities_be">Belgium</label><input type="radio" value="FR" name="user[nationalities]" id="user_nationalities_fr"><label for="user_nationalities_fr">France</label>
+      HTML
     end
   end
 

@@ -10,9 +10,9 @@ RSpec.describe ViewComponent::Form::UrlFieldComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq(
-        %(<input type="url" name="user[wiki_url]" id="user_wiki_url">)
-      )
+      expect(component).to eq_html <<~HTML
+        <input type="url" name="user[wiki_url]" id="user_wiki_url">
+      HTML
     end
   end
 

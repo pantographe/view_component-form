@@ -10,9 +10,9 @@ RSpec.describe ViewComponent::Form::FileFieldComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq(
-        %(<input type="file" name="user[avatar]" id="user_avatar">)
-      )
+      expect(component).to eq_html <<~HTML
+        <input type="file" name="user[avatar]" id="user_avatar">
+      HTML
     end
   end
 

@@ -23,10 +23,10 @@ RSpec.describe ViewComponent::Form::CollectionSelectComponent, type: :component 
 
   context "with simple args" do
     it do
-      expect(component.to_html).to eq(
-        "<select name=\"user[country]\" id=\"user_country\"><option value=\"BE\">Belgium</option>\n" \
-        "<option value=\"FR\">France</option></select>"
-      )
+      expect(component).to eq_html <<~HTML
+        <select name="user[country]" id="user_country"><option value="BE">Belgium</option>
+        <option value="FR">France</option></select>
+      HTML
     end
   end
 
