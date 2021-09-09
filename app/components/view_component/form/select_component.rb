@@ -18,7 +18,7 @@ module ViewComponent
         ActionView::Helpers::Tags::Select.new(
           object_name,
           method_name,
-          form,
+          @view_context,
           choices,
           options,
           html_options,

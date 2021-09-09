@@ -2,28 +2,22 @@
 
 module ViewComponent
   module Form
-    class GroupedCollectionSelectComponent < FieldComponent
-      attr_reader :collection, :group_method,
-                  :group_label_method, :option_key_method, :option_value_method,
-                  :html_options
+    class CollectionCheckBoxesComponent < FieldComponent
+      attr_reader :collection, :value_method, :text_method, :html_options
 
       def initialize( # rubocop:disable Metrics/ParameterLists
         form,
         object_name,
         method_name,
         collection,
-        group_method,
-        group_label_method,
-        option_key_method,
-        option_value_method,
+        value_method,
+        text_method,
         options = {},
         html_options = {}
       )
         @collection = collection
-        @group_method = group_method
-        @group_label_method = group_label_method
-        @option_key_method = option_key_method
-        @option_value_method = option_value_method
+        @value_method = value_method
+        @text_method = text_method
         @html_options = html_options
 
         super(form, object_name, method_name, options)
@@ -32,17 +26,16 @@ module ViewComponent
       end
 
       def call # rubocop:disable Metrics/MethodLength
-        ActionView::Helpers::Tags::GroupedCollectionSelect.new(
+        ActionView::Helpers::Tags::CollectionCheckBoxes.new(
           object_name,
           method_name,
           @view_context,
           collection,
-          group_method,
-          group_label_method,
-          option_key_method,
-          option_value_method,
+          value_method,
+          text_method,
           options,
-          html_options
+          html_options,
+          &content
         ).render
       end
 

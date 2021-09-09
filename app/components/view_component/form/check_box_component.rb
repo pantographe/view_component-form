@@ -16,7 +16,7 @@ module ViewComponent
         ActionView::Helpers::Tags::CheckBox.new(
           object_name,
           method_name,
-          form,
+          @view_context,
           checked_value,
           unchecked_value,
           options

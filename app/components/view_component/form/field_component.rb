@@ -19,7 +19,7 @@ module ViewComponent
       def call
         raise "`self.tag_klass' should be defined in #{self.class.name}" unless self.class.tag_klass
 
-        self.class.tag_klass.new(object_name, method_name, form, options).render
+        self.class.tag_klass.new(object_name, method_name, @view_context, options).render
       end
 
       def method_errors
