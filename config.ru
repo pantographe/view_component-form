@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
+ENV["RAILS_ENV"] ||= "development"
+
 require "rubygems"
 require "bundler"
 
-Bundler.require :default, :development
-
-require "view_component/engine"
-require "lookbook"
+Bundler.require(:default, :development)
 
 Combustion.initialize! :all do
   config.logger = ActiveSupport::TaggedLogging.new(Logger.new(nil))

@@ -20,3 +20,4 @@
 # combustion
 spec/internal/db/*.sqlite
 spec/internal/log
+spec/internal/tmp

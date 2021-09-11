@@ -21,6 +21,8 @@ gem "simplecov", require: false, group: :test
 gem "sqlite3"
 
 group :development do
-  gem "lookbook", require: false
+  gem "view_component", require: "view_component/engine"
+
+  gem "lookbook"
   gem "puma"
 end
