@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Per component Builder customization (#54)
 - Add basic `ViewComponent::Form::Builder` that can be used in place of Rails' `ActionView::Helpers::FormBuilder` (#1)
 - Add all standard FormBuilder helpers provided by Rails, implemented as ViewComponents (#4)
 - Add a custom FormBuilder generator (#34)
