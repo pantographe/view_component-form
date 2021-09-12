@@ -2,6 +2,12 @@
 
 **ViewComponent::Form** provides a `FormBuilder` with the same interface as [`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html), but using [ViewComponent](https://github.com/github/view_component)s for rendering the fields. It's a starting point for writing your own custom ViewComponents.
 
+## Compatibility
+
+This gem is tested on:
+- Rails 6.0+
+- Ruby 2.7+
+
 ## Installation
 
 Add this line to your application's Gemfile:
