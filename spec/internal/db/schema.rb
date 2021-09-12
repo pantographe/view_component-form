@@ -33,6 +33,11 @@ ActiveRecord::Schema.define do
 
   create_table(:cities, force: true) do |t|
     t.belongs_to :country
+  end
+
+  create_table(:users, force: true) do |t|
+    t.string :first_name
+    t.string :last_name
     t.timestamps
   end
 end
