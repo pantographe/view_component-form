@@ -130,8 +130,6 @@ You can then customize the behavior of your `Form::TextFieldComponent`:
 
 module Form
   class TextFieldComponent < ViewComponent::Form::TextFieldComponent
-    self.tag_klass = ActionView::Helpers::Tags::TextField
-
     def html_class
       class_names("text-field", "border-error": method_errors?)
     end
