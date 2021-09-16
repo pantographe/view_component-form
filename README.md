@@ -89,7 +89,7 @@ This allows you to pick the namespace your components will be loaded from.
 # lib/custom_form_builder.rb
 class CustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  self.components_namespace = "Form"
+  namespace Form
 end
 ```
 
@@ -105,7 +105,7 @@ bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace Forms::Compo
 # app/forms/another_custom_form_builder.rb
 class AnotherCustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  self.components_namespace = "Forms::Components"
+  namespace Forms::Components
 end
 ```
 
@@ -136,8 +136,6 @@ You can then customize the behavior of your `Form::TextFieldComponent`:
 
 module Form
   class TextFieldComponent < ViewComponent::Form::TextFieldComponent
-    self.tag_klass = ActionView::Helpers::Tags::TextField
-
     def html_class
       class_names("text-field", "border-error": method_errors?)
     end
