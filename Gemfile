@@ -10,6 +10,7 @@ gem "capybara", require: false
 gem "combustion"
 gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0", require: false
+gem "rspec-html-matchers"
 gem "rubocop", require: false
 gem "rubocop-performance", require: false
 gem "rubocop-rspec", require: false
