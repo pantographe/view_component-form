@@ -2,14 +2,15 @@
 
 source "https://rubygems.org"
 
+gem "ammeter"
 gem "appraisal", require: false
 gem "capybara", require: false
 gem "combustion"
-gem "rails", "~> 6.1.0"
 gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0", require: false
 gem "rubocop", require: false
 gem "rubocop-performance", require: false
 gem "rubocop-rspec", require: false
+gem "rails", "~> 6.1.0"
 
 gemspec path: "../"

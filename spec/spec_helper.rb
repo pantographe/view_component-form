@@ -3,6 +3,7 @@
 require "view_component/engine"
 require "view_component/form"
 
+require "ammeter/init"
 require "combustion"
 
 Combustion.path = "spec/internal"
