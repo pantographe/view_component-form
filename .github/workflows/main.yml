@@ -29,4 +29,11 @@ jobs:
 
     - name: Test with Rake
       run: |
-        bundle exec rake
+        COVERAGE=true bundle exec rake
+
+    - name: Upload coverage results
+      uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: coverage-report
+        path: coverage

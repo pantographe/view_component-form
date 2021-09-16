@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
-require "simplecov"
-SimpleCov.start
+if ENV.fetch("COVERAGE", false)
+  require "simplecov"
+  SimpleCov.start do
+    minimum_coverage 90
+    maximum_coverage_drop 2
+  end
+end
 
 require "view_component/engine"
 require "view_component/form"
