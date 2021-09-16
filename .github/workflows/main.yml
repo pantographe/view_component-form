@@ -35,5 +35,5 @@ jobs:
       uses: actions/upload-artifact@v2
       if: always()
       with:
-        name: coverage-report
+        name: coverage-report-ruby-${{ matrix.versions.ruby }}-rails-${{ matrix.versions.rails }}
         path: coverage
