@@ -43,4 +43,30 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     it { expect(form).to respond_to(:url_field).with(1..2).arguments }
     it { expect(form).to respond_to(:week_field).with(1..2).arguments }
   end
+
+  describe "#component_klass" do
+    context "with gem Builder" do
+      let(:builder) { described_class.new(object_name, object, template, options) }
+
+      it { expect(builder.send(:component_klass, :label)).to eq(ViewComponent::Form::LabelComponent) }
+      it { expect(builder.send(:component_klass, :text_field)).to eq(ViewComponent::Form::TextFieldComponent) }
+      it { expect(builder.send(:component_klass, :submit)).to eq(ViewComponent::Form::SubmitComponent) }
+    end
+
+    context "with custom Builder" do
+      let(:builder) { CustomFormBuilder.new(object_name, object, template, options) }
+
+      it { expect(builder.send(:component_klass, :label)).to eq(Form::LabelComponent) }
+      it { expect(builder.send(:component_klass, :text_field)).to eq(Form::TextFieldComponent) }
+      it { expect(builder.send(:component_klass, :submit)).to eq(ViewComponent::Form::SubmitComponent) }
+    end
+
+    context "with embeded builder" do
+      let(:builder) { InlineCustomFormBuilder.new(object_name, object, template, options) }
+
+      it { expect(builder.send(:component_klass, :label)).to eq(InlineForm::LabelComponent) }
+      it { expect(builder.send(:component_klass, :text_field)).to eq(Form::TextFieldComponent) }
+      it { expect(builder.send(:component_klass, :submit)).to eq(ViewComponent::Form::SubmitComponent) }
+    end
+  end
 end

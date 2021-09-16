@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+VERSION=$1
+
+printf "# frozen_string_literal: true\n\nmodule ViewComponent\n  module Form\n    VERSION = \"$VERSION\"\n  end\nend\n" > ./lib/view_component/form/version.rb
+bundle
+git add Gemfile.lock lib/view_component/form/version.rb
+git commit -m "Bump version for $VERSION"
+git push
+git tag v$VERSION
+git push --tags
+gem build view_component-form.gemspec
+gem push "view_component-form-$VERSION.gem" --host https://rubygems.org
+rm "view_component-form-$VERSION.gem"

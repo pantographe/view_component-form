@@ -2,6 +2,8 @@
 
 **ViewComponent::Form** provides a `FormBuilder` with the same interface as [`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html), but using [ViewComponent](https://github.com/github/view_component)s for rendering the fields. It's a starting point for writing your own custom ViewComponents.
 
+:warning: **This is an early release: the API is subject to change until we reach `v1.0.0`.**
+
 ## Compatibility
 
 This gem is tested on:
@@ -89,7 +91,7 @@ This allows you to pick the namespace your components will be loaded from.
 # lib/custom_form_builder.rb
 class CustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  self.components_namespace = "Form"
+  namespace Form
 end
 ```
 
@@ -105,7 +107,7 @@ bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace Forms::Compo
 # app/forms/another_custom_form_builder.rb
 class AnotherCustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  self.components_namespace = "Forms::Components"
+  namespace Forms::Components
 end
 ```
 
