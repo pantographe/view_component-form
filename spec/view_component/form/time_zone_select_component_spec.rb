@@ -10,10 +10,11 @@ RSpec.describe ViewComponent::Form::TimeZoneSelectComponent, type: :component do
   let(:component_html_attributes) { component.css("select").first.attributes }
 
   context "with simple args" do
-    it do
-      expect(component.to_html).to start_with(
-        %(<select name="user[time_zone]" id="user_time_zone">)
-      )
+    it "has a select" do
+      expect(component.to_html).to have_tag("select",
+                                            with: { id: "user_time_zone", name: "user[time_zone]" }) do
+                                              with_tag "option", with: { value: "Warsaw" }
+                                            end
     end
   end
 

@@ -10,10 +10,14 @@ RSpec.describe ViewComponent::Form::TimeSelectComponent, type: :component do
   let(:component_html_attributes) { component.css("select").first.attributes }
 
   context "with simple args" do
-    it do
-      expect(component.to_html).to include(
-        %(<select id="user_wakes_up_at_4i" name="user[wakes_up_at(4i)]">)
-      )
+    it "has a select for the hours" do
+      expect(component.to_html).to have_tag("select",
+                                            with: { id: "user_wakes_up_at_4i", name: "user[wakes_up_at(4i)]" })
+    end
+
+    it "has a select for the minutes" do
+      expect(component.to_html).to have_tag("select",
+                                            with: { id: "user_wakes_up_at_5i", name: "user[wakes_up_at(5i)]" })
     end
   end
 

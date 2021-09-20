@@ -27,7 +27,7 @@ module ComponentMatchers
     end
 
     def description
-      "has HTML containing #{expected_formatted}"
+      "have HTML containing #{expected_formatted}"
     end
 
     def diffable?
