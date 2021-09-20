@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Setup rspec-html-matchers and use it for complex components specs (#65)
+
 ## [0.1.0] - 2021-09-16
 
 ### Added
@@ -16,3 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add a custom FormBuilder generator (#34)
 - Add CHANGELOG (#50)
 - Add CI (#2)
+
+[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/pantographe/view_component-form/releases/tag/v0.1.0
+
