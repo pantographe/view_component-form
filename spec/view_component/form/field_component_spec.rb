@@ -32,7 +32,7 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       it { expect(component.method_errors).to eq([]) }
     end
 
-    context "with unvalid object" do
+    context "with invalid object" do
       let(:object) { object_klass.new(first_name: "") }
 
       it { expect(component.method_errors).to eq(["Can't be blank", "Is too short (minimum is 2 characters)"]) }
@@ -48,7 +48,7 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       it { expect(component.method_errors?).to eq(false) }
     end
 
-    context "with unvalid object" do
+    context "with invalid object" do
       let(:object) { object_klass.new(first_name: "") }
 
       it { expect(component.method_errors?).to eq(true) }

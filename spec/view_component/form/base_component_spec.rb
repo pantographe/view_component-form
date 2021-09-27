@@ -32,7 +32,7 @@ RSpec.describe ViewComponent::Form::BaseComponent, type: :component do
       it { expect(component.object_errors?).to eq(false) }
     end
 
-    context "with unvalid object" do
+    context "with invalid object" do
       let(:object) { object_klass.new(first_name: "") }
 
       it { expect(component.object_errors?).to eq(true) }
