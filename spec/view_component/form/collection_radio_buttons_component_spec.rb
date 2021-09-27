@@ -11,7 +11,7 @@ RSpec.describe ViewComponent::Form::CollectionRadioButtonsComponent, type: :comp
     render_inline(described_class.new(
                     form,
                     object_name,
-                    :nationalities,
+                    :nationality,
                     collection,
                     :code,
                     :name,
@@ -23,9 +23,33 @@ RSpec.describe ViewComponent::Form::CollectionRadioButtonsComponent, type: :comp
 
   context "with simple args" do
     it do
-      expect(component).to eq_html <<~HTML
-        <input type="hidden" name="user[nationalities]" value=""><input type="radio" value="BE" name="user[nationalities]" id="user_nationalities_be"><label for="user_nationalities_be">Belgium</label><input type="radio" value="FR" name="user[nationalities]" id="user_nationalities_fr"><label for="user_nationalities_fr">France</label>
-      HTML
+      expect(component.to_html).to have_tag("input", with: { type: "hidden", value: "", name: "user[nationality]" })
+    end
+
+    it do
+      expect(component.to_html)
+        .to have_tag("input", with: {
+                       type: "radio", value: "BE",
+                       id: "user_nationality_be", name: "user[nationality]"
+                     })
+    end
+
+    it do
+      expect(component.to_html)
+        .to have_tag("input", with: {
+                       type: "radio", value: "FR",
+                       id: "user_nationality_fr", name: "user[nationality]"
+                     })
+    end
+
+    it do
+      expect(component.to_html)
+        .to have_tag("label", with: { for: "user_nationality_be" }, text: "Belgium")
+    end
+
+    it do
+      expect(component.to_html)
+        .to have_tag("label", with: { for: "user_nationality_fr" }, text: "France")
     end
   end
 
