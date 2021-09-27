@@ -3,7 +3,9 @@
 if ENV.fetch("COVERAGE", false)
   require "simplecov"
   SimpleCov.start do
-    minimum_coverage 90
+    add_filter "/spec"
+
+    minimum_coverage 89
     maximum_coverage_drop 2
   end
 end
