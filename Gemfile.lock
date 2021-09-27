@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    view_component-form (0.1.0)
+    view_component-form (0.1.1)
       actionview (>= 6.0.0, < 7.0)
       activesupport (>= 6.0.0, < 7.0)
       view_component (>= 2.34.0, < 3.0)
@@ -232,4 +232,4 @@ DEPENDENCIES
   view_component-form!
 
 BUNDLED WITH
-   2.2.21
+   2.2.27
