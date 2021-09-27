@@ -41,7 +41,7 @@ module ViewComponent
 
       def object_method_names
         @object_method_names ||= begin
-          object_method_names = [method_name]
+          object_method_names = [method_name.to_sym]
           if method_name.end_with?("_id") && object.respond_to?(singular_association_method_name)
             object_method_names << singular_association_method_name
           elsif method_name.end_with?("_ids") && object.respond_to?(collection_association_method_name)
