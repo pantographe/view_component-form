@@ -41,11 +41,13 @@ RSpec.describe ViewComponent::Form::SelectComponent, type: :component do
   context "with multiple select" do
     let(:html_options) { { multiple: true } }
 
+    it { expect(component.to_html).to have_tag("input", with: { type: "hidden", value: "", name: "user[role][]" }) }
+
     it do
-      expect(component).to eq_html <<~HTML
-        <input name="user[role][]" type="hidden" value=""><select multiple name="user[role][]" id="user_role"><option value="admin">Admin</option>
-        <option value="manager">Manager</option></select>
-      HTML
+      expect(component.to_html).to have_tag("select", with: { name: "user[role][]", id: "user_role" }) do
+        with_tag "option", with: { value: "admin" }, text: "Admin"
+        with_tag "option", with: { value: "manager" }, text: "Manager"
+      end
     end
   end
 

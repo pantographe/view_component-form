@@ -23,9 +23,33 @@ RSpec.describe ViewComponent::Form::CollectionCheckBoxesComponent, type: :compon
 
   context "with simple args" do
     it do
-      expect(component).to eq_html <<~HTML
-        <input type="hidden" name="user[nationalities][]" value=""><input type="checkbox" value="BE" name="user[nationalities][]" id="user_nationalities_be"><label for="user_nationalities_be">Belgium</label><input type="checkbox" value="FR" name="user[nationalities][]" id="user_nationalities_fr"><label for="user_nationalities_fr">France</label>
-      HTML
+      expect(component.to_html).to have_tag("input", with: { type: "hidden", value: "", name: "user[nationalities][]" })
+    end
+
+    it do
+      expect(component.to_html)
+        .to have_tag("input", with: {
+                       type: "checkbox", value: "BE",
+                       id: "user_nationalities_be", name: "user[nationalities][]"
+                     })
+    end
+
+    it do
+      expect(component.to_html)
+        .to have_tag("input", with: {
+                       type: "checkbox", value: "FR",
+                       id: "user_nationalities_fr", name: "user[nationalities][]"
+                     })
+    end
+
+    it do
+      expect(component.to_html)
+        .to have_tag("label", with: { for: "user_nationalities_be" }, text: "Belgium")
+    end
+
+    it do
+      expect(component.to_html)
+        .to have_tag("label", with: { for: "user_nationalities_fr" }, text: "France")
     end
   end
 
