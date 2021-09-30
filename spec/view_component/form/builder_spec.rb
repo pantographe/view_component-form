@@ -7,7 +7,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   let(:form)    { form_with(object) }
   let(:options) { {} }
 
-  context "standard helpers arguments" do
+  describe "standard helpers arguments" do
     it { expect(form).to respond_to(:button).with(0..2).arguments }
     it { expect(form).to respond_to(:check_box).with(1..4).arguments }
     it { expect(form).to respond_to(:collection_check_boxes).with(4..6).arguments }
@@ -44,7 +44,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     it { expect(form).to respond_to(:week_field).with(1..2).arguments }
   end
 
-  context "standard helpers return values" do
+  describe "standard helpers return values" do
     it { expect(form.button).to be_present }
     it { expect(form.check_box(:foo)).to be_present }
     it { expect(form.collection_check_boxes(:foo, [], :id, :name)).to be_present }
