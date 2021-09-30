@@ -188,9 +188,9 @@ module ViewComponent
         )
       end
 
-      def time_zone_select(method, options = {}, html_options = {})
+      def time_zone_select(method, priority_zones = nil, options = {}, html_options = {})
         render_component(
-          :time_zone_select, @object_name, method,
+          :time_zone_select, @object_name, method, priority_zones,
           objectify_options(options), @default_html_options.merge(html_options)
         )
       end
