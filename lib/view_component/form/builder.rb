@@ -27,6 +27,37 @@ module ViewComponent
 
           lookup_namespaces.prepend namespace
         end
+
+        def for_tags
+          Class.new do
+            def method_missing(method_name, *_aargs, **kwargs)
+              render_component(method_name.to_s.delete_suffix("_tag").to_sym, nil, nil, objectify_options(kwargs))
+            rescue NotImplementedComponentError
+              super
+            end
+
+            def respond_to_missing?(method_name, include_private = false)
+              component_klass(method_name.to_s.delete_suffix("_tag").to_sym) || super
+            rescue NotImplementedComponentError
+              super
+            end
+          end
+        end
+
+        private
+
+        def component_klass(component_name)
+          component_klass = lookup_namespaces.filter_map do |namespace|
+            "#{namespace}::#{component_name.to_s.camelize}Component".safe_constantize || false
+          end.first
+
+          unless component_klass.is_a?(Class) && component_klass < ViewComponent::Base
+            raise NotImplementedComponentError, "Component named #{component_name} doesn't exist" \
+                                                " or is not a ViewComponent::Base class"
+          end
+
+          component_klass
+        end
       end
 
       def initialize(*)
@@ -194,18 +225,7 @@ module ViewComponent
       end
 
       def component_klass(component_name)
-        @__component_klass_cache[component_name] ||= begin
-          component_klass = self.class.lookup_namespaces.filter_map do |namespace|
-            "#{namespace}::#{component_name.to_s.camelize}Component".safe_constantize || false
-          end.first
-
-          unless component_klass.is_a?(Class) && component_klass < ViewComponent::Base
-            raise NotImplementedComponentError, "Component named #{component_name} doesn't exist" \
-                                                " or is not a ViewComponent::Base class"
-          end
-
-          component_klass
-        end
+        @__component_klass_cache[component_name] ||= self.class.component_klass(component_name)
       end
     end
   end

@@ -69,4 +69,35 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
       it { expect(builder.send(:component_klass, :submit)).to eq(ViewComponent::Form::SubmitComponent) }
     end
   end
+
+  describe "#for_tags" do
+    subject { described_class.for_tags }
+
+    it { is_expected.to respond_to(:select_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:text_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:label_tag).with(0..3).arguments }
+    it { is_expected.to respond_to(:hidden_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:file_field_tag).with(1..2).arguments }
+    it { is_expected.to respond_to(:password_field_tag).with(0..3).arguments }
+    it { is_expected.to respond_to(:text_area_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:check_box_tag).with(1..4).arguments }
+    it { is_expected.to respond_to(:radio_button_tag).with(2..4).arguments }
+    it { is_expected.to respond_to(:submit_tag).with(0..2).arguments }
+    it { is_expected.to respond_to(:button_tag).with(0..2).arguments }
+    it { is_expected.to respond_to(:image_submit_tag).with(0..2).arguments }
+    it { is_expected.to respond_to(:field_set_tag).with(0..2).arguments }
+    it { is_expected.to respond_to(:color_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:search_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:telephone_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:date_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:time_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:datetime_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:datetime_local_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:month_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:week_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:url_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:email_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:number_field_tag).with(1..3).arguments }
+    it { is_expected.to respond_to(:range_field_tag).with(1..3).arguments }
+  end
 end
