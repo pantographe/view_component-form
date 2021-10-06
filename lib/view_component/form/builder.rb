@@ -28,23 +28,14 @@ module ViewComponent
           lookup_namespaces.prepend namespace
         end
 
-        def for_tags
-          Class.new do
-            def method_missing(method_name, *_aargs, **kwargs)
-              render_component(method_name.to_s.delete_suffix("_tag").to_sym, nil, nil, objectify_options(kwargs))
-            rescue NotImplementedComponentError
-              super
-            end
-
-            def respond_to_missing?(method_name, include_private = false)
-              component_klass(method_name.to_s.delete_suffix("_tag").to_sym) || super
-            rescue NotImplementedComponentError
-              super
-            end
-          end
+        def mapping
+          (field_helpers - %i[fields_for phone_field fields hidden_field] + %i[select])
+            .to_h { |selector| [selector, component_klass(selector)] }
         end
 
-        private
+        def for_tags
+          ViewComponent::Form::ComponentMapping.new(mapping)
+        end
 
         def component_klass(component_name)
           component_klass = lookup_namespaces.filter_map do |namespace|
