@@ -34,7 +34,7 @@ module ViewComponent
         end
 
         def for_tags
-          ViewComponent::Form::ComponentMapping.new(mapping)
+          ViewComponent::Form::ComponentMapping.new(mapping, @template)
         end
 
         def component_klass(component_name)

@@ -3,12 +3,15 @@
 module ViewComponent
   module Form
     class ComponentMapping
-      def initialize(mapping)
+      def initialize(mapping, template)
         @mapping = HashWithIndifferentAccess.new(mapping)
+        @template = template
       end
 
-      def method_missing(method_name, _args = nil, *_aargs, **_kwargs)
+      def method_missing(method_name, field_name = nil, *aargs, **kwargs)
         @mapping.fetch(remove_tag_suffix(method_name))
+                .new(nil, field_name, *aargs, **kwargs)
+                .render_in(@template, &block)
       end
 
       def respond_to_missing?(method_name, include_private = false)
