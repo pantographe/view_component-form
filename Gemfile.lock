@@ -76,6 +76,7 @@ GEM
       thor (>= 0.14.0)
     ast (2.4.2)
     builder (3.2.4)
+    byebug (11.1.3)
     capybara (3.35.3)
       addressable
       mini_mime (>= 0.1.3)
@@ -219,6 +220,7 @@ PLATFORMS
 
 DEPENDENCIES
   appraisal
+  byebug (~> 11.1)
   capybara
   combustion
   rails

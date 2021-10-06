@@ -6,6 +6,7 @@ source "https://rubygems.org"
 gemspec
 
 gem "appraisal", require: false
+gem "byebug", "~> 11.1", require: false, group: :test
 gem "capybara", require: false
 gem "combustion"
 gem "rails"
