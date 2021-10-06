@@ -24,7 +24,7 @@ And then execute:
 
 ## Usage
 
-Add a `builder` param to your `form_for` of `form_with`:
+Add a `builder` param to your `form_for`, `form_with`, `fields_for` or `fields`:
 
 ```diff
 - <%= form_for @user do |f| %>
@@ -64,10 +64,10 @@ It should work out of the box, but does nothing particularly interesting for now
 
   <label for="user_last_name">Last name</label>
   <input type="text" value="Doe" name="user[last_name]" id="user_last_name" />
-  
+
   <label for="user_email">E-mail</label>
   <input type="email" value="john.doe@example.com" name="user[email]" id="user_email" />
-  
+
   <label for="user_password">Password</label>
   <input type="password" name="user[password]" id="user_password" />
 </form>
@@ -150,6 +150,22 @@ The generated form field with now have your class names:
 ```html
 <input class="text-field" type="text" value="John" name="user[first_name]" id="user_first_name">
 ```
+
+### Using your form components without a backing model
+
+If you want to ensure that your fields display consistently across your app,
+you'll need to lean on Rails' own helpers. You may be used to using form tag
+helpers such as `text_field_tag` to generate tags, or even writing out plain
+HTML tags. These can't be integrated with a form builder, so they won't offer you the benefits of this gem.
+
+You'll most likely want to use either:
+
+- [`form_with`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-form_with) and supply a route as the endpoint, e.g. `form_for users_path
+  do |f| ...`, or
+- [`fields`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields), supplying a namespace if necessary. `fields do |f| ...` ought to
+  work in the most basic case.
+
+[`fields_for`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for) may also be of interest. To make consistent use of `view_component-form`, you'll want to be using these three helpers to build your forms wherever possible.
 
 ## Development
 
