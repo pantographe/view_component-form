@@ -59,15 +59,15 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
     before(:all) do # rubocop:disable RSpec/BeforeAfterAll
       Continent.create(name: "Africa")
-               .countries.tap {
-                _1.create(name: "South Africa")
-                _1.create(name: "Somalia")
-               }
+               .countries.tap do |countries|
+                 countries.create(name: "South Africa")
+                 countries.create(name: "Somalia")
+               end
       Continent.create(name: "Europe")
-               .countries.tap {
-                _1.create(name: "Denmark")
-                _1.create(name: "Ireland")
-               }
+               .countries.tap do |countries|
+                 countries.create(name: "Denmark")
+                 countries.create(name: "Ireland")
+               end
     end
 
     after(:all) { Person.delete_all } # rubocop:disable RSpec/BeforeAfterAll
