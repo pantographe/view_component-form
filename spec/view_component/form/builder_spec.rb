@@ -123,7 +123,9 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :time_zone_select, :time_zone, nil, { include_blank: true }
   it_behaves_like "the default form builder", :url_field, :homepage
   it_behaves_like "the default form builder", :week_field, :birthday_week
-  it_behaves_like "the default form builder", :weekday_select, :weekday, { include_blank: true }
+  if Rails::VERSION::MAJOR >= 7
+    it_behaves_like "the default form builder", :weekday_select, :weekday, { include_blank: true }
+  end
 
   describe "#component_klass" do
     context "with gem Builder" do
