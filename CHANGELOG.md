@@ -6,8 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add missing component specs (#75)
+- Add missing builder specs for return values (#76)
+
 ### Changed
 - Cross-documented Rails form helpers (#84)
+
+### Fixed
+- Fix `phone_field` helper (#74)
+- Fix `datetime_local_field` helper (#76)
+- Fix `time_zone_select` helper (#76)
 
 ## [0.1.1] - 2021-09-27
 
@@ -20,7 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2021-09-16
 
 ### Added
-
 - `FormBuilder`: add `.namespace` method to allow local lookup of components (#54)
 - Add basic `ViewComponent::Form::Builder` that can be used in place of Rails' `ActionView::Helpers::FormBuilder` (#1)
 - Add all standard FormBuilder helpers provided by Rails, implemented as ViewComponents (#4)
