@@ -23,6 +23,18 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
   let(:component) { described_class.new(form, object_name, :first_name, options) }
 
+  describe "#tag_klass" do
+    subject { Class.new(ChildClass).tag_klass }
+
+    before do
+      stub_const("ChildClass", Class.new(described_class) do
+                                 self.tag_klass = ActionView::Helpers::Tags::TextField
+                               end)
+    end
+
+    it { is_expected.to be ActionView::Helpers::Tags::TextField }
+  end
+
   describe "#method_errors" do
     before { object.validate }
 
