@@ -3,7 +3,7 @@
 require_relative "../../fixtures/test_model"
 
 RSpec.describe ViewComponent::Form::Builder, type: :builder do
-  let(:object)  { TestModel.new }
+  let(:object)  { OpenStruct.new }
   let(:form)    { form_with(object) }
   let(:options) { {} }
 
