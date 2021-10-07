@@ -19,4 +19,20 @@ ActiveRecord::Schema.define do
     t.string :tag_list
     t.timestamps
   end
+
+  create_table(:continents, force: true) do |t|
+    t.string :name
+    t.timestamps
+  end
+
+  create_table(:countries, force: true) do |t|
+    t.string :name
+    t.belongs_to :continent
+    t.timestamps
+  end
+
+  create_table(:cities, force: true) do |t|
+    t.belongs_to :country
+    t.timestamps
+  end
 end

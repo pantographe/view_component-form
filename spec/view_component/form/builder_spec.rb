@@ -53,9 +53,27 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :file_field, :attached, { accept: "text/html" }
   it_behaves_like "the default form builder", :file_field, :image, { accept: "image/png,image/gif,image/jpeg" }
   it_behaves_like "the default form builder", :file_field, :file, { class: "file_input" }
-  skip "has an instance variable" do
+
+  context "with fields dependent on Continent" do
+    let(:object) { City.new(country: Country.find_by!(name: "Denmark")) }
+
+    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      Continent.create(name: "Africa")
+               .countries.tap {
+                _1.create(name: "South Africa")
+                _1.create(name: "Somalia")
+               }
+      Continent.create(name: "Europe")
+               .countries.tap {
+                _1.create(name: "Denmark")
+                _1.create(name: "Ireland")
+               }
+    end
+
+    after(:all) { Person.delete_all } # rubocop:disable RSpec/BeforeAfterAll
+
     it_behaves_like "the default form builder", :grouped_collection_select,
-                    [:country_id, @continents, :countries, :name, :id, :name]
+                    :country_id, Continent.all, :countries, :name, :id, :name
   end
 
   context "with values from the object" do
