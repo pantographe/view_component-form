@@ -24,14 +24,21 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :check_box, "validated"
   it_behaves_like "the default form builder", :check_box, "gooddog", {}, "yes", "no"
   it_behaves_like "the default form builder", :check_box, "accepted", { class: "eula_check" }, "yes", "no"
-  # rubocop:disable RSpec/RepeatedDescription
-  skip "uses an ActiveRecord relation" do # rubocop:disable RSpec/ExampleLength
+  context "with model-dependent fields" do
+    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      Author.create(name_with_initial: "Touma K.")
+      Author.create(name_with_initial: "Rintaro S.")
+      Author.create(name_with_initial: "Kento F.")
+    end
+
+    after(:all) { Author.delete_all } # rubocop:disable RSpec/BeforeAfterAll
+
     it_behaves_like "the default form builder", :collection_check_boxes, :author_ids, Author.all, :id,
                     :name_with_initial
-    it_behaves_like "the default form builder", :collection_radio_buttons,
-                    [:author_id, Author.all, :id, :name_with_initial]
-    it_behaves_like "the default form builder", :collection_select,
-                    [:person_id, Author.all, :id, :name_with_initial, { prompt: true }]
+    it_behaves_like "the default form builder", :collection_radio_buttons, :author_id, Author.all, :id,
+                    :name_with_initial
+    it_behaves_like "the default form builder", :collection_select, :person_id, Author.all, :id, :name_with_initial,
+                    { prompt: true }
   end
 
   it_behaves_like "the default form builder", :color_field, :favorite_color
@@ -51,10 +58,12 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
                     [:country_id, @continents, :countries, :name, :id, :name]
   end
 
-  skip "These would load the values from the model" do
-    it_behaves_like "the default form builder", :hidden_field, [:pass_confirm]
-    it_behaves_like "the default form builder", :hidden_field, [:tag_list]
-    it_behaves_like "the default form builder", :hidden_field, [:token]
+  context "with values from the object" do
+    let(:object) { HiddenFieldTest.new(pass_confirm: true, tag_list: "blog, ruby", token: "abcde") }
+
+    it_behaves_like "the default form builder", :hidden_field, :pass_confirm
+    it_behaves_like "the default form builder", :hidden_field, :tag_list
+    it_behaves_like "the default form builder", :hidden_field, :token
   end
 
   it_behaves_like "the default form builder", :label, :title
@@ -93,11 +102,17 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :radio_button, "receive_newsletter", "yes"
   it_behaves_like "the default form builder", :radio_button, "receive_newsletter", "no"
   it_behaves_like "the default form builder", :range_field, :age
-  skip "uses an ActiveRecord relation" do
-    # rubocop:enable RSpec/RepeatedDescription
-    it_behaves_like "the default form builder", :select, [:person_id, Person.all.collect do |p|
-                                                                        [p.name, p.id]
-                                                                      end, { include_blank: true }]
+
+  context "with fields dependent on Person" do
+    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      Person.create(name: "Touma")
+      Person.create(name: "Rintaro")
+      Person.create(name: "Kento")
+    end
+
+    after(:all) { Person.delete_all } # rubocop:disable RSpec/BeforeAfterAll
+
+    it_behaves_like "the default form builder", :select, [:person_id, Person.pluck(:name, :id), { include_blank: true }]
   end
 
   it_behaves_like "the default form builder", :submit

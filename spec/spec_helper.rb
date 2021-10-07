@@ -16,7 +16,7 @@ require "view_component/form"
 require "combustion"
 
 Combustion.path = "spec/internal"
-Combustion.initialize! :action_controller, :action_view, :action_text do
+Combustion.initialize! :action_controller, :action_view, :action_text, :active_record do
   config.logger = ActiveSupport::TaggedLogging.new(Logger.new(nil))
   config.log_level = :fatal
 end
