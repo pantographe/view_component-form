@@ -112,7 +112,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
     after(:all) { Person.delete_all } # rubocop:disable RSpec/BeforeAfterAll
 
-    it_behaves_like "the default form builder", :select, [:person_id, Person.pluck(:name, :id), { include_blank: true }]
+    it_behaves_like "the default form builder", :select, :person_id, Person.pluck(:name, :id), { include_blank: true }
   end
 
   it_behaves_like "the default form builder", :submit
