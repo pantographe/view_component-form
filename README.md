@@ -162,7 +162,7 @@ you the benefits of this gem.
 You'll most likely want to use either:
 
 - [`form_with`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
-  and supply a route as the endpoint, e.g. `form_for users_path do |f| ...`, or
+  and supply a route as the endpoint, e.g. `form_with url: users_path do |f| ...`, or
 - [`fields`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields),
   supplying a namespace if necessary. `fields do |f| ...` ought to work in the
   most basic case.
