@@ -35,7 +35,18 @@ module ViewComponent
         super
       end
 
-      (field_helpers - %i[label check_box radio_button fields_for fields hidden_field file_field]).each do |selector|
+      (field_helpers - %i[
+        check_box
+        datetime_field
+        datetime_local_field
+        fields
+        fields_for
+        file_field
+        hidden_field
+        label
+        phone_field
+        radio_button
+      ]).each do |selector|
         class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
           def #{selector}(method, options = {}) # def text_field(method, options = {})
             render_component(                   #   render_component(
@@ -47,11 +58,19 @@ module ViewComponent
           end                                   # end
         RUBY_EVAL
       end
+      alias phone_field telephone_field
 
       # See: https://github.com/rails/rails/blob/33d60cb02dcac26d037332410eabaeeb0bdc384c/actionview/lib/action_view/helpers/form_helper.rb#L2280
       def label(method, text = nil, options = {}, &block)
         render_component(:label, @object_name, method, text, objectify_options(options), &block)
       end
+
+      def datetime_field(method, options = {})
+        render_component(
+          :datetime_local_field, @object_name, method, objectify_options(options)
+        )
+      end
+      alias datetime_locale_field datetime_field
 
       def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
         render_component(
@@ -169,9 +188,9 @@ module ViewComponent
         )
       end
 
-      def time_zone_select(method, options = {}, html_options = {})
+      def time_zone_select(method, priority_zones = nil, options = {}, html_options = {})
         render_component(
-          :time_zone_select, @object_name, method,
+          :time_zone_select, @object_name, method, priority_zones,
           objectify_options(options), @default_html_options.merge(html_options)
         )
       end
