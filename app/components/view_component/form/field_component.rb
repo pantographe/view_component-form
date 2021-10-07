@@ -3,9 +3,8 @@
 module ViewComponent
   module Form
     class FieldComponent < BaseComponent
-      class << self
-        attr_accessor :tag_klass
-      end
+      class_attribute :tag_klass, instance_reader: false, instance_writer: false, instance_accessor: false,
+                                  instance_predicate: false
 
       attr_reader :method_name
 
