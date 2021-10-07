@@ -7,8 +7,8 @@ require "action_view"
 module ViewComponent
   module Form
     module TestHelpers
-      def form_with(object, options = {})
-        ViewComponent::Form::Builder.new(object_name, object, template, options)
+      def form_with(object, builder: ViewComponent::Form::Builder, **options)
+        builder.new(object_name, object, template, options)
       end
 
       def object_name
