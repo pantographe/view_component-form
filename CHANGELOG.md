@@ -9,10 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add missing component specs (#75)
 - Add missing builder specs for return values (#76)
-- Made tag_klass optional when inheriting from a component class (#87)
 
 ### Changed
 - Cross-documented Rails form helpers (#84)
+- Made tag_klass optional when inheriting from a component class (#87)
 
 ### Fixed
 - Fix `phone_field` helper (#74)
