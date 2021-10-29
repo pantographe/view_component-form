@@ -98,7 +98,7 @@ end
 You can change the default namespace and path:
 
 ```console
-bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace Forms::Components --path app/forms
+bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace Custom::Form --path app/forms
 
       create  app/forms/another_custom_form_builder.rb
 ```
@@ -107,22 +107,21 @@ bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace Forms::Compo
 # app/forms/another_custom_form_builder.rb
 class AnotherCustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  namespace Forms::Components
+  namespace Custom::Form
 end
 ```
 
-:warning: **Everything below this line describes the future usage and is subject to change. It does not work yet as the gem is still under heavy development.**
-
-Now let's generate your own components to customize the rendering.
+Now let's generate your own components to customize the rendering. We can use the standard view_component generator:
 
 ```console
-bin/rails generate vcf:component Form::TextField
+bin/rails generate component Custom::Form::TextField --inline --parent ViewComponent::Form::TextFieldComponent
 
       invoke  test_unit
-      create  test/components/form/text_field_component_test.rb
-      create  app/components/form/text_field_component.rb
-      create  app/components/form/text_field_component.html.erb
+      create  test/components/custom/form/text_field_component_test.rb
+      create  app/components/custom/form/text_field_component.rb
 ```
+
+:warning: The `--parent` option is available since ViewComponent [`v2.41.0`](https://viewcomponent.org/CHANGELOG.html#2410). If you're using a previous version, you can always edit the generated `Custom::Form::CustomTextFieldComponent` class to make it inherit from `ViewComponent::Form::TextFieldComponent`.
 
 Change your forms to use your new builder:
 
@@ -131,45 +130,44 @@ Change your forms to use your new builder:
 + <%= form_for @user, builder: CustomFormBuilder do |f| %>
 ```
 
-You can then customize the behavior of your `Form::TextFieldComponent`:
+You can then customize the behavior of your `Custom::Form::CustomTextFieldComponent`:
 
 ```rb
-# app/components/form/text_field_component.rb
+# app/components/custom/form/text_field_component.rb
 
-module Form
-  class TextFieldComponent < ViewComponent::Form::TextFieldComponent
-    def html_class
-      class_names("text-field", "border-error": method_errors?)
-    end
+class Admin::Form::TextFieldComponent < ViewComponent::Form::TextFieldComponent
+  self.tag_klass = ActionView::Helpers::Tags::TextField
+
+  def html_class
+    class_names("custom-text-field", "has-error": method_errors?)
   end
 end
 ```
 
-The generated form field with now have your class names:
+In this case we leverage the [`#class_names`](https://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-class_names) helper to:
+- always add the `custom-text-field` class;
+- add the `has-error` class if there is an error on the attribute (using `ViewComponent::Form::FieldComponent#method_errors?`).
+
+The rendered form field with now look like this:
 
 ```html
-<input class="text-field" type="text" value="John" name="user[first_name]" id="user_first_name">
+<input class="custom-text-field" type="text" value="John" name="user[first_name]" id="user_first_name">
 ```
+
+You can use the same approach to inject options, wrap the input in a `<div>`, etc.
+
+We'll add more use cases to the documentation soon.
 
 ### Using your form components without a backing model
 
-If you want to ensure that your fields display consistently across your app,
-you'll need to lean on Rails' own helpers. You may be used to using form tag
-helpers such as `text_field_tag` to generate tags, or even writing out plain
-HTML tags. These can't be integrated with a form builder, so they won't offer
-you the benefits of this gem.
+If you want to ensure that your fields display consistently across your app, you'll need to lean on Rails' own helpers. You may be used to using form tag helpers such as `text_field_tag` to generate tags, or even writing out plain HTML tags. These can't be integrated with a form builder, so they won't offer you the benefits of this gem.
 
 You'll most likely want to use either:
 
-- [`form_with`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
-  and supply a route as the endpoint, e.g. `form_with url: users_path do |f| ...`, or
-- [`fields`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields),
-  supplying a namespace if necessary. `fields do |f| ...` ought to work in the
-  most basic case.
+- [`form_with`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-form_with) and supply a route as the endpoint, e.g. `form_with url: users_path do |f| ...`, or
+- [`fields`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields), supplying a namespace if necessary. `fields do |f| ...` ought to work in the most basic case.
 
-[`fields_for`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for)
-may also be of interest. To make consistent use of `view_component-form`, you'll
-want to be using these three helpers to build your forms wherever possible.
+[`fields_for`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for) may also be of interest. To make consistent use of `view_component-form`, you'll want to be using these three helpers to build your forms wherever possible.
 
 ## Development
 
