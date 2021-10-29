@@ -111,7 +111,7 @@ class AnotherCustomFormBuilder < ViewComponent::Form::Builder
 end
 ```
 
-Now let's generate your own components to customize the rendering. We can use the standard view_component generator:
+Now let's generate your own components to customize their rendering. We can use the standard view_component generator:
 
 ```console
 bin/rails generate component Custom::Form::TextField --inline --parent ViewComponent::Form::TextFieldComponent
@@ -148,7 +148,7 @@ In this case we leverage the [`#class_names`](https://api.rubyonrails.org/classe
 - always add the `custom-text-field` class;
 - add the `has-error` class if there is an error on the attribute (using `ViewComponent::Form::FieldComponent#method_errors?`).
 
-The rendered form field with now look like this:
+The rendered form field will now look like this:
 
 ```html
 <input class="custom-text-field" type="text" value="John" name="user[first_name]" id="user_first_name">
