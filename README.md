@@ -91,14 +91,14 @@ This allows you to pick the namespace your components will be loaded from.
 # lib/custom_form_builder.rb
 class CustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  namespace Form
+  namespace Custom::Form
 end
 ```
 
-You can change the default namespace and path:
+Use the generator options to change the default namespace or the path where the file will be created:
 
 ```console
-bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace Custom::Form --path app/forms
+bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace AnotherCustom::Form --path app/forms
 
       create  app/forms/another_custom_form_builder.rb
 ```
@@ -107,7 +107,7 @@ bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace Custom::Form
 # app/forms/another_custom_form_builder.rb
 class AnotherCustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  namespace Custom::Form
+  namespace AnotherCustom::Form
 end
 ```
 
