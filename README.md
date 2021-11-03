@@ -136,8 +136,6 @@ You can then customize the behavior of your `Custom::Form::CustomTextFieldCompon
 # app/components/custom/form/text_field_component.rb
 
 class Admin::Form::TextFieldComponent < ViewComponent::Form::TextFieldComponent
-  self.tag_klass = ActionView::Helpers::Tags::TextField
-
   def html_class
     class_names("custom-text-field", "has-error": method_errors?)
   end
