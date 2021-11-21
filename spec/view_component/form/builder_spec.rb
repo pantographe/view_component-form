@@ -25,13 +25,11 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :check_box, "gooddog", {}, "yes", "no"
   it_behaves_like "the default form builder", :check_box, "accepted", { class: "eula_check" }, "yes", "no"
   context "with model-dependent fields" do
-    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+    before do
       Author.create(name_with_initial: "Touma K.")
       Author.create(name_with_initial: "Rintaro S.")
       Author.create(name_with_initial: "Kento F.")
     end
-
-    after(:all) { Author.delete_all } # rubocop:disable RSpec/BeforeAfterAll
 
     it_behaves_like "the default form builder", :collection_check_boxes, :author_ids, Author.all, :id,
                     :name_with_initial
@@ -57,7 +55,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   context "with fields dependent on Continent" do
     let(:object) { City.new(country: Country.find_by!(name: "Denmark")) }
 
-    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+    before do
       Continent.create(name: "Africa")
                .countries.tap do |countries|
                  countries.create(name: "South Africa")
@@ -69,8 +67,6 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
                  countries.create(name: "Ireland")
                end
     end
-
-    after(:all) { Person.delete_all } # rubocop:disable RSpec/BeforeAfterAll
 
     it_behaves_like "the default form builder", :grouped_collection_select,
                     :country_id, Continent.all, :countries, :name, :id, :name
@@ -122,13 +118,11 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :range_field, :age
 
   context "with fields dependent on Person" do
-    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+    before do
       Person.create(name: "Touma")
       Person.create(name: "Rintaro")
       Person.create(name: "Kento")
     end
-
-    after(:all) { Person.delete_all } # rubocop:disable RSpec/BeforeAfterAll
 
     it_behaves_like "the default form builder", :select, :person_id, Person.pluck(:name, :id), { include_blank: true }
   end
