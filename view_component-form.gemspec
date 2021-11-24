@@ -17,7 +17,8 @@ Gem::Specification.new do |spec|
     "homepage_uri" => spec.homepage,
     "changelog_uri" => "https://github.com/pantographe/view_component-form/blob/master/CHANGELOG.md",
     "source_code_uri" => spec.homepage,
-    "bug_tracker_uri" => "https://github.com/pantographe/view_component-form/issues"
+    "bug_tracker_uri" => "https://github.com/pantographe/view_component-form/issues",
+    "rubygems_mfa_required" => "true"
   }
 
   spec.files         = Dir["CHANGELOG.md", "LICENSE.txt", "README.md", "app/**/*", "lib/**/*"]
