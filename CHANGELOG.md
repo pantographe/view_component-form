@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add missing component specs (#75)
 - Add missing builder specs for return values (#76)
+- Add accurate test cases for all helpers from ActionView::Helpers::FormBuilder
+  documentation (#85)
 
 ### Changed
 - Cross-documented Rails form helpers (#84)

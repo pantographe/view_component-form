@@ -3,83 +3,140 @@
 require_relative "../../fixtures/test_model"
 
 RSpec.describe ViewComponent::Form::Builder, type: :builder do
-  let(:object)  { TestModel.new }
+  let(:object)  { OpenStruct.new }
   let(:form)    { form_with(object) }
   let(:options) { {} }
 
-  describe "standard helpers arguments" do
-    it { expect(form).to respond_to(:button).with(0..2).arguments }
-    it { expect(form).to respond_to(:check_box).with(1..4).arguments }
-    it { expect(form).to respond_to(:collection_check_boxes).with(4..6).arguments }
-    it { expect(form).to respond_to(:collection_radio_buttons).with(4..6).arguments }
-    it { expect(form).to respond_to(:collection_select).with(4..6).arguments }
-    it { expect(form).to respond_to(:color_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:date_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:date_select).with(1..3).arguments }
-    it { expect(form).to respond_to(:datetime_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:datetime_local_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:datetime_select).with(1..3).arguments }
-    it { expect(form).to respond_to(:email_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:file_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:grouped_collection_select).with(6..8).arguments }
-    it { expect(form).to respond_to(:hidden_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:label).with(1..3).arguments }
-    it { expect(form).to respond_to(:month_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:number_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:password_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:phone_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:radio_button).with(2..3).arguments }
-    it { expect(form).to respond_to(:range_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:search_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:select).with(1..4).arguments }
-    it { expect(form).to respond_to(:submit).with(0..2).arguments }
-    it { expect(form).to respond_to(:telephone_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:rich_text_area).with(1..2).arguments }
-    it { expect(form).to respond_to(:text_area).with(1..2).arguments }
-    it { expect(form).to respond_to(:text_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:time_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:time_select).with(1..3).arguments }
-    it { expect(form).to respond_to(:time_zone_select).with(1..3).arguments }
-    it { expect(form).to respond_to(:url_field).with(1..2).arguments }
-    it { expect(form).to respond_to(:week_field).with(1..2).arguments }
+  shared_examples "the default form builder" do |method_name, *args, rspec_around: lambda { |example|
+                                                                                     example.run
+                                                                                   }, **kwargs, &block|
+    around(&rspec_around)
+    subject { form.public_send(method_name, *args, **kwargs, &block) }
+
+    let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
+    let(:default_form_builder_output) { default_form_builder.public_send(method_name, *args, **kwargs, &block) }
+
+    context "when calling ##{method_name}" do
+      it { is_expected.to eq(default_form_builder_output) }
+    end
   end
 
-  describe "standard helpers return values" do
-    it { expect(form.button).to be_present }
-    it { expect(form.check_box(:foo)).to be_present }
-    it { expect(form.collection_check_boxes(:foo, [], :id, :name)).to be_present }
-    it { expect(form.collection_radio_buttons(:foo, [], :id, :name)).to be_present }
-    it { expect(form.collection_select(:foo, [], :id, :name)).to be_present }
-    it { expect(form.color_field(:foo)).to be_present }
-    it { expect(form.date_field(:foo)).to be_present }
-    it { expect(form.date_select(:foo)).to be_present }
-    it { expect(form.datetime_field(:foo)).to be_present }
-    it { expect(form.datetime_local_field(:foo)).to be_present }
-    it { expect(form.datetime_select(:foo)).to be_present }
-    it { expect(form.email_field(:foo)).to be_present }
-    it { expect(form.file_field(:foo)).to be_present }
-    it { expect(form.grouped_collection_select(:foo, [], :id, :name, :id, :name)).to be_present }
-    it { expect(form.hidden_field(:foo)).to be_present }
-    it { expect(form.label(:foo)).to be_present }
-    it { expect(form.month_field(:foo)).to be_present }
-    it { expect(form.number_field(:foo)).to be_present }
-    it { expect(form.password_field(:foo)).to be_present }
-    it { expect(form.phone_field(:foo)).to be_present }
-    it { expect(form.radio_button(:foo, 1)).to be_present }
-    it { expect(form.range_field(:foo)).to be_present }
-    it { expect(form.search_field(:foo)).to be_present }
-    it { expect(form.select(:foo, [])).to be_present }
-    it { expect(form.submit).to be_present }
-    it { expect(form.telephone_field(:foo)).to be_present }
-    # TODO: fix undefined method `rich_text_area_tag' for #<ActionView::Base>
-    # it { expect(form.rich_text_area(:foo)).to be_present }
-    it { expect(form.text_area(:foo)).to be_present }
-    it { expect(form.text_field(:foo)).to be_present }
-    it { expect(form.time_field(:foo)).to be_present }
-    it { expect(form.time_select(:foo)).to be_present }
-    it { expect(form.time_zone_select(:foo)).to be_present }
-    it { expect(form.url_field(:foo)).to be_present }
-    it { expect(form.week_field(:foo)).to be_present }
+  it_behaves_like "the default form builder", :check_box, "validated"
+  it_behaves_like "the default form builder", :check_box, "gooddog", {}, "yes", "no"
+  it_behaves_like "the default form builder", :check_box, "accepted", { class: "eula_check" }, "yes", "no"
+  context "with model-dependent fields" do
+    before do
+      Author.create(name_with_initial: "Touma K.")
+      Author.create(name_with_initial: "Rintaro S.")
+      Author.create(name_with_initial: "Kento F.")
+    end
+
+    it_behaves_like "the default form builder", :collection_check_boxes, :author_ids, Author.all, :id,
+                    :name_with_initial
+    it_behaves_like "the default form builder", :collection_radio_buttons, :author_id, Author.all, :id,
+                    :name_with_initial
+    it_behaves_like "the default form builder", :collection_select, :person_id, Author.all, :id, :name_with_initial,
+                    { prompt: true }
+  end
+
+  it_behaves_like "the default form builder", :color_field, :favorite_color
+  it_behaves_like "the default form builder", :date_field, :born_on
+  it_behaves_like "the default form builder", :date_select, :birth_date
+  it_behaves_like "the default form builder", :datetime_field, :graduation_day
+  it_behaves_like "the default form builder", :datetime_local_field, :graduation_day
+  it_behaves_like "the default form builder", :datetime_select, :last_request_at
+  it_behaves_like "the default form builder", :email_field, :address
+  it_behaves_like "the default form builder", :file_field, :avatar
+  it_behaves_like "the default form builder", :file_field, :image, { multiple: true }
+  it_behaves_like "the default form builder", :file_field, :attached, { accept: "text/html" }
+  it_behaves_like "the default form builder", :file_field, :image, { accept: "image/png,image/gif,image/jpeg" }
+  it_behaves_like "the default form builder", :file_field, :file, { class: "file_input" }
+
+  context "with fields dependent on Continent" do
+    let(:object) { City.new(country: Country.find_by!(name: "Denmark")) }
+
+    before do
+      Continent.create(name: "Africa")
+               .countries.tap do |countries|
+                 countries.create(name: "South Africa")
+                 countries.create(name: "Somalia")
+               end
+      Continent.create(name: "Europe")
+               .countries.tap do |countries|
+                 countries.create(name: "Denmark")
+                 countries.create(name: "Ireland")
+               end
+    end
+
+    it_behaves_like "the default form builder", :grouped_collection_select,
+                    :country_id, Continent.all, :countries, :name, :id, :name
+  end
+
+  context "with values from the object" do
+    let(:object) { HiddenFieldTest.new(pass_confirm: true, tag_list: "blog, ruby", token: "abcde") }
+
+    it_behaves_like "the default form builder", :hidden_field, :pass_confirm
+    it_behaves_like "the default form builder", :hidden_field, :tag_list
+    it_behaves_like "the default form builder", :hidden_field, :token
+  end
+
+  it_behaves_like "the default form builder", :label, :title
+  it_behaves_like "the default form builder", :label, :body
+  skip "This would demonstrate translations via i18n.yml" do
+    it_behaves_like "the default form builder", :label, :cost
+  end
+
+  it_behaves_like "the default form builder", :label, :title, "A short title"
+  it_behaves_like "the default form builder", :label, :privacy, "Public Post", value: "public"
+
+  # rubocop:disable RSpec/ExampleLength
+  skip "These helpers also take blocks" do
+    it_behaves_like("the default form builder", :label, [:cost]) do |translation|
+      content_tag(:span, translation, class: "cost_label")
+    end
+    it_behaves_like("the default form builder", :label, [:cost]) do |builder|
+      content_tag(:span, builder, class: "cost_label")
+    end
+    it_behaves_like("the default form builder", :label, [:cost]) do |builder|
+      content_tag(:span, builder.translation, class: [
+                    "cost_label",
+                    ("error_label" if builder.object.errors.include?(:cost))
+                  ])
+    end
+    it_behaves_like("the default form builder", :label, [:terms]) { raw('Accept <a href="/terms">Terms</a>.') }
+  end
+  # rubocop:enable RSpec/ExampleLength
+
+  it_behaves_like "the default form builder", :month_field, :birthday_month
+  it_behaves_like "the default form builder", :number_field, :age
+  it_behaves_like "the default form builder", :password_field, :password
+  it_behaves_like "the default form builder", :phone_field, :phone
+  it_behaves_like "the default form builder", :radio_button, "category", "rails"
+  it_behaves_like "the default form builder", :radio_button, "category", "java"
+  it_behaves_like "the default form builder", :radio_button, "receive_newsletter", "yes"
+  it_behaves_like "the default form builder", :radio_button, "receive_newsletter", "no"
+  it_behaves_like "the default form builder", :range_field, :age
+
+  context "with fields dependent on Person" do
+    before do
+      Person.create(name: "Touma")
+      Person.create(name: "Rintaro")
+      Person.create(name: "Kento")
+    end
+
+    it_behaves_like "the default form builder", :select, :person_id, Person.pluck(:name, :id), { include_blank: true }
+  end
+
+  it_behaves_like "the default form builder", :submit
+  it_behaves_like "the default form builder", :text_area, :detail
+  it_behaves_like "the default form builder", :text_field, :name
+  it_behaves_like "the default form builder", :time_field, :born_at
+  it_behaves_like "the default form builder", :time_select, :average_lap
+  it_behaves_like "the default form builder", :time_zone_select, :time_zone, nil, { include_blank: true }
+  it_behaves_like "the default form builder", :url_field, :homepage
+  it_behaves_like "the default form builder", :week_field, :birthday_week
+  if Rails::VERSION::MAJOR >= 7
+    it_behaves_like "the default form builder", :weekday_select, :weekday, { include_blank: true }
   end
 
   describe "#component_klass" do

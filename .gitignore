@@ -5,6 +5,9 @@
 /doc/
 /pkg/
 /spec/reports/
+/spec/internal/log
+/spec/internal/public
+/spec/internal/db/combustion_test.sqlite
 /tmp/
 
 # appraisal
