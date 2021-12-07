@@ -14,8 +14,8 @@ module ViewComponent
 
       attr_reader :form, :object_name, :options
 
-      delegate :object, to: :form
-      delegate :errors, to: :object, prefix: true
+      delegate :object, to: :form, allow_nil: true
+      delegate :errors, to: :object, prefix: true, allow_nil: true
 
       def initialize(form, object_name, options = {})
         @form = form
@@ -28,6 +28,8 @@ module ViewComponent
       end
 
       def object_errors?
+        return false unless object
+
         object.errors.any?
       end
 

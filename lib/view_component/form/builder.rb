@@ -107,18 +107,6 @@ module ViewComponent
         render_component(:button, value, options, &block)
       end
 
-      # SELECTORS.each do |selector|
-      #   class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
-      #     def #{selector}(*args)
-      #       render_component(
-      #         :#{selector},
-      #         *args,
-      #         super,
-      #       )
-      #     end
-      #   RUBY_EVAL
-      # end
-
       # See: https://github.com/rails/rails/blob/fe76a95b0d252a2d7c25e69498b720c96b243ea2/actionview/lib/action_view/helpers/form_options_helper.rb
       def select(method, choices = nil, options = {}, html_options = {}, &block)
         render_component(

@@ -24,10 +24,10 @@ RSpec.describe ViewComponent::Form::BaseComponent, type: :component do
   let(:component) { described_class.new(form, object_name, options) }
 
   describe "#object_errors?" do
-    before { object.validate }
-
     context "with valid object" do
       let(:object) { object_klass.new(first_name: "John") }
+
+      before { object.validate }
 
       it { expect(component.object_errors?).to eq(false) }
     end
@@ -35,7 +35,15 @@ RSpec.describe ViewComponent::Form::BaseComponent, type: :component do
     context "with invalid object" do
       let(:object) { object_klass.new(first_name: "") }
 
+      before { object.validate }
+
       it { expect(component.object_errors?).to eq(true) }
+    end
+
+    context "without object" do
+      let(:object) { nil }
+
+      it { expect(component.object_errors?).to eq(false) }
     end
   end
 end
