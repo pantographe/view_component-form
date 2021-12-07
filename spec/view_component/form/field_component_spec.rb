@@ -36,10 +36,10 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
   end
 
   describe "#method_errors" do
-    before { object.validate }
-
     context "with valid object" do
       let(:object) { object_klass.new(first_name: "John") }
+
+      before { object.validate }
 
       it { expect(component.method_errors).to eq([]) }
     end
@@ -47,15 +47,23 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     context "with invalid object" do
       let(:object) { object_klass.new(first_name: "") }
 
+      before { object.validate }
+
       it { expect(component.method_errors).to eq(["Can't be blank", "Is too short (minimum is 2 characters)"]) }
+    end
+
+    context "without object" do
+      let(:object) { nil }
+
+      it { expect(component.method_errors).to eq([]) }
     end
   end
 
   describe "#method_errors?" do
-    before { object.validate }
-
     context "with valid object" do
       let(:object) { object_klass.new(first_name: "John") }
+
+      before { object.validate }
 
       it { expect(component.method_errors?).to eq(false) }
     end
@@ -63,7 +71,15 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     context "with invalid object" do
       let(:object) { object_klass.new(first_name: "") }
 
+      before { object.validate }
+
       it { expect(component.method_errors?).to eq(true) }
+    end
+
+    context "without object" do
+      let(:object) { nil }
+
+      it { expect(component.method_errors?).to eq(false) }
     end
   end
 

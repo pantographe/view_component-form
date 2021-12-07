@@ -32,10 +32,14 @@ module ViewComponent
 
       if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("6.1")
         def method_errors?
+          return false unless object_errors
+
           (object_errors.attribute_names & object_method_names).any?
         end
       else
         def method_errors?
+          return false unless object_errors
+
           (object_errors.keys & object_method_names).any?
         end
       end
