@@ -5,7 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+Nothing yet
 
+## [0.1.2] - 2021-12-07
 ### Added
 - Add missing component specs (#75)
 - Add missing builder specs for return values (#76)
@@ -15,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Cross-documented Rails form helpers (#84)
 - Made tag_klass optional when inheriting from a component class (#87)
+- Improve README: generator, html_class example (#88)
+- Make rails version condition used the same way (#92)
 - Add rails 7.0 and make rails head works (#94)
 - Allow `Base` and `FieldComponent` to support forms without objects (#95)
 
@@ -22,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix `phone_field` helper (#74)
 - Fix `datetime_local_field` helper (#76)
 - Fix `time_zone_select` helper (#76)
+- Resolve Rails 6.1 deprecation on ActiveModel::Errors#keys call (#91)
 
 ## [0.1.1] - 2021-09-27
 
@@ -41,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add CHANGELOG (#50)
 - Add CI (#2)
 
-[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/pantographe/view_component-form/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/pantographe/view_component-form/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/pantographe/view_component-form/releases/tag/v0.1.0
