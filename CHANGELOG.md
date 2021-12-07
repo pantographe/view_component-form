@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Cross-documented Rails form helpers (#84)
 - Made tag_klass optional when inheriting from a component class (#87)
+- Add rails 7.0 and make rails head works (#94)
 
 ### Fixed
 - Fix `phone_field` helper (#74)
