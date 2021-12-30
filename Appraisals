@@ -9,7 +9,7 @@ appraise "rails-6.1.x" do
 end
 
 appraise "rails-7.0.x" do
-  gem "rails", "~> 7.0.0.rc1"
+  gem "rails", "~> 7.0.0"
 end
 
 appraise "rails-head" do
