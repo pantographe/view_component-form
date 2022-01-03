@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     view_component-form (0.1.2)
-      actionview (>= 6.0.0, < 7.0)
-      activesupport (>= 6.0.0, < 7.0)
+      actionview (>= 6.0.0, < 7.1)
+      activesupport (>= 6.0.0, < 7.1)
       view_component (>= 2.34.0, < 3.0)
 
 GEM
@@ -112,10 +112,6 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
-      racc (~> 1.4)
-    nokogiri (1.12.5-x86_64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     parallel (1.21.0)
     parser (3.0.2.0)
@@ -246,4 +242,4 @@ DEPENDENCIES
   view_component-form!
 
 BUNDLED WITH
-   2.2.27
+   2.2.30
