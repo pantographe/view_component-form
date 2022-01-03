@@ -49,6 +49,9 @@ Then call your helpers as usual:
 
   <%= f.label :password %>          <%# renders a ViewComponent::Form::LabelComponent %>
   <%= f.password_field :password %> <%# renders a ViewComponent::Form::PasswordFieldComponent %>
+  <%= f.hint :password, 'The password should be at least 8 characters long' %>
+                                    <%# renders a ViewComponent::Form::HintComponent %>
+  <%= f.error_message :password %>  <%# renders a ViewComponent::Form::ErrorMessageComponent %>
 <% end %>
 ```
 
@@ -70,6 +73,7 @@ It should work out of the box, but does nothing particularly interesting for now
 
   <label for="user_password">Password</label>
   <input type="password" name="user[password]" id="user_password" />
+  <div>The password should be at least 8 characters long</div>
 </form>
 ```
 
