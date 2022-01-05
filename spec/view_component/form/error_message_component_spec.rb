@@ -36,11 +36,11 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
   end
 
   context "with invalid object" do
+    let(:object) { object_klass.new(first_name: "") }
+
+    before { object.validate }
+
     context "with simple args" do
-      let(:object) { object_klass.new(first_name: "") }
-
-      before { object.validate }
-
       it { expect(subject.method_errors).to eq(["Can't be blank", "Is too short (minimum is 2 characters)"]) }
       it { expect(subject.render?).to be true }
       it do
@@ -49,7 +49,6 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
         HTML
       end
     end
-
 
     include_examples "component with custom html classes"
     include_examples "component with custom data attributes"
