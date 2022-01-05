@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe ViewComponent::Form::HintComponent, type: :component do
-  subject { described_class.new(form, object_name, :birth_date, 'this is my hint for you', options) }
+  subject { described_class.new(form, object_name, :birth_date, "this is my hint for you", options) }
 
   let(:object)  { OpenStruct.new }
   let(:form)    { form_with(object) }

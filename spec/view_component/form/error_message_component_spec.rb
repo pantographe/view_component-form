@@ -43,6 +43,7 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
     context "with simple args" do
       it { expect(subject.method_errors).to eq(["Can't be blank", "Is too short (minimum is 2 characters)"]) }
       it { expect(subject.render?).to be true }
+
       it do
         expect(component).to eq_html <<~HTML
           <div>Can't be blank<br>Is too short (minimum is 2 characters)</div>
