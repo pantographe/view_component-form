@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 Nothing yet
 
+## [0.1.3] - 2022-01-11
+### Fixed
+- Update dependencies for Rails 7.0.0 (#96)
+- Bump to Rails 7 in Gemfile.lock (#99)
+
 ## [0.1.2] - 2021-12-07
 ### Added
 - Add missing component specs (#75)
@@ -46,7 +51,8 @@ Nothing yet
 - Add CHANGELOG (#50)
 - Add CI (#2)
 
-[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.1.3...HEAD
+[0.1.3]: https://github.com/pantographe/view_component-form/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/pantographe/view_component-form/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/pantographe/view_component-form/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/pantographe/view_component-form/releases/tag/v0.1.0
