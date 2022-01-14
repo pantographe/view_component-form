@@ -28,7 +28,7 @@ module ViewComponent
 
         content_or_options = content || attribute_content if content.present? || attribute_content.present?
 
-        tag.public_send(self.class.tag, content_or_options, options)
+        tag.public_send(self.class.tag, content_or_options, **options)
       end
 
       def render?

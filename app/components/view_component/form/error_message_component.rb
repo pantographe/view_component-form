@@ -9,7 +9,7 @@ module ViewComponent
       self.tag = :div
 
       def call
-        tag.public_send(self.class.tag, messages, options)
+        tag.public_send(self.class.tag, messages, **options)
       end
 
       def render?
