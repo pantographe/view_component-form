@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
-  subject { described_class.new(form, object_name, :first_name, options) }
+  subject(:component) { described_class.new(form, object_name, :first_name, options) }
 
   let(:object_klass) do
     Class.new do
@@ -23,16 +23,16 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
   let(:form)    { form_with(object) }
   let(:options) { {} }
 
-  let(:component) { render_inline(subject) }
-  let(:component_html_attributes) { component.css("div").first.attributes }
+  let(:rendered_component) { render_inline(component) }
+  let(:component_html_attributes) { rendered_component.css("div").first.attributes }
 
   context "with valid object" do
     let(:object) { object_klass.new(first_name: "John") }
 
     before { object.validate }
 
-    it { expect(subject.method_errors).to eq([]) }
-    it { expect(subject.render?).to be false }
+    it { expect(component.method_errors).to eq([]) }
+    it { expect(component.render?).to be false }
   end
 
   context "with invalid object" do
@@ -41,11 +41,11 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
     before { object.validate }
 
     context "with simple args" do
-      it { expect(subject.method_errors).to eq(["Can't be blank", "Is too short (minimum is 2 characters)"]) }
-      it { expect(subject.render?).to be true }
+      it { expect(component.method_errors).to eq(["Can't be blank", "Is too short (minimum is 2 characters)"]) }
+      it { expect(component.render?).to be true }
 
       it do
-        expect(component).to eq_html <<~HTML
+        expect(rendered_component).to eq_html <<~HTML
           <div>Can't be blank<br>Is too short (minimum is 2 characters)</div>
         HTML
       end
