@@ -24,9 +24,7 @@ module ViewComponent
       end
 
       def call
-        content_or_options = nil
-
-        content_or_options = content || attribute_content if content.present? || attribute_content.present?
+        content_or_options = content.presence || attribute_content.presence
 
         tag.public_send(self.class.tag, content_or_options, **options)
       end
