@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
-  subject(:component) { described_class.new(form, object_name, :first_name, options) }
+  subject(:rendered_component) { render_inline(component) }
+  let(:component) { described_class.new(form, object_name, :first_name, options) }
 
   let(:object_klass) do
     Class.new do
@@ -22,8 +23,6 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
   let(:object)  { object_klass.new }
   let(:form)    { form_with(object) }
   let(:options) { {} }
-
-  let(:rendered_component) { render_inline(component) }
   let(:component_html_attributes) { rendered_component.css("div").first.attributes }
 
   context "with valid object" do
