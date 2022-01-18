@@ -48,7 +48,7 @@ Then call your helpers as usual:
   <%= f.email_field :email %>       <%# renders a ViewComponent::Form::EmailFieldComponent %>
 
   <%= f.label :password %>          <%# renders a ViewComponent::Form::LabelComponent %>
-  <%= f.password_field :password, aria: { describedby: f.field_id(: password, :description) } %>
+  <%= f.password_field :password, aria: { describedby: f.field_id(:password, :description) } %>
                                     <%# renders a ViewComponent::Form::PasswordFieldComponent %>
                                     <%# Note: #field_id only supported on Rails 7 %>
   <div id="<%= f.field_id(:title, :description) %>">
