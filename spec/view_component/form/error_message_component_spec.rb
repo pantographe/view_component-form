@@ -26,12 +26,12 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
   let(:component_html_attributes) { rendered_component.css("div").first.attributes }
 
   context "with valid object" do
+    subject { component }
     let(:object) { object_klass.new(first_name: "John") }
 
     before { object.validate }
 
-    it { expect(component.method_errors).to eq([]) }
-    it { expect(component.render?).to be false }
+    it { is_expected.to have_attributes(method_errors: [], render?: false) }
   end
 
   context "with invalid object" do
