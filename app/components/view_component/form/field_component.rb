@@ -68,6 +68,26 @@ module ViewComponent
         content
       end
 
+      def optional?
+        return nil if object.nil?
+
+        !required?
+      end
+
+      def required?
+        return nil if object.nil?
+
+        validators.any? do |v|
+          v.is_a? ActiveRecord::Validations::PresenceValidator
+        end
+      end
+
+      def validators
+        return [] if object.nil?
+
+        object.class.validators_on(method_name)
+      end
+
       private
 
       def singular_association_method_name
