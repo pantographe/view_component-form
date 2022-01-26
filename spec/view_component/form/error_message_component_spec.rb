@@ -2,6 +2,7 @@
 
 RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
   subject(:rendered_component) { render_inline(component) }
+
   let(:component) { described_class.new(form, object_name, :first_name, options) }
 
   let(:object_klass) do
@@ -27,6 +28,7 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
 
   context "with valid object" do
     subject { component }
+
     let(:object) { object_klass.new(first_name: "John") }
 
     before { object.validate }
