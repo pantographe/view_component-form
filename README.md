@@ -48,7 +48,14 @@ Then call your helpers as usual:
   <%= f.email_field :email %>       <%# renders a ViewComponent::Form::EmailFieldComponent %>
 
   <%= f.label :password %>          <%# renders a ViewComponent::Form::LabelComponent %>
-  <%= f.password_field :password %> <%# renders a ViewComponent::Form::PasswordFieldComponent %>
+  <%= f.password_field :password, aria: { describedby: f.field_id(:password, :description) } %>
+                                    <%# renders a ViewComponent::Form::PasswordFieldComponent %>
+                                    <%# Note: #field_id only supported on Rails 7 %>
+  <div id="<%= f.field_id(:title, :description) %>">
+    <%= f.hint :password, 'The password should be at least 8 characters long' %>
+                                      <%# renders a ViewComponent::Form::HintComponent %>
+    <%= f.error_message :password %>  <%# renders a ViewComponent::Form::ErrorMessageComponent %>
+  </div>
 <% end %>
 ```
 
@@ -69,7 +76,10 @@ It should work out of the box, but does nothing particularly interesting for now
   <input type="email" value="john.doe@example.com" name="user[email]" id="user_email" />
 
   <label for="user_password">Password</label>
-  <input type="password" name="user[password]" id="user_password" />
+  <input type="password" name="user[password]" id="user_password" aria-describedby="user_password_description" />
+  <div id="user_password_description">
+    <div>The password should be at least 8 characters long</div>
+  </div>
 </form>
 ```
 
