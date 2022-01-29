@@ -77,9 +77,7 @@ module ViewComponent
       def required?
         return nil if object.nil?
 
-        validators.any? do |v|
-          v.is_a? ActiveRecord::Validations::PresenceValidator
-        end
+        validators.any?(ActiveRecord::Validations::PresenceValidator)
       end
 
       def validators
