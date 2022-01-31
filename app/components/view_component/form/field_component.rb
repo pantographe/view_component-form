@@ -68,22 +68,20 @@ module ViewComponent
         content
       end
 
-      def optional?
+      def optional?(context: nil)
         return nil if object.nil?
 
-        !required?
+        !required?(context: context)
       end
 
-      def required?
+      def required?(context: nil)
         return nil if object.nil?
 
-        validators.any?(ActiveModel::Validations::PresenceValidator)
+        validators(context: context).any?(ActiveModel::Validations::PresenceValidator)
       end
 
-      def validators
-        return [] if object.nil?
-
-        object.class.validators_on(method_name)
+      def validators(context: nil)
+        method_validators.select { |validator| validator.options[:on] == context&.to_sym }
       end
 
       private
@@ -94,6 +92,14 @@ module ViewComponent
 
       def collection_association_method_name
         @collection_association_method_name ||= method_name.to_s.sub(/_ids$/, "").pluralize.to_sym
+      end
+
+      def method_validators
+        @method_validators ||= if object.nil?
+                                 []
+                               else
+                                 object.class.validators_on(method_name)
+                               end
       end
     end
   end
