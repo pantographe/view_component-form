@@ -5,7 +5,7 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     Class.new do
       include ActiveModel::Model
 
-      attr_accessor :first_name
+      attr_accessor :first_name, :last_name
 
       validates :first_name, presence: true, length: { minimum: 2 }
 
@@ -17,11 +17,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     end
   end
 
-  let(:object)  { object_klass.new }
-  let(:form)    { form_with(object) }
-  let(:options) { {} }
+  let(:object)      { object_klass.new }
+  let(:form)        { form_with(object) }
+  let(:method_name) { :first_name }
+  let(:options)     { {} }
 
-  let(:component) { described_class.new(form, object_name, :first_name, options) }
+  let(:component) { described_class.new(form, object_name, method_name, options) }
 
   describe "#tag_klass" do
     subject { Class.new(ChildClass).tag_klass }
@@ -108,5 +109,44 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       it { expect(component.label_text).to eq("Your first name") }
     end
+  end
+
+  describe "#optional?" do
+    let(:object) { object_klass.new(first_name: "John", last_name: "Doe") }
+
+    context "with required method name" do
+      let(:method_name) { :first_name }
+
+      it { expect(component.optional?).to eq(false) }
+    end
+
+    context "with optional method name" do
+      let(:method_name) { :last_name }
+
+      it { expect(component.optional?).to eq(true) }
+    end
+  end
+
+  describe "#required?" do
+    let(:object) { object_klass.new(first_name: "John", last_name: "Doe") }
+
+    context "with required method name" do
+      let(:method_name) { :first_name }
+
+      it { expect(component.required?).to eq(true) }
+    end
+
+    context "with optional method name" do
+      let(:method_name) { :last_name }
+
+      it { expect(component.required?).to eq(false) }
+    end
+  end
+
+  describe "#validators" do
+    let(:object) { object_klass.new(first_name: "John", last_name: "Doe") }
+
+    it { expect(component.validators.first).to be_a(ActiveModel::Validations::PresenceValidator) }
+    it { expect(component.validators.last).to be_a(ActiveModel::Validations::LengthValidator) }
   end
 end
