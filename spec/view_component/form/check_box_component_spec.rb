@@ -9,10 +9,11 @@ RSpec.describe ViewComponent::Form::CheckBoxComponent, type: :component do
   let(:component_html_attributes) { component.css("input").last.attributes }
 
   context "with simple args" do
+    it { expect(component.to_html).to have_tag("input", with: { type: "hidden", value: "0", name: "user[admin]" }) }
+
     it do
-      expect(component).to eq_html <<~HTML
-        <input name="user[admin]" type="hidden" value="0"><input type="checkbox" value="1" name="user[admin]" id="user_admin">
-      HTML
+      expect(component.to_html)
+        .to have_tag("input", with: { type: "checkbox", value: "1", name: "user[admin]", id: "user_admin" })
     end
   end
 

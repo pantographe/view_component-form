@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+VERSION=$1
+
+if [[ -z "$VERSION" ]]; then
+  echo "Version should be specified. Example: bin/release v1.0.0"
+  exit 1
+fi
+
+printf "# frozen_string_literal: true\n\nmodule ViewComponent\n  module Form\n    VERSION = \"$VERSION\"\n  end\nend\n" > ./lib/view_component/form/version.rb
+bundle
+$EDITOR CHANGELOG.md
+git add Gemfile.lock lib/view_component/form/version.rb CHANGELOG.md
+git commit -m "Bump version for $VERSION"
+
+read -p "Are you sure you want to publish this release? " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
+fi
+
+git push
+git tag v$VERSION
+git push --tags
+gem build view_component-form.gemspec
+gem push "view_component-form-$VERSION.gem" --host https://rubygems.org
+rm "view_component-form-$VERSION.gem"

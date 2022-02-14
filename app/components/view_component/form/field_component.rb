@@ -3,9 +3,8 @@
 module ViewComponent
   module Form
     class FieldComponent < BaseComponent
-      class << self
-        attr_accessor :tag_klass
-      end
+      class_attribute :tag_klass, instance_reader: false, instance_writer: false, instance_accessor: false,
+                                  instance_predicate: false
 
       attr_reader :method_name
 
@@ -31,8 +30,18 @@ module ViewComponent
                                         .map(&:upcase_first)
       end
 
-      def method_errors?
-        (object_errors.keys & object_method_names).any?
+      if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("6.1")
+        def method_errors?
+          return false unless object_errors
+
+          (object_errors.attribute_names & object_method_names).any?
+        end
+      else
+        def method_errors?
+          return false unless object_errors
+
+          (object_errors.keys & object_method_names).any?
+        end
       end
 
       def value
@@ -41,7 +50,7 @@ module ViewComponent
 
       def object_method_names
         @object_method_names ||= begin
-          object_method_names = [method_name]
+          object_method_names = [method_name.to_sym]
           if method_name.end_with?("_id") && object.respond_to?(singular_association_method_name)
             object_method_names << singular_association_method_name
           elsif method_name.end_with?("_ids") && object.respond_to?(collection_association_method_name)

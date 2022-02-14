@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Backport of https://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-class_names
+# :nocov:
 module ViewComponent
   module Form
     module ClassNamesHelper
@@ -35,3 +36,4 @@ module ViewComponent
     end
   end
 end
+# :nocov:

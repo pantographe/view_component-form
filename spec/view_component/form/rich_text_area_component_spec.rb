@@ -9,13 +9,11 @@ RSpec.describe ViewComponent::Form::RichTextAreaComponent, type: :component do
   let(:component_html_attributes) { component.css("trix-editor").first.attributes }
 
   context "with simple args" do
-    it do # rubocop:disable RSpec/ExampleLength
-      expect(component.to_html).to start_with(
-        "<input type=\"hidden\" name=\"user[bio]\" id=\"trix_input_1\">" \
-        "<trix-editor id=\"user_bio\" input=\"trix_input_1\" class=\"trix-content\" " \
-        "data-direct-upload-url=\"http://test.host/rails/active_storage/direct_uploads\" " \
-        "data-blob-url-template=\"http://test.host/rails/active_storage/blobs/"
-      )
+    it "has a hidden field", :aggregate_failures do
+      expect(component.to_html).to have_tag("input",
+                                            with: { type: "hidden", id: "trix_input_1", name: "user[bio]" })
+      expect(component.to_html).to have_tag("trix-editor",
+                                            with: { id: "user_bio", input: "trix_input_1", class: "trix-content" })
     end
   end
 

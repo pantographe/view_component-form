@@ -17,7 +17,8 @@ Gem::Specification.new do |spec|
     "homepage_uri" => spec.homepage,
     "changelog_uri" => "https://github.com/pantographe/view_component-form/blob/master/CHANGELOG.md",
     "source_code_uri" => spec.homepage,
-    "bug_tracker_uri" => "https://github.com/pantographe/view_component-form/issues"
+    "bug_tracker_uri" => "https://github.com/pantographe/view_component-form/issues",
+    "rubygems_mfa_required" => "true"
   }
 
   spec.files         = Dir["CHANGELOG.md", "LICENSE.txt", "README.md", "app/**/*", "lib/**/*"]
@@ -25,7 +26,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
 
-  spec.add_dependency "actionview", [">= 6.0.0", "< 7.0"]
-  spec.add_dependency "activesupport", [">= 6.0.0", "< 7.0"]
+  spec.add_dependency "actionview", [">= 6.0.0", "< 7.1"]
+  spec.add_dependency "activesupport", [">= 6.0.0", "< 7.1"]
   spec.add_dependency "view_component", [">= 2.34.0", "< 3.0"]
 end

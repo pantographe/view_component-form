@@ -7,20 +7,24 @@ require "action_view"
 module ViewComponent
   module Form
     module TestHelpers
-      def form_with(object, options = {})
-        ViewComponent::Form::Builder.new(object_name, object, template, options)
+      def form_with(object, builder: ViewComponent::Form::Builder, **options)
+        builder.new(object_name, object, template, options)
       end
 
       def object_name
         :user
       end
 
-      def template
-        lookup_context = ActionView::LookupContext.new(ActionController::Base.view_paths)
+      if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("6.1")
+        def template
+          lookup_context = ActionView::LookupContext.new(ActionController::Base.view_paths)
 
-        if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("6.1")
           ActionView::Base.new(lookup_context, {}, ApplicationController.new)
-        else
+        end
+      else
+        def template
+          lookup_context = ActionView::LookupContext.new(ActionController::Base.view_paths)
+
           ActionView::Base.new(lookup_context, {})
         end
       end

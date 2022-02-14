@@ -9,13 +9,44 @@ module ViewComponent
 
       class NotImplementedComponentError < Error; end
 
+      class NamespaceAlreadyAddedError < Error; end
+
+      class_attribute :lookup_namespaces, default: [ViewComponent::Form]
+
       class << self
-        attr_accessor :components_namespace
+        def inherited(base)
+          base.lookup_namespaces = lookup_namespaces.dup
+
+          super
+        end
+
+        def namespace(namespace)
+          if lookup_namespaces.include?(namespace)
+            raise NamespaceAlreadyAddedError, "The component namespace '#{namespace}' is already added"
+          end
+
+          lookup_namespaces.prepend namespace
+        end
       end
 
-      self.components_namespace = "ViewComponent::Form"
+      def initialize(*)
+        @__component_klass_cache = {}
 
-      (field_helpers - %i[label check_box radio_button fields_for fields hidden_field file_field]).each do |selector|
+        super
+      end
+
+      (field_helpers - %i[
+        check_box
+        datetime_field
+        datetime_local_field
+        fields
+        fields_for
+        file_field
+        hidden_field
+        label
+        phone_field
+        radio_button
+      ]).each do |selector|
         class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
           def #{selector}(method, options = {}) # def text_field(method, options = {})
             render_component(                   #   render_component(
@@ -27,11 +58,19 @@ module ViewComponent
           end                                   # end
         RUBY_EVAL
       end
+      alias phone_field telephone_field
 
       # See: https://github.com/rails/rails/blob/33d60cb02dcac26d037332410eabaeeb0bdc384c/actionview/lib/action_view/helpers/form_helper.rb#L2280
       def label(method, text = nil, options = {}, &block)
         render_component(:label, @object_name, method, text, objectify_options(options), &block)
       end
+
+      def datetime_field(method, options = {})
+        render_component(
+          :datetime_local_field, @object_name, method, objectify_options(options)
+        )
+      end
+      alias datetime_locale_field datetime_field
 
       def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
         render_component(
@@ -67,18 +106,6 @@ module ViewComponent
         value ||= submit_default_value
         render_component(:button, value, options, &block)
       end
-
-      # SELECTORS.each do |selector|
-      #   class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
-      #     def #{selector}(*args)
-      #       render_component(
-      #         :#{selector},
-      #         *args,
-      #         super,
-      #       )
-      #     end
-      #   RUBY_EVAL
-      # end
 
       # See: https://github.com/rails/rails/blob/fe76a95b0d252a2d7c25e69498b720c96b243ea2/actionview/lib/action_view/helpers/form_options_helper.rb
       def select(method, choices = nil, options = {}, html_options = {}, &block)
@@ -149,9 +176,9 @@ module ViewComponent
         )
       end
 
-      def time_zone_select(method, options = {}, html_options = {})
+      def time_zone_select(method, priority_zones = nil, options = {}, html_options = {})
         render_component(
-          :time_zone_select, @object_name, method,
+          :time_zone_select, @object_name, method, priority_zones,
           objectify_options(options), @default_html_options.merge(html_options)
         )
       end
@@ -162,23 +189,38 @@ module ViewComponent
         end
       end
 
+      def error_message(method, options = {})
+        render_component(:error_message, @object_name, method, objectify_options(options))
+      end
+
+      def hint(method, text = nil, options = {}, &block)
+        render_component(:hint, @object_name, method, text, objectify_options(options), &block)
+      end
+
       private
 
       def render_component(component_name, *args, &block)
-        component_klassname = "#{self.class.components_namespace}::#{component_name.to_s.camelize}Component"
-        component_klass     = component_klassname.safe_constantize
-
-        unless component_klass.is_a?(Class) && component_klass < ViewComponent::Base
-          raise NotImplementedComponentError, "Component #{component_klassname} doesn't exist" \
-                                              " or is not a ViewComponent::Base class"
-        end
-
-        component = component_klass.new(self, *args)
+        component = component_klass(component_name).new(self, *args)
         component.render_in(@template, &block)
       end
 
       def objectify_options(options)
         @default_options.merge(options.merge(object: @object))
+      end
+
+      def component_klass(component_name)
+        @__component_klass_cache[component_name] ||= begin
+          component_klass = self.class.lookup_namespaces.filter_map do |namespace|
+            "#{namespace}::#{component_name.to_s.camelize}Component".safe_constantize || false
+          end.first
+
+          unless component_klass.is_a?(Class) && component_klass < ViewComponent::Base
+            raise NotImplementedComponentError, "Component named #{component_name} doesn't exist" \
+                                                " or is not a ViewComponent::Base class"
+          end
+
+          component_klass
+        end
       end
     end
   end

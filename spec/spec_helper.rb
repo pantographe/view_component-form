@@ -1,5 +1,15 @@
 # frozen_string_literal: true
 
+if ENV.fetch("COVERAGE", false)
+  require "simplecov"
+  SimpleCov.start do
+    add_filter "/spec"
+
+    minimum_coverage 89
+    maximum_coverage_drop 2
+  end
+end
+
 require "view_component/engine"
 require "view_component/form"
 
@@ -7,7 +17,7 @@ require "ammeter/init"
 require "combustion"
 
 Combustion.path = "spec/internal"
-Combustion.initialize! :action_controller, :action_view, :action_text do
+Combustion.initialize! :action_controller, :action_view, :action_text, :active_record do
   config.logger = ActiveSupport::TaggedLogging.new(Logger.new(nil))
   config.log_level = :fatal
 end
@@ -36,4 +46,5 @@ RSpec.configure do |config|
   config.include ViewComponent::Form::TestHelpers, type: :component
   config.include ViewComponent::Form::TestHelpers, type: :builder
   config.include Capybara::RSpecMatchers, type: :component
+  config.include RSpecHtmlMatchers, type: :component
 end

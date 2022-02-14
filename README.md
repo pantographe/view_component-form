@@ -2,6 +2,8 @@
 
 **ViewComponent::Form** provides a `FormBuilder` with the same interface as [`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html), but using [ViewComponent](https://github.com/github/view_component)s for rendering the fields. It's a starting point for writing your own custom ViewComponents.
 
+:warning: **This is an early release: the API is subject to change until we reach `v1.0.0`.**
+
 ## Compatibility
 
 This gem is tested on:
@@ -22,7 +24,7 @@ And then execute:
 
 ## Usage
 
-Add a `builder` param to your `form_for` of `form_with`:
+Add a `builder` param to your `form_for`, `form_with`, `fields_for` or `fields`:
 
 ```diff
 - <%= form_for @user do |f| %>
@@ -46,7 +48,14 @@ Then call your helpers as usual:
   <%= f.email_field :email %>       <%# renders a ViewComponent::Form::EmailFieldComponent %>
 
   <%= f.label :password %>          <%# renders a ViewComponent::Form::LabelComponent %>
-  <%= f.password_field :password %> <%# renders a ViewComponent::Form::PasswordFieldComponent %>
+  <%= f.password_field :password, aria: { describedby: f.field_id(:password, :description) } %>
+                                    <%# renders a ViewComponent::Form::PasswordFieldComponent %>
+                                    <%# Note: #field_id only supported on Rails 7 %>
+  <div id="<%= f.field_id(:title, :description) %>">
+    <%= f.hint :password, 'The password should be at least 8 characters long' %>
+                                      <%# renders a ViewComponent::Form::HintComponent %>
+    <%= f.error_message :password %>  <%# renders a ViewComponent::Form::ErrorMessageComponent %>
+  </div>
 <% end %>
 ```
 
@@ -62,12 +71,15 @@ It should work out of the box, but does nothing particularly interesting for now
 
   <label for="user_last_name">Last name</label>
   <input type="text" value="Doe" name="user[last_name]" id="user_last_name" />
-  
+
   <label for="user_email">E-mail</label>
   <input type="email" value="john.doe@example.com" name="user[email]" id="user_email" />
-  
+
   <label for="user_password">Password</label>
-  <input type="password" name="user[password]" id="user_password" />
+  <input type="password" name="user[password]" id="user_password" aria-describedby="user_password_description" />
+  <div id="user_password_description">
+    <div>The password should be at least 8 characters long</div>
+  </div>
 </form>
 ```
 
@@ -89,14 +101,14 @@ This allows you to pick the namespace your components will be loaded from.
 # lib/custom_form_builder.rb
 class CustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  self.components_namespace = "Form"
+  namespace Custom::Form
 end
 ```
 
-You can change the default namespace and path:
+Use the generator options to change the default namespace or the path where the file will be created:
 
 ```console
-bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace Forms::Components --path app/forms
+bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace AnotherCustom::Form --path app/forms
 
       create  app/forms/another_custom_form_builder.rb
 ```
@@ -105,22 +117,21 @@ bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace Forms::Compo
 # app/forms/another_custom_form_builder.rb
 class AnotherCustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  self.components_namespace = "Forms::Components"
+  namespace AnotherCustom::Form
 end
 ```
 
-:warning: **Everything below this line describes the future usage and is subject to change. It does not work yet as the gem is still under heavy development.**
-
-Now let's generate your own components to customize the rendering.
+Now let's generate your own components to customize their rendering. We can use the standard view_component generator:
 
 ```console
-bin/rails generate vcf:component Form::TextField
+bin/rails generate component Custom::Form::TextField --inline --parent ViewComponent::Form::TextFieldComponent
 
       invoke  test_unit
-      create  test/components/form/text_field_component_test.rb
-      create  app/components/form/text_field_component.rb
-      create  app/components/form/text_field_component.html.erb
+      create  test/components/custom/form/text_field_component_test.rb
+      create  app/components/custom/form/text_field_component.rb
 ```
+
+:warning: The `--parent` option is available since ViewComponent [`v2.41.0`](https://viewcomponent.org/CHANGELOG.html#2410). If you're using a previous version, you can always edit the generated `Custom::Form::CustomTextFieldComponent` class to make it inherit from `ViewComponent::Form::TextFieldComponent`.
 
 Change your forms to use your new builder:
 
@@ -129,25 +140,42 @@ Change your forms to use your new builder:
 + <%= form_for @user, builder: CustomFormBuilder do |f| %>
 ```
 
-You can then customize the behavior of your `Form::TextFieldComponent`:
+You can then customize the behavior of your `Custom::Form::CustomTextFieldComponent`:
 
 ```rb
-# app/components/form/text_field_component.rb
+# app/components/custom/form/text_field_component.rb
 
-module Form
-  class TextFieldComponent < ViewComponent::Form::TextFieldComponent
-    def html_class
-      class_names("text-field", "border-error": method_errors?)
-    end
+class Admin::Form::TextFieldComponent < ViewComponent::Form::TextFieldComponent
+  def html_class
+    class_names("custom-text-field", "has-error": method_errors?)
   end
 end
 ```
 
-The generated form field with now have your class names:
+In this case we leverage the [`#class_names`](https://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-class_names) helper to:
+- always add the `custom-text-field` class;
+- add the `has-error` class if there is an error on the attribute (using `ViewComponent::Form::FieldComponent#method_errors?`).
+
+The rendered form field will now look like this:
 
 ```html
-<input class="text-field" type="text" value="John" name="user[first_name]" id="user_first_name">
+<input class="custom-text-field" type="text" value="John" name="user[first_name]" id="user_first_name">
 ```
+
+You can use the same approach to inject options, wrap the input in a `<div>`, etc.
+
+We'll add more use cases to the documentation soon.
+
+### Using your form components without a backing model
+
+If you want to ensure that your fields display consistently across your app, you'll need to lean on Rails' own helpers. You may be used to using form tag helpers such as `text_field_tag` to generate tags, or even writing out plain HTML tags. These can't be integrated with a form builder, so they won't offer you the benefits of this gem.
+
+You'll most likely want to use either:
+
+- [`form_with`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-form_with) and supply a route as the endpoint, e.g. `form_with url: users_path do |f| ...`, or
+- [`fields`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields), supplying a namespace if necessary. `fields do |f| ...` ought to work in the most basic case.
+
+[`fields_for`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for) may also be of interest. To make consistent use of `view_component-form`, you'll want to be using these three helpers to build your forms wherever possible.
 
 ## Development
 
