@@ -135,6 +135,13 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       it { expect(component.optional?(context: :custom_context)).to eq(false) }
     end
 
+    context "with context from the form" do
+      let(:form) { form_with(object, validation_context: :custom_context) }
+      let(:method_name) { :email }
+
+      it { expect(component.optional?).to eq(false) }
+    end
+
     context "with multiple contexts" do
       let(:method_name) { :city }
 
@@ -157,6 +164,20 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       let(:method_name) { :last_name }
 
       it { expect(component.required?).to eq(false) }
+    end
+
+    context "with context" do
+      let(:method_name) { :email }
+
+      it { expect(component.required?).to eq(false) }
+      it { expect(component.required?(context: :custom_context)).to eq(true) }
+    end
+
+    context "with context from the form" do
+      let(:form) { form_with(object, validation_context: :custom_context) }
+      let(:method_name) { :email }
+
+      it { expect(component.required?).to eq(true) }
     end
 
     context "with multiple contexts" do
@@ -185,6 +206,16 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       end
     end
 
+    context "with context from the form" do
+      let(:form) { form_with(object, validation_context: :custom_context) }
+      let(:method_name) { :email }
+
+      it do
+        expect(component.validators.first)
+          .to be_a(ActiveModel::Validations::PresenceValidator)
+      end
+    end
+
     context "with multiple contexts" do
       let(:method_name) { :city }
 
@@ -199,6 +230,18 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
         expect(component.validators(context: :another_context).first)
           .to be_a(ActiveModel::Validations::PresenceValidator)
       end
+    end
+  end
+
+  describe "#validation_context" do
+    context "without context" do
+      it { expect(component.validation_context).to eq(nil) }
+    end
+
+    context "with context from the form" do
+      let(:form) { form_with(object, validation_context: :custom_context) }
+
+      it { expect(component.validation_context).to eq(:custom_context) }
     end
   end
 end

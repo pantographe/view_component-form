@@ -7,6 +7,7 @@ module ViewComponent
                                   instance_predicate: false
 
       attr_reader :method_name
+      delegate :validation_context, to: :form
 
       def initialize(form, object_name, method_name, options = {})
         # See: https://github.com/rails/rails/blob/83217025a171593547d1268651b446d3533e2019/actionview/lib/action_view/helpers/tags/base.rb#L13
@@ -68,19 +69,19 @@ module ViewComponent
         content
       end
 
-      def optional?(context: nil)
+      def optional?(context: validation_context)
         return nil if object.nil?
 
         !required?(context: context)
       end
 
-      def required?(context: nil)
+      def required?(context: validation_context)
         return nil if object.nil?
 
         validators(context: context).any?(ActiveModel::Validations::PresenceValidator)
       end
 
-      def validators(context: nil)
+      def validators(context: validation_context)
         method_validators.select do |validator|
           if context.nil?
             validator.options[:on].blank?
