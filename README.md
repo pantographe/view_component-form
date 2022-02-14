@@ -166,9 +166,9 @@ You can use the same approach to inject options, wrap the input in a `<div>`, et
 
 We'll add more use cases to the documentation soon.
 
-### Helpers available in `FieldComponent`
+### Building your own components
 
-Most field helpers inherit from `FieldComponent`, so they get access to the following helpers:
+When building your own ViewComponents for using in forms, it's recommended to inherit from `ViewComponent::Form::FieldComponent`, so you get access to the following helpers:
 
 #### `#label_text`
 
