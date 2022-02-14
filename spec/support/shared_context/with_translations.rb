@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.shared_context "with translations" do
-  let(:translations) { { } }
+  let(:translations) { {} }
 
   around do |example|
     I18n.backend.store_translations(:en, translations)
