@@ -191,7 +191,7 @@ end
 ```
 
 ```erb
-# app/views/user/edit.html.erb
+<%# app/views/users/_form.html.erb %>
 <%= form_for @user do |f| %>
   <%= f.group :first_name do %>
     <%= f.text_field :first_name %>
