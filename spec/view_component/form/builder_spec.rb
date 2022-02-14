@@ -172,6 +172,19 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
       let(:builder) { described_class.new(object_name, object, template, options) }
 
       it { expect(builder.send(:field_id, :first_name, :hint)).to eq("first_name_hint") }
+  end
+
+  describe "#validation_context" do
+    let(:builder) { described_class.new(object_name, object, template, options) }
+
+    context "without context" do
+      it { expect(builder.send(:validation_context)).to be_nil }
+    end
+
+    context "with context" do
+      let(:options) { { validation_context: :create } }
+
+      it { expect(builder.send(:validation_context)).to eq(:create) }
     end
   end
 end
