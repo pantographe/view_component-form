@@ -95,4 +95,19 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     pending "test with belongs_to for _id"
     pending "test with has_many for _ids"
   end
+
+  describe "#label_text" do
+    context "without translation" do
+      it { expect(component.label_text).to eq("First name") }
+    end
+
+    context "with custom translation" do
+      before do
+        allow(I18n).to receive(:t).with("user.first_name", default: [:"user.first_name", ""],
+                                                           scope: "helpers.label").and_return("Your first name")
+      end
+
+      it { expect(component.label_text).to eq("Your first name") }
+    end
+  end
 end

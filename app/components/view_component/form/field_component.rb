@@ -60,6 +60,13 @@ module ViewComponent
         end
       end
 
+      def label_text
+        content ||= ActionView::Helpers::Tags::Translator.new(object, object_name, method_name,
+                                                              scope: "helpers.label").translate
+        content ||= method_name.humanize
+        content
+      end
+
       private
 
       def singular_association_method_name
