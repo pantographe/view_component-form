@@ -7,6 +7,7 @@ module ViewComponent
                                   instance_predicate: false
 
       attr_reader :method_name
+
       delegate :validation_context, to: :form
 
       def initialize(form, object_name, method_name, options = {})
