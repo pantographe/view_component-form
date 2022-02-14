@@ -102,10 +102,9 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     end
 
     context "with custom translation" do
-      before do
-        allow(I18n).to receive(:t).with("user.first_name", default: [:"user.first_name", ""],
-                                                           scope: "helpers.label").and_return("Your first name")
-      end
+      include_context "with translations"
+
+      let(:translations) { { helpers: { label: { user: { first_name: "Your first name" } } } } }
 
       it { expect(component.label_text).to eq("Your first name") }
     end
