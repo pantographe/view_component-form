@@ -5,10 +5,11 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     Class.new do
       include ActiveModel::Model
 
-      attr_accessor :first_name, :last_name, :email
+      attr_accessor :first_name, :last_name, :email, :city
 
       validates :first_name, presence: true, length: { minimum: 2 }
       validates :email, presence: true, on: :custom_context
+      validates :city, presence: true, on: %i[custom_context another_context]
 
       class << self
         def name
@@ -133,6 +134,14 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       it { expect(component.optional?).to eq(true) }
       it { expect(component.optional?(context: :custom_context)).to eq(false) }
     end
+
+    context "with multiple contexts" do
+      let(:method_name) { :city }
+
+      it { expect(component.optional?).to eq(true) }
+      it { expect(component.optional?(context: :custom_context)).to eq(false) }
+      it { expect(component.optional?(context: :another_context)).to eq(false) }
+    end
   end
 
   describe "#required?" do
@@ -150,11 +159,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       it { expect(component.required?).to eq(false) }
     end
 
-    context "with context" do
-      let(:method_name) { :email }
+    context "with multiple contexts" do
+      let(:method_name) { :city }
 
       it { expect(component.required?).to eq(false) }
       it { expect(component.required?(context: :custom_context)).to eq(true) }
+      it { expect(component.required?(context: :another_context)).to eq(true) }
     end
   end
 
@@ -171,6 +181,22 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       it do
         expect(component.validators(context: :custom_context).first)
+          .to be_a(ActiveModel::Validations::PresenceValidator)
+      end
+    end
+
+    context "with multiple contexts" do
+      let(:method_name) { :city }
+
+      it { expect(component.validators).to eq([]) }
+
+      it do
+        expect(component.validators(context: :custom_context).first)
+          .to be_a(ActiveModel::Validations::PresenceValidator)
+      end
+
+      it do
+        expect(component.validators(context: :another_context).first)
           .to be_a(ActiveModel::Validations::PresenceValidator)
       end
     end

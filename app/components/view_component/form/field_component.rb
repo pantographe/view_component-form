@@ -81,7 +81,13 @@ module ViewComponent
       end
 
       def validators(context: nil)
-        method_validators.select { |validator| validator.options[:on] == context&.to_sym }
+        method_validators.select do |validator|
+          if context.nil?
+            validator.options[:on].blank?
+          else
+            Array(validator.options[:on]).include?(context&.to_sym)
+          end
+        end
       end
 
       private
