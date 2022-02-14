@@ -181,7 +181,7 @@ end
 ```
 
 ```erb
-# app/components/custom/form/group_component.html.erb
+<%# app/components/custom/form/group_component.html.erb %>
 <div class="custom-form-group">
   <label>
     <%= label_text %><br />
