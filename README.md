@@ -166,6 +166,60 @@ You can use the same approach to inject options, wrap the input in a `<div>`, et
 
 We'll add more use cases to the documentation soon.
 
+### Helpers available in `FieldComponent`
+
+Most field helpers inherit from `FieldComponent`, so they get access to the following helpers:
+
+#### `#label_text`
+
+Returns the translated text for the label of the field (looking up for `helpers.label.OBJECT.METHOD_NAME`), or humanized version of the method name if not available.
+
+```rb
+# app/components/custom/form/group_component.rb
+class Custom::Form::GroupComponent < ViewComponent::Form::FieldComponent
+end
+```
+
+```erb
+# app/components/custom/form/group_component.html.erb
+<div class="custom-form-group">
+  <label>
+    <%= label_text %><br />
+    <%= content %>
+  </label>
+</div>
+```
+
+```erb
+# app/views/user/edit.html.erb
+<%= form_for @user do |f| %>
+  <%= f.group :first_name do %>
+    <%= f.text_field :first_name %>
+  <% end %>
+<% end %>
+```
+
+```yml
+# config/locales/en.yml
+en:
+  helpers:
+    label:
+      user:
+        first_name: Your first name
+```
+
+Renders:
+
+```html
+<form class="edit_user" id="edit_user_1" action="/users/1" accept-charset="UTF-8" method="post">
+  <!-- ... -->
+  <label>
+    Your first name<br />
+    <input type="text" value="John" name="user[first_name]" id="user_first_name" />
+  </label>
+</form>
+```
+
 ### Using your form components without a backing model
 
 If you want to ensure that your fields display consistently across your app, you'll need to lean on Rails' own helpers. You may be used to using form tag helpers such as `text_field_tag` to generate tags, or even writing out plain HTML tags. These can't be integrated with a form builder, so they won't offer you the benefits of this gem.
