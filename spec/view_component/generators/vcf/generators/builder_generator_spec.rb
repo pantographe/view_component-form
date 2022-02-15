@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
 require "generators/vcf/builder/builder_generator"
 
 RSpec.describe Vcf::Generators::BuilderGenerator, type: :generator do
