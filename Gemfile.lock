@@ -5,6 +5,7 @@ PATH
       actionview (>= 6.0.0, < 7.1)
       activesupport (>= 6.0.0, < 7.1)
       view_component (>= 2.34.0, < 3.0)
+      zeitwerk (~> 2.5)
 
 GEM
   remote: https://rubygems.org/
@@ -180,7 +181,7 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
-    regexp_parser (2.2.0)
+    regexp_parser (2.2.1)
     rexml (3.2.5)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
@@ -206,16 +207,16 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.10.3)
-    rubocop (1.24.1)
+    rubocop (1.25.1)
       parallel (~> 1.10)
-      parser (>= 3.0.0.0)
+      parser (>= 3.1.0.0)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml
       rubocop-ast (>= 1.15.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.15.1)
+    rubocop-ast (1.15.2)
       parser (>= 3.0.1.1)
     rubocop-performance (1.13.1)
       rubocop (>= 1.7.0, < 2.0)
@@ -269,4 +270,4 @@ DEPENDENCIES
   view_component-form!
 
 BUNDLED WITH
-   2.2.30
+   2.2.32
