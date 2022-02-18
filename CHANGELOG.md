@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Add `label_text` helper (#103)
 - Add `field_id` helper, backported from Rails 7.0 (#104)
 - Add `weekday_select` helper (#105)
 
