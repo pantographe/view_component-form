@@ -50,7 +50,6 @@ Then call your helpers as usual:
   <%= f.label :password %>          <%# renders a ViewComponent::Form::LabelComponent %>
   <%= f.password_field :password, aria: { describedby: f.field_id(:password, :description) } %>
                                     <%# renders a ViewComponent::Form::PasswordFieldComponent %>
-                                    <%# Note: #field_id only supported on Rails 7 %>
   <div id="<%= f.field_id(:title, :description) %>">
     <%= f.hint :password, 'The password should be at least 8 characters long' %>
                                       <%# renders a ViewComponent::Form::HintComponent %>
@@ -230,6 +229,22 @@ You'll most likely want to use either:
 - [`fields`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields), supplying a namespace if necessary. `fields do |f| ...` ought to work in the most basic case.
 
 [`fields_for`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for) may also be of interest. To make consistent use of `view_component-form`, you'll want to be using these three helpers to build your forms wherever possible.
+
+## Supported helpers
+
+The following helpers are currently supported by `ViewComponent::Form`.
+
+### `ActionView::Helpers::FormBuilder`
+
+**Supported:** `button` `check_box` `collection_check_boxes` `collection_radio_buttons` `collection_select` `color_field` `date_field` `date_select` `datetime_field` `datetime_local_field` `datetime_select` `email_field` `fields` `fields_for` `file_field` `field_id` `grouped_collection_select` `hidden_field` `month_field` `number_field` `password_field` `phone_field` `radio_button` `range_field` `search_field` `select` `submit` `telephone_field` `text_area` `text_field` `time_field` `time_select` `time_zone_select` `to_model` `to_partial_path` `url_field` `week_field` `weekday_select`
+
+**Partially supported:** `label` (blocks not supported) `rich_text_area` (untested)
+
+**Unsupported for now:** `field_name`
+
+### Specific to `ViewComponent::Form`
+
+**Supported:** `error_message` `hint`
 
 ## Development
 
