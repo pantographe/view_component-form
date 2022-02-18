@@ -177,6 +177,22 @@ You'll most likely want to use either:
 
 [`fields_for`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for) may also be of interest. To make consistent use of `view_component-form`, you'll want to be using these three helpers to build your forms wherever possible.
 
+## Supported helpers
+
+The following helpers are currently supported by `ViewComponent::Form`.
+
+### `ActionView::Helpers::FormBuilder`
+
+**Supported:** `button` `check_box` `collection_check_boxes` `collection_radio_buttons` `collection_select` `color_field` `date_field` `date_select` `datetime_field` `datetime_local_field` `datetime_select` `email_field` `fields` `fields_for` `file_field` `grouped_collection_select` `hidden_field` `month_field` `number_field` `password_field` `phone_field` `radio_button` `range_field` `search_field` `select` `submit` `telephone_field` `text_area` `text_field` `time_field` `time_select` `time_zone_select` `to_model` `to_partial_path` `url_field` `week_field`
+
+**Partially supported:** `label` (blocks not supported) `rich_text_area` (untested)
+
+**Unsupported for now:** `field_id` `field_name` `weekday_select` (Rails 7 only)
+
+### Specific to `ViewComponent::Form`
+
+**Supported:** `error_message` `hint`
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
