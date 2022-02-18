@@ -164,4 +164,14 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
       it { expect(builder.send(:component_klass, :submit)).to eq(ViewComponent::Form::SubmitComponent) }
     end
   end
+
+  describe "#field_id" do
+    if Rails::VERSION::MAJOR >= 7
+      it_behaves_like "the default form builder", :field_id, :first_name, :hint
+    else
+      let(:builder) { described_class.new(object_name, object, template, options) }
+
+      it { expect(builder.send(:field_id, :first_name, :hint)).to eq("first_name_hint") }
+    end
+  end
 end
