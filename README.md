@@ -246,6 +246,49 @@ The following helpers are currently supported by `ViewComponent::Form`.
 
 **Supported:** `error_message` `hint`
 
+## Testing your components
+
+### RSpec
+
+#### Configuration
+
+This assumes your already have read and configured [tests for `view_component`](https://viewcomponent.org/guide/testing.html#rspec-configuration).
+
+```rb
+# spec/rails_helper.rb
+require "view_component/test_helpers"
+require "view_component/form/test_helpers"
+require "capybara/rspec"
+
+RSpec.configure do |config|
+  config.include ViewComponent::TestHelpers, type: :component
+  config.include ViewComponent::Form::TestHelpers, type: :component
+  config.include Capybara::RSpecMatchers, type: :component
+end
+```
+
+#### Example
+
+```rb
+# spec/components/form/text_field_component_spec.rb
+RSpec.describe Form::TextFieldComponent, type: :component do
+  let(:object)  { User.new } # replace with a model of your choice
+  let(:form)    { form_with(object) }
+  let(:options) { {} }
+
+  let(:component) { render_inline(described_class.new(form, object_name, :first_name, options)) }
+
+  context "with simple args" do
+    it do
+      expect(component.to_html)
+        .to have_tag("input", with: { name: "user[first_name]", id: "user_first_name", type: "text" })
+    end
+  end
+end
+```
+
+For more complex components, we recommend the [`rspec-html-matchers` gem](https://github.com/kucaahbe/rspec-html-matchers).
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
