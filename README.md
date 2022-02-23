@@ -246,7 +246,7 @@ The following helpers are currently supported by `ViewComponent::Form`.
 
 **Supported:** `error_message` `hint`
 
-## Testing
+## Testing your components
 
 ### RSpec
 
@@ -265,7 +265,6 @@ RSpec.configure do |config|
   config.include ViewComponent::Form::TestHelpers, type: :component
   config.include Capybara::RSpecMatchers, type: :component
 end
-
 ```
 
 #### Example
