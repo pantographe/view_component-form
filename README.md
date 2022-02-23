@@ -271,7 +271,7 @@ end
 
 ```rb
 RSpec.describe Form::TextFieldComponent, type: :component do
-  let(:object)  { User.new }
+  let(:object)  { User.new } # replace with a model of your choice
   let(:form)    { form_with(object) }
   let(:options) { {} }
 
