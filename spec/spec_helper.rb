@@ -21,6 +21,8 @@ Combustion.initialize! :action_controller, :action_view, :action_text, :active_r
   config.log_level = :fatal
 end
 
+require "generator_spec"
+
 class ApplicationController < ActionController::Base
 end
 
