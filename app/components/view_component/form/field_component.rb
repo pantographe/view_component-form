@@ -60,6 +60,14 @@ module ViewComponent
         end
       end
 
+      # From https://github.com/rails/rails/blob/497ab719d04a2d505f4d6a76c9d359b3d7f8e502/actionview/lib/action_view/helpers/tags/label.rb#L18-L27
+      def label_text
+        content ||= ActionView::Helpers::Tags::Translator.new(object, object_name, method_name,
+                                                              scope: "helpers.label").translate
+        content ||= method_name.humanize
+        content
+      end
+
       private
 
       def singular_association_method_name
