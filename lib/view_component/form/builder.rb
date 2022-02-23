@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "action_view"
-
 module ViewComponent
   module Form
     class Builder < ActionView::Helpers::FormBuilder

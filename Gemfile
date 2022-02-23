@@ -5,10 +5,10 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in view_component-form.gemspec
 gemspec
 
-gem "ammeter"
 gem "appraisal", require: false
 gem "capybara", require: false
 gem "combustion"
+gem "generator_spec"
 gem "rails"
 gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0", require: false

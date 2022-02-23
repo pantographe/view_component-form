@@ -8,7 +8,6 @@ module ViewComponent
       end
 
       if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new("6.1")
-        require "view_component/form/class_names_helper"
         include ClassNamesHelper
       end
 

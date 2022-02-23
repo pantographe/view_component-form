@@ -3,34 +3,47 @@
 require "generators/vcf/builder/builder_generator"
 
 RSpec.describe Vcf::Generators::BuilderGenerator, type: :generator do
-  destination File.expand_path("../../../../../tmp", __dir__)
-
-  let(:generator) { %w[CustomFormBuilder] }
+  destination Dir.mktmpdir
+  arguments %w[CustomFormBuilder]
 
   before do
     prepare_destination
-    run_generator generator
   end
 
   describe "the builder" do
-    subject { file("lib/custom_form_builder.rb") }
+    context "without options" do
+      before do
+        run_generator
+      end
 
-    it { is_expected.to exist }
-    it { is_expected.to contain(/class CustomFormBuilder < ViewComponent::Form::Builder/) }
-    it { is_expected.to contain(/namespace "Form"/) }
+      it do
+        assert_file "lib/custom_form_builder.rb" do |builder|
+          assert_match(/class CustomFormBuilder < ViewComponent::Form::Builder/, builder)
+          assert_match(/namespace "Form"/, builder)
+        end
+      end
+    end
 
     context "with namespace option" do
-      let(:generator) { %w[CustomFormBuilder --namespace=CustomForm] }
+      before do
+        run_generator %w[CustomFormBuilder --namespace=CustomForm]
+      end
 
-      it { is_expected.to contain(/namespace "CustomForm"/) }
+      it do
+        assert_file "lib/custom_form_builder.rb" do |builder|
+          assert_match(/namespace "CustomForm"/, builder)
+        end
+      end
     end
 
     context "with path option" do
-      subject { file("custom/lib/custom_form_builder.rb") }
+      before do
+        run_generator %w[CustomFormBuilder --path=custom/lib]
+      end
 
-      let(:generator) { %w[CustomFormBuilder --path=custom/lib] }
-
-      it { is_expected.to exist }
+      it do
+        assert_file "custom/lib/custom_form_builder.rb"
+      end
     end
   end
 end

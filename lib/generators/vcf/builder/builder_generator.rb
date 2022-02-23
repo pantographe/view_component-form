@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails/generators"
-
 module Vcf
   module Generators
     class BuilderGenerator < Rails::Generators::NamedBase
