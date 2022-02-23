@@ -249,8 +249,10 @@ The following helpers are currently supported by `ViewComponent::Form`.
 ## Testing
 
 ### RSpec
+
 #### Configuration
-This assume your already have read and configure [tests for `view_component`](https://viewcomponent.org/guide/testing.html#rspec-configuration).
+
+This assumes your already have read and configured [tests for `view_component`](https://viewcomponent.org/guide/testing.html#rspec-configuration).
 
 ```rb
 # spec/rails_helper.rb
@@ -267,6 +269,7 @@ end
 ```
 
 #### Example
+
 ```rb
 RSpec.describe Form::TextFieldComponent, type: :component do
   let(:object)  { User.new }
@@ -284,7 +287,7 @@ RSpec.describe Form::TextFieldComponent, type: :component do
 end
 ```
 
-For more complexe components you could use [`rspec-html-matchers` gem](https://github.com/kucaahbe/rspec-html-matchers).
+For more complex components, we recommend the [`rspec-html-matchers` gem](https://github.com/kucaahbe/rspec-html-matchers).
 
 ## Development
 
