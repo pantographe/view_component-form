@@ -8,10 +8,13 @@ AllCops:
   TargetRubyVersion: 2.7
   NewCops: enable
   Exclude:
-    - bin/**/*
-    - lib/generators/**/templates/**/*
-    - gemfiles/**/*
-    - vendor/**/*
+    - '.git/**/*'
+    - 'bin/**/*'
+    - 'gemfiles/**/*'
+    - 'lib/generators/**/templates/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
 
 Style/StringLiterals:
   Enabled: true
