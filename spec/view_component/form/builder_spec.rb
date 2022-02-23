@@ -129,6 +129,25 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
   it_behaves_like "the default form builder", :submit
   it_behaves_like "the default form builder", :text_area, :detail
+  if defined?(ActionView::Helpers::Tags::ActionText)
+    let(:object_klass) do
+      Class.new(ActiveRecord::Base) do
+        has_rich_text :content
+
+        class << self
+          def name
+            "Message"
+          end
+        end
+      end
+    end
+
+    let(:object)  { object_klass.new }
+
+    context "with a model with rich text" do
+      it_behaves_like "the default form builder", :rich_text_area, :content
+    end
+  end
   it_behaves_like "the default form builder", :text_field, :name
   it_behaves_like "the default form builder", :time_field, :born_at
   it_behaves_like "the default form builder", :time_select, :average_lap
