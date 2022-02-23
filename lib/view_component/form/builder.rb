@@ -27,10 +27,14 @@ module ViewComponent
         end
       end
 
+      attr_reader :validation_context
+
       def initialize(*)
         @__component_klass_cache = {}
 
         super
+
+        @validation_context = options[:validation_context]
       end
 
       (field_helpers - %i[

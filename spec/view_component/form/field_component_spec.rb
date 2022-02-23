@@ -5,9 +5,11 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     Class.new do
       include ActiveModel::Model
 
-      attr_accessor :first_name
+      attr_accessor :first_name, :last_name, :email, :city
 
       validates :first_name, presence: true, length: { minimum: 2 }
+      validates :email, presence: true, on: :custom_context
+      validates :city, presence: true, on: %i[custom_context another_context]
 
       class << self
         def name
@@ -17,11 +19,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     end
   end
 
-  let(:object)  { object_klass.new }
-  let(:form)    { form_with(object) }
-  let(:options) { {} }
+  let(:object)      { object_klass.new }
+  let(:form)        { form_with(object) }
+  let(:method_name) { :first_name }
+  let(:options)     { {} }
 
-  let(:component) { described_class.new(form, object_name, :first_name, options) }
+  let(:component) { described_class.new(form, object_name, method_name, options) }
 
   describe "#tag_klass" do
     subject { Class.new(ChildClass).tag_klass }
@@ -107,6 +110,138 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       let(:translations) { { helpers: { label: { user: { first_name: "Your first name" } } } } }
 
       it { expect(component.label_text).to eq("Your first name") }
+    end
+  end
+
+  describe "#optional?" do
+    let(:object) { object_klass.new(first_name: "John", last_name: "Doe") }
+
+    context "with required method name" do
+      let(:method_name) { :first_name }
+
+      it { expect(component.optional?).to eq(false) }
+    end
+
+    context "with optional method name" do
+      let(:method_name) { :last_name }
+
+      it { expect(component.optional?).to eq(true) }
+    end
+
+    context "with context" do
+      let(:method_name) { :email }
+
+      it { expect(component.optional?).to eq(true) }
+      it { expect(component.optional?(context: :custom_context)).to eq(false) }
+    end
+
+    context "with context from the form" do
+      let(:form) { form_with(object, validation_context: :custom_context) }
+      let(:method_name) { :email }
+
+      it { expect(component.optional?).to eq(false) }
+    end
+
+    context "with multiple contexts" do
+      let(:method_name) { :city }
+
+      it { expect(component.optional?).to eq(true) }
+      it { expect(component.optional?(context: :custom_context)).to eq(false) }
+      it { expect(component.optional?(context: :another_context)).to eq(false) }
+    end
+  end
+
+  describe "#required?" do
+    let(:object) { object_klass.new(first_name: "John", last_name: "Doe") }
+
+    context "with required method name" do
+      let(:method_name) { :first_name }
+
+      it { expect(component.required?).to eq(true) }
+    end
+
+    context "with optional method name" do
+      let(:method_name) { :last_name }
+
+      it { expect(component.required?).to eq(false) }
+    end
+
+    context "with context" do
+      let(:method_name) { :email }
+
+      it { expect(component.required?).to eq(false) }
+      it { expect(component.required?(context: :custom_context)).to eq(true) }
+    end
+
+    context "with context from the form" do
+      let(:form) { form_with(object, validation_context: :custom_context) }
+      let(:method_name) { :email }
+
+      it { expect(component.required?).to eq(true) }
+    end
+
+    context "with multiple contexts" do
+      let(:method_name) { :city }
+
+      it { expect(component.required?).to eq(false) }
+      it { expect(component.required?(context: :custom_context)).to eq(true) }
+      it { expect(component.required?(context: :another_context)).to eq(true) }
+    end
+  end
+
+  describe "#validators" do
+    let(:object) { object_klass.new(first_name: "John", last_name: "Doe") }
+
+    it { expect(component.validators.first).to be_a(ActiveModel::Validations::PresenceValidator) }
+    it { expect(component.validators.last).to be_a(ActiveModel::Validations::LengthValidator) }
+
+    context "with context" do
+      let(:method_name) { :email }
+
+      it { expect(component.validators).to eq([]) }
+
+      it do
+        expect(component.validators(context: :custom_context).first)
+          .to be_a(ActiveModel::Validations::PresenceValidator)
+      end
+    end
+
+    context "with context from the form" do
+      let(:form) { form_with(object, validation_context: :custom_context) }
+      let(:method_name) { :email }
+
+      it do
+        expect(component.validators.first)
+          .to be_a(ActiveModel::Validations::PresenceValidator)
+      end
+    end
+
+    context "with multiple contexts" do
+      let(:method_name) { :city }
+
+      it { expect(component.validators).to eq([]) }
+
+      it do
+        expect(component.validators(context: :custom_context).first)
+          .to be_a(ActiveModel::Validations::PresenceValidator)
+      end
+
+      it do
+        expect(component.validators(context: :another_context).first)
+          .to be_a(ActiveModel::Validations::PresenceValidator)
+      end
+    end
+  end
+
+  describe "#validation_context" do
+    context "without context" do
+      it { expect(component.validation_context).to eq(nil) }
+    end
+
+    context "with context from the form" do
+      let(:form) { form_with(object, validation_context: :custom_context) }
+
+      it { expect(component.validation_context).to eq(:custom_context) }
     end
   end
 end
