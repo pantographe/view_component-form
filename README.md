@@ -219,6 +219,97 @@ Renders:
 </form>
 ```
 
+#### Validations
+
+Let's consider the following model for the examples below.
+
+```rb
+# app/models/user.rb
+class User < ActiveRecord::Base
+  validates :first_name, presence: true, length: { minimum: 2, maximum: 255 }
+end
+```
+
+##### Accessing validations with `#validators`
+
+Returns all validators for the method name.
+
+```rb
+# app/components/custom/form/group_component.rb
+class Custom::Form::GroupComponent < ViewComponent::Form::FieldComponent
+  private
+
+  def validation_hint
+    if length_validator
+      "between #{length_validator.options[:minimum]} and #{length_validator.options[:maximum]} chars"
+    end
+  end
+
+  def length_validator
+    validators.find { |v| v.is_a?(ActiveModel::Validations::LengthValidator) }
+  end
+end
+```
+
+```erb
+<%# app/components/custom/form/group_component.html.erb %>
+<div class="custom-form-group">
+  <label>
+    <%= label_text %> (<%= validation_hint %>)<br />
+    <%= content %>
+  </label>
+</div>
+```
+
+##### Using `#required?` and `#optional?`
+
+```erb
+<%# app/components/custom/form/group_component.html.erb %>
+<div class="custom-form-group">
+  <label>
+    <%= label_text %><%= " (required)" if required? %><br />
+    <%= content %>
+  </label>
+</div>
+```
+
+##### Validation contexts
+
+When using [validation contexts](https://guides.rubyonrails.org/active_record_validations.html#on), you can specify a context to the helpers above.
+
+```rb
+# app/models/user.rb
+class User < ActiveRecord::Base
+  validates :first_name, presence: true, length: { minimum: 2, maximum: 255 }
+  validates :email, presence: true, on: :registration
+end
+```
+
+```erb
+<%# app/views/users/_form_.html.erb %>
+<%= form_with model: @user,
+              builder: ViewComponent::Form::Builder,
+              validation_context: :registration do |f| %>
+  <%= f.group :email do %>
+    <%= f.email_field :email %>
+  <% end %>
+<% end %>
+```
+
+In this case, `ViewComponent::Form::Builder` accepts a `validation_context` option and passes it as a default value to the `#validators`, `#required?` and `#optional?` helpers.
+
+Alternatively, you can pass the context to the helpers:
+
+```erb
+<%= "(required)" if required?(context: :registration) %>
+```
+
+```rb
+def length_validator
+  validators(context: :registration).find { |v| v.is_a?(ActiveModel::Validations::LengthValidator) }
+end
+```
+
 ### Using your form components without a backing model
 
 If you want to ensure that your fields display consistently across your app, you'll need to lean on Rails' own helpers. You may be used to using form tag helpers such as `text_field_tag` to generate tags, or even writing out plain HTML tags. These can't be integrated with a form builder, so they won't offer you the benefits of this gem.
