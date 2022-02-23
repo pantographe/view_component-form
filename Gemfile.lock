@@ -5,6 +5,7 @@ PATH
       actionview (>= 6.0.0, < 7.1)
       activesupport (>= 6.0.0, < 7.1)
       view_component (>= 2.34.0, < 3.0)
+      zeitwerk (~> 2.5)
 
 GEM
   remote: https://rubygems.org/
@@ -240,7 +241,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.3)
+    zeitwerk (2.5.4)
 
 PLATFORMS
   ruby
@@ -264,4 +265,4 @@ DEPENDENCIES
   view_component-form!
 
 BUNDLED WITH
-   2.2.30
+   2.2.32

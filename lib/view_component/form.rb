@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
-require_relative "form/version"
+require "view_component"
+require "zeitwerk"
+
+loader = Zeitwerk::Loader.for_gem
+form = "#{__dir__}/form.rb"
+loader.ignore(form)
+loader.push_dir("#{__dir__}/form", namespace: ViewComponent::Form)
+loader.setup
+
 require_relative "form/engine"
-require_relative "form/builder"
