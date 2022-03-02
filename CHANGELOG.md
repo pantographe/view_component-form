@@ -5,13 +5,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+Nothing yet
+
+## [0.2.0] - 2022-03-02
 ### Added
+- Test BuilderGenerator with generator\_spec (#64)
+- Add HintComponent and ErrorMessageComponent (#98)
 - Add `validation_context` option to `Form::Builder` (#101)
 - Add `validators` helper to `FieldComponent` (#101)
 - Add `optional?` and `required?` helpers to `FieldComponent` (#101)
 - Add `label_text` helper (#103)
 - Add `field_id` helper, backported from Rails 7.0 (#104)
 - Add `weekday_select` helper (#105)
+- Add README section about supported helpers (#106)
+- Setup zeitwerk (#107)
+- Add documentation for tests (#108)
 
 ## [0.1.3] - 2022-01-11
 ### Fixed
@@ -57,7 +65,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add CHANGELOG (#50)
 - Add CI (#2)
 
-[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/pantographe/view_component-form/compare/v0.1.3...v0.2.0
 [0.1.3]: https://github.com/pantographe/view_component-form/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/pantographe/view_component-form/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/pantographe/view_component-form/compare/v0.1.0...v0.1.1
