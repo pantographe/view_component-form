@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - Fix broken gem initialization due to missing ViewComponent::Form constant (#114)
+- Initialize empty WeekdaySelectComponent if Rails < 7 to fix Zeitwerk error (#115)
 
 ## [0.2.0] - 2022-03-02
 ### Added
