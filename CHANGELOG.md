@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+Nothing yet
+
+## [0.2.1] - 2022-03-17
 ### Added
 - Conditional ActionText in CI (#117)
 
@@ -70,7 +73,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add CHANGELOG (#50)
 - Add CI (#2)
 
-[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/pantographe/view_component-form/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/pantographe/view_component-form/compare/v0.1.3...v0.2.0
 [0.1.3]: https://github.com/pantographe/view_component-form/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/pantographe/view_component-form/compare/v0.1.1...v0.1.2
