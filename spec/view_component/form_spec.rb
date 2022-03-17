@@ -2,6 +2,6 @@
 
 RSpec.describe ViewComponent::Form do
   it "has a version number" do
-    expect(ViewComponent::Form::VERSION).not_to be nil
+    expect(ViewComponent::Form::VERSION).not_to be_nil
   end
 end
