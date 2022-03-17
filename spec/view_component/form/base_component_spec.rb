@@ -29,7 +29,7 @@ RSpec.describe ViewComponent::Form::BaseComponent, type: :component do
 
       before { object.validate }
 
-      it { expect(component.object_errors?).to eq(false) }
+      it { expect(component.object_errors?).to be(false) }
     end
 
     context "with invalid object" do
@@ -37,13 +37,13 @@ RSpec.describe ViewComponent::Form::BaseComponent, type: :component do
 
       before { object.validate }
 
-      it { expect(component.object_errors?).to eq(true) }
+      it { expect(component.object_errors?).to be(true) }
     end
 
     context "without object" do
       let(:object) { nil }
 
-      it { expect(component.object_errors?).to eq(false) }
+      it { expect(component.object_errors?).to be(false) }
     end
   end
 end

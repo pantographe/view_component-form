@@ -68,7 +68,7 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       before { object.validate }
 
-      it { expect(component.method_errors?).to eq(false) }
+      it { expect(component.method_errors?).to be(false) }
     end
 
     context "with invalid object" do
@@ -76,13 +76,13 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       before { object.validate }
 
-      it { expect(component.method_errors?).to eq(true) }
+      it { expect(component.method_errors?).to be(true) }
     end
 
     context "without object" do
       let(:object) { nil }
 
-      it { expect(component.method_errors?).to eq(false) }
+      it { expect(component.method_errors?).to be(false) }
     end
   end
 
@@ -119,35 +119,35 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     context "with required method name" do
       let(:method_name) { :first_name }
 
-      it { expect(component.optional?).to eq(false) }
+      it { expect(component.optional?).to be(false) }
     end
 
     context "with optional method name" do
       let(:method_name) { :last_name }
 
-      it { expect(component.optional?).to eq(true) }
+      it { expect(component.optional?).to be(true) }
     end
 
     context "with context" do
       let(:method_name) { :email }
 
-      it { expect(component.optional?).to eq(true) }
-      it { expect(component.optional?(context: :custom_context)).to eq(false) }
+      it { expect(component.optional?).to be(true) }
+      it { expect(component.optional?(context: :custom_context)).to be(false) }
     end
 
     context "with context from the form" do
       let(:form) { form_with(object, validation_context: :custom_context) }
       let(:method_name) { :email }
 
-      it { expect(component.optional?).to eq(false) }
+      it { expect(component.optional?).to be(false) }
     end
 
     context "with multiple contexts" do
       let(:method_name) { :city }
 
-      it { expect(component.optional?).to eq(true) }
-      it { expect(component.optional?(context: :custom_context)).to eq(false) }
-      it { expect(component.optional?(context: :another_context)).to eq(false) }
+      it { expect(component.optional?).to be(true) }
+      it { expect(component.optional?(context: :custom_context)).to be(false) }
+      it { expect(component.optional?(context: :another_context)).to be(false) }
     end
   end
 
@@ -157,35 +157,35 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     context "with required method name" do
       let(:method_name) { :first_name }
 
-      it { expect(component.required?).to eq(true) }
+      it { expect(component.required?).to be(true) }
     end
 
     context "with optional method name" do
       let(:method_name) { :last_name }
 
-      it { expect(component.required?).to eq(false) }
+      it { expect(component.required?).to be(false) }
     end
 
     context "with context" do
       let(:method_name) { :email }
 
-      it { expect(component.required?).to eq(false) }
-      it { expect(component.required?(context: :custom_context)).to eq(true) }
+      it { expect(component.required?).to be(false) }
+      it { expect(component.required?(context: :custom_context)).to be(true) }
     end
 
     context "with context from the form" do
       let(:form) { form_with(object, validation_context: :custom_context) }
       let(:method_name) { :email }
 
-      it { expect(component.required?).to eq(true) }
+      it { expect(component.required?).to be(true) }
     end
 
     context "with multiple contexts" do
       let(:method_name) { :city }
 
-      it { expect(component.required?).to eq(false) }
-      it { expect(component.required?(context: :custom_context)).to eq(true) }
-      it { expect(component.required?(context: :another_context)).to eq(true) }
+      it { expect(component.required?).to be(false) }
+      it { expect(component.required?(context: :custom_context)).to be(true) }
+      it { expect(component.required?(context: :another_context)).to be(true) }
     end
   end
 
@@ -235,7 +235,7 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
   describe "#validation_context" do
     context "without context" do
-      it { expect(component.validation_context).to eq(nil) }
+      it { expect(component.validation_context).to be_nil }
     end
 
     context "with context from the form" do
