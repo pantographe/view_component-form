@@ -8,6 +8,8 @@ module ViewComponent
 
       attr_reader :method_name
 
+      delegate :validation_context, to: :form
+
       def initialize(form, object_name, method_name, options = {})
         # See: https://github.com/rails/rails/blob/83217025a171593547d1268651b446d3533e2019/actionview/lib/action_view/helpers/tags/base.rb#L13
         @method_name = method_name.to_s.dup
@@ -68,6 +70,28 @@ module ViewComponent
         content
       end
 
+      def optional?(context: validation_context)
+        return nil if object.nil?
+
+        !required?(context: context)
+      end
+
+      def required?(context: validation_context)
+        return nil if object.nil?
+
+        validators(context: context).any?(ActiveModel::Validations::PresenceValidator)
+      end
+
+      def validators(context: validation_context)
+        method_validators.select do |validator|
+          if context.nil?
+            validator.options[:on].blank?
+          else
+            Array(validator.options[:on]).include?(context&.to_sym)
+          end
+        end
+      end
+
       private
 
       def singular_association_method_name
@@ -76,6 +100,14 @@ module ViewComponent
 
       def collection_association_method_name
         @collection_association_method_name ||= method_name.to_s.sub(/_ids$/, "").pluralize.to_sym
+      end
+
+      def method_validators
+        @method_validators ||= if object.nil?
+                                 []
+                               else
+                                 object.class.validators_on(method_name)
+                               end
       end
     end
   end

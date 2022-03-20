@@ -219,6 +219,97 @@ Renders:
 </form>
 ```
 
+#### Validations
+
+Let's consider the following model for the examples below.
+
+```rb
+# app/models/user.rb
+class User < ActiveRecord::Base
+  validates :first_name, presence: true, length: { minimum: 2, maximum: 255 }
+end
+```
+
+##### Accessing validations with `#validators`
+
+Returns all validators for the method name.
+
+```rb
+# app/components/custom/form/group_component.rb
+class Custom::Form::GroupComponent < ViewComponent::Form::FieldComponent
+  private
+
+  def validation_hint
+    if length_validator
+      "between #{length_validator.options[:minimum]} and #{length_validator.options[:maximum]} chars"
+    end
+  end
+
+  def length_validator
+    validators.find { |v| v.is_a?(ActiveModel::Validations::LengthValidator) }
+  end
+end
+```
+
+```erb
+<%# app/components/custom/form/group_component.html.erb %>
+<div class="custom-form-group">
+  <label>
+    <%= label_text %> (<%= validation_hint %>)<br />
+    <%= content %>
+  </label>
+</div>
+```
+
+##### Using `#required?` and `#optional?`
+
+```erb
+<%# app/components/custom/form/group_component.html.erb %>
+<div class="custom-form-group">
+  <label>
+    <%= label_text %><%= " (required)" if required? %><br />
+    <%= content %>
+  </label>
+</div>
+```
+
+##### Validation contexts
+
+When using [validation contexts](https://guides.rubyonrails.org/active_record_validations.html#on), you can specify a context to the helpers above.
+
+```rb
+# app/models/user.rb
+class User < ActiveRecord::Base
+  validates :first_name, presence: true, length: { minimum: 2, maximum: 255 }
+  validates :email, presence: true, on: :registration
+end
+```
+
+```erb
+<%# app/views/users/_form_.html.erb %>
+<%= form_with model: @user,
+              builder: ViewComponent::Form::Builder,
+              validation_context: :registration do |f| %>
+  <%= f.group :email do %>
+    <%= f.email_field :email %>
+  <% end %>
+<% end %>
+```
+
+In this case, `ViewComponent::Form::Builder` accepts a `validation_context` option and passes it as a default value to the `#validators`, `#required?` and `#optional?` helpers.
+
+Alternatively, you can pass the context to the helpers:
+
+```erb
+<%= "(required)" if required?(context: :registration) %>
+```
+
+```rb
+def length_validator
+  validators(context: :registration).find { |v| v.is_a?(ActiveModel::Validations::LengthValidator) }
+end
+```
+
 ### Using your form components without a backing model
 
 If you want to ensure that your fields display consistently across your app, you'll need to lean on Rails' own helpers. You may be used to using form tag helpers such as `text_field_tag` to generate tags, or even writing out plain HTML tags. These can't be integrated with a form builder, so they won't offer you the benefits of this gem.
@@ -245,6 +336,49 @@ The following helpers are currently supported by `ViewComponent::Form`.
 ### Specific to `ViewComponent::Form`
 
 **Supported:** `error_message` `hint`
+
+## Testing your components
+
+### RSpec
+
+#### Configuration
+
+This assumes your already have read and configured [tests for `view_component`](https://viewcomponent.org/guide/testing.html#rspec-configuration).
+
+```rb
+# spec/rails_helper.rb
+require "view_component/test_helpers"
+require "view_component/form/test_helpers"
+require "capybara/rspec"
+
+RSpec.configure do |config|
+  config.include ViewComponent::TestHelpers, type: :component
+  config.include ViewComponent::Form::TestHelpers, type: :component
+  config.include Capybara::RSpecMatchers, type: :component
+end
+```
+
+#### Example
+
+```rb
+# spec/components/form/text_field_component_spec.rb
+RSpec.describe Form::TextFieldComponent, type: :component do
+  let(:object)  { User.new } # replace with a model of your choice
+  let(:form)    { form_with(object) }
+  let(:options) { {} }
+
+  let(:component) { render_inline(described_class.new(form, object_name, :first_name, options)) }
+
+  context "with simple args" do
+    it do
+      expect(component.to_html)
+        .to have_tag("input", with: { name: "user[first_name]", id: "user_first_name", type: "text" })
+    end
+  end
+end
+```
+
+For more complex components, we recommend the [`rspec-html-matchers` gem](https://github.com/kucaahbe/rspec-html-matchers).
 
 ## Development
 
