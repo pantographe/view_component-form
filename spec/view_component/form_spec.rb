@@ -7,11 +7,11 @@ RSpec.describe ViewComponent::Form do
 
   if ENV.fetch("VIEW_COMPONENT_FORM_USE_ACTIONTEXT", "false") == "true"
     it "loads ActionText" do
-      expect(defined?(ActionView::Helpers::Tags::ActionText)).to be true
+      expect(defined?(ActionView::Helpers::Tags::ActionText)).to eq("constant")
     end
   else
     it "does not load ActionText" do
-      expect(defined?(ActionView::Helpers::Tags::ActionText)).not_to be true
+      expect(defined?(ActionView::Helpers::Tags::ActionText)).to be_nil
     end
   end
 end
