@@ -4,7 +4,7 @@ on: [push,pull_request]
 
 jobs:
   build:
-    name: "Ruby ${{ matrix.versions.ruby }}, Rails ${{ matrix.versions.rails }} (ActionText ${{ matrix.action_text }})"
+    name: "Ruby ${{ matrix.versions.ruby }}, Rails ${{ matrix.versions.rails }}, ${{ matrix.action_text }} ActionText"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -17,11 +17,11 @@ jobs:
           - { ruby: "3.0", rails: "7.0.x" }
           - { ruby: "2.7", rails: "head" }
           - { ruby: "3.0", rails: "head" }
-        action_text: ['true', 'false']
+        action_text: ['with', 'without']
 
     env:
       BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.versions.rails }}.gemfile
-      VIEW_COMPONENT_FORM_USE_ACTIONTEXT: ${{ matrix.action_text }}
+      VIEW_COMPONENT_FORM_USE_ACTIONTEXT: ${{ matrix.action_text == 'with' && 'true' || 'false' }}
 
     steps:
     - uses: actions/checkout@v2
