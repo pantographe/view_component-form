@@ -3,7 +3,7 @@
 VERSION=$1
 
 if [[ -z "$VERSION" ]]; then
-  echo "Version should be specified. Example: bin/release v1.0.0"
+  echo "Version should be specified. Example: bin/release 1.0.0"
   exit 1
 fi
 
