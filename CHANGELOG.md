@@ -9,7 +9,7 @@ Nothing yet
 
 ## [0.2.1] - 2022-03-17
 ### Added
-- Conditional ActionText in CI (#117)
+- Conditional ActionText support (#117, #118)
 
 ### Fixed
 - Fix broken gem initialization due to missing ViewComponent::Form constant (#114)

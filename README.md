@@ -7,7 +7,7 @@
 ## Compatibility
 
 This gem is tested on:
-- Rails 6.0+
+- Rails 6.0+ (with or without ActionText)
 - Ruby 2.7+
 
 ## Installation
