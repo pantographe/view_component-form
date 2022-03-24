@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-if defined?(ActionView::Helpers::Tags::ActionText)
-  module ViewComponent
-    module Form
-      class RichTextAreaComponent < FieldComponent
+module ViewComponent
+  module Form
+    class RichTextAreaComponent < FieldComponent
+      if defined?(ActionView::Helpers::Tags::ActionText) # rubocop:disable Style/IfUnlessModifier
         self.tag_klass = ActionView::Helpers::Tags::ActionText
       end
     end
