@@ -35,4 +35,8 @@ ActiveRecord::Schema.define do
     t.belongs_to :country
     t.timestamps
   end
+
+  create_table(:messages, force: true) do |t|
+    t.timestamps
+  end
 end
