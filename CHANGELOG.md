@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Add ruby 3.1 to CI (#123) 
 
+### Fixed
+- Fix `FileFieldComponent` options for `direct_upload` and `include_hidden` (#122)
+
 ## [0.2.3] - 2022-03-24
 ### Fixed
 - Declare empty RichTextAreaComponent if ActionText is not installed, to fix Zeitwerk error (#120)
