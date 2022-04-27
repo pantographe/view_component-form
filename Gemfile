@@ -7,7 +7,7 @@ gemspec
 
 gem "appraisal", require: false
 gem "capybara", require: false
-gem "combustion"
+gem "combustion", github: "pat/combustion"
 gem "generator_spec"
 gem "rails"
 gem "rake", "~> 13.0"

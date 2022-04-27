@@ -13,10 +13,12 @@ jobs:
           - { ruby: "3.0", rails: "6.0.x" }
           - { ruby: "2.7", rails: "6.1.x" }
           - { ruby: "3.0", rails: "6.1.x" }
+          - { ruby: "3.1", rails: "6.1.x" }
           - { ruby: "2.7", rails: "7.0.x" }
           - { ruby: "3.0", rails: "7.0.x" }
-          - { ruby: "2.7", rails: "head" }
+          - { ruby: "3.1", rails: "7.0.x" }
           - { ruby: "3.0", rails: "head" }
+          - { ruby: "3.1", rails: "head" }
         action_text: ['with', 'without']
 
     env:
