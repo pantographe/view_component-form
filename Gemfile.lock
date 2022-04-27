@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    view_component-form (0.2.3)
+    view_component-form (0.2.4)
       actionview (>= 6.0.0, < 7.1)
       activesupport (>= 6.0.0, < 7.1)
       view_component (>= 2.34.0, < 3.0)
@@ -241,7 +241,7 @@ GEM
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.1.0)
-    view_component (2.51.0)
+    view_component (2.53.0)
       activesupport (>= 5.0.0, < 8.0)
       method_source (~> 1.0)
     websocket-driver (0.7.5)
