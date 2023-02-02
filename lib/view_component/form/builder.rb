@@ -27,13 +27,14 @@ module ViewComponent
         end
       end
 
-      attr_reader :validation_context
+      include ViewComponent::Form::ValidationContext
 
       def initialize(*)
         @__component_klass_cache = {}
 
         super
 
+        # TODO: Not sure how to move this to ViewComponent::Form::ValidationContext
         @validation_context = options[:validation_context]
       end
 
