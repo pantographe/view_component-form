@@ -236,8 +236,8 @@ module ViewComponent
           end.first
 
           unless component_klass.is_a?(Class) && component_klass < ViewComponent::Base
-            raise NotImplementedComponentError, "Component named #{component_name} doesn't exist" \
-                                                " or is not a ViewComponent::Base class"
+            raise NotImplementedComponentError, "Component named #{component_name} doesn't exist " \
+                                                "or is not a ViewComponent::Base class"
           end
 
           component_klass
