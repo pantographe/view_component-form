@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Fixed
-- Update dependencies and add Ruby 3.2 to CI (#128)
+- Update dependencies (#128)
+- Add Ruby 3.2 to CI (#128)
+- Fix specs for Rails 7.1 (#128)
 
 ## [0.2.4] - 2022-04-27
 ### Changed
