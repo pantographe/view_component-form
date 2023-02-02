@@ -9,18 +9,18 @@ jobs:
     strategy:
       matrix:
         versions:
-          - { ruby: "2.7", rails: "6.0.x" }
-          - { ruby: "3.0", rails: "6.0.x" }
-          - { ruby: "2.7", rails: "6.1.x" }
-          - { ruby: "3.0", rails: "6.1.x" }
-          - { ruby: "3.1", rails: "6.1.x" }
-          - { ruby: "2.7", rails: "7.0.x" }
-          - { ruby: "3.0", rails: "7.0.x" }
-          - { ruby: "3.1", rails: "7.0.x" }
-          - { ruby: "3.2", rails: "7.0.x" }
-          - { ruby: "3.0", rails: "head" }
-          - { ruby: "3.1", rails: "head" }
-          - { ruby: "3.2", rails: "head" }
+          - { ruby: "2.7", rails: "6.0.x", rubygems: "default" }
+          - { ruby: "3.0", rails: "6.0.x", rubygems: "default" }
+          - { ruby: "2.7", rails: "6.1.x", rubygems: "default" }
+          - { ruby: "3.0", rails: "6.1.x", rubygems: "default" }
+          - { ruby: "3.1", rails: "6.1.x", rubygems: "default" }
+          - { ruby: "2.7", rails: "7.0.x", rubygems: "default" }
+          - { ruby: "3.0", rails: "7.0.x", rubygems: "default" }
+          - { ruby: "3.1", rails: "7.0.x", rubygems: "default" }
+          - { ruby: "3.2", rails: "7.0.x", rubygems: "default" }
+          - { ruby: "3.0", rails: "head", rubygems: "latest" }
+          - { ruby: "3.1", rails: "head", rubygems: "latest" }
+          - { ruby: "3.2", rails: "head", rubygems: "latest" }
         action_text: ['with', 'without']
 
     env:
@@ -39,6 +39,7 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.versions.ruby }}
+        rubygems: ${{ matrix.versions.rubygems }}
         bundler-cache: true
 
     - name: Test with Rake
