@@ -18,5 +18,14 @@ RSpec.describe ViewComponent::Form::TimeFieldComponent, type: :component do
 
   include_examples "component with custom html classes"
   include_examples "component with custom data attributes"
-  include_examples "component with custom value"
+
+  if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new("7.1.0.alpha")
+    include_examples "component with custom value"
+  else
+    context "with custom value" do
+      let(:options) { { value: DateTime.new(2004, 6, 15, 1, 2, 3) } }
+
+      it { expect(component_html_attributes["value"].to_s).to eq("01:02:03.000") }
+    end
+  end
 end
