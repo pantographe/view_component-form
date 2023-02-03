@@ -3,6 +3,10 @@
 module ViewComponent
   module Form
     module Renderer
+      class Error < StandardError; end
+      class NamespaceAlreadyAddedError < Error; end
+      class NotImplementedComponentError < Error; end
+
       # rubocop:disable Metrics/MethodLength
       def self.included(base)
         base.class_eval do
