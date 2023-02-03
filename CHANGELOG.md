@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Split `Form::Builder` into modules, to allow including only some modules instead of inheriting the whole class (#134)
+
 ### Fixed
 - Update dependencies (#128)
 - Add Ruby 3.2 to CI (#128)
