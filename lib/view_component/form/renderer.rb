@@ -6,6 +6,14 @@ module ViewComponent
       # rubocop:disable Metrics/MethodLength
       def self.included(base)
         base.class_eval do
+          original_initialize_method = instance_method(:initialize)
+
+          define_method(:initialize) do |*args, &block|
+            @__component_klass_cache = {}
+
+            original_initialize_method.bind_call(self, *args, &block)
+          end
+
           class_attribute :lookup_namespaces, default: [ViewComponent::Form]
 
           class << self
