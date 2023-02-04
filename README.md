@@ -134,8 +134,8 @@ class ModularCustomFormBuilder < ActionView::Helpers::FormBuilder
   # All standard Rails form helpers
   include ViewComponent::Form::Helpers::Rails
 
-  # Backports of newest Rails form helpers
-  # include ViewComponent::Form::Helpers::RailsBackports
+  # Backports of Rails 7 form helpers (can be removed if you're running Rails >= 7)
+  # include ViewComponent::Form::Helpers::Rails7Backports
 
   # Additional form helpers provided by ViewComponent::Form
   # include ViewComponent::Form::Helpers::Custom
