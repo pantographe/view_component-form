@@ -4,7 +4,7 @@ on: [push,pull_request]
 
 jobs:
   build:
-    name: "Ruby ${{ matrix.versions.ruby }}, Rails ${{ matrix.versions.rails }}, ${{ matrix.action_text }} ActionText"
+    name: "Ruby ${{ matrix.versions.ruby }}, Rails ${{ matrix.versions.rails }}, VC ${{ matrix.view_component }}, ${{ matrix.action_text }} ActionText"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -25,7 +25,7 @@ jobs:
         view_component: ['2.0', '3.0']
 
     env:
-      BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.versions.rails }}_${{ matrix.view_component }}.gemfile
+      BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.versions.rails }}_vc_${{ matrix.view_component }}.gemfile
       VIEW_COMPONENT_FORM_USE_ACTIONTEXT: ${{ matrix.action_text == 'with' && 'true' || 'false' }}
 
     steps:
@@ -51,5 +51,5 @@ jobs:
       uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: coverage-report-ruby-${{ matrix.versions.ruby }}-rails-${{ matrix.versions.rails }}
+        name: coverage-report-ruby-${{ matrix.versions.ruby }}-rails-${{ matrix.versions.rails }}-vc-${{ matrix.view_component }}-actiontext-${{ matrix.action_text }}
         path: coverage
