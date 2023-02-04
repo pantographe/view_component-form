@@ -4,7 +4,7 @@ PATH
     view_component-form (0.2.4)
       actionview (>= 6.0.0, < 7.1)
       activesupport (>= 6.0.0, < 7.1)
-      view_component (>= 3.0.0.rc1, < 4.0)
+      view_component (>= 2.34.0, < 4.0)
       zeitwerk (~> 2.5)
 
 GEM
