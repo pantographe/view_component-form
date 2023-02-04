@@ -100,7 +100,7 @@ This allows you to pick the namespace your components will be loaded from.
 # lib/custom_form_builder.rb
 class CustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  namespace Custom::Form
+  namespace "Custom::Form"
 end
 ```
 
@@ -116,7 +116,32 @@ bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace AnotherCusto
 # app/forms/another_custom_form_builder.rb
 class AnotherCustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  namespace AnotherCustom::Form
+  namespace "AnotherCustom::Form"
+end
+```
+
+Another approach is to include only some modules instead of inheriting from the whole class:
+
+```rb
+# app/forms/modular_custom_form_builder.rb
+class ModularCustomFormBuilder < ActionView::Helpers::FormBuilder
+  # Provides `render_component` method and namespace management
+  include ViewComponent::Form::Renderer
+
+  # Exposes a `validation_context` to your components
+  include ViewComponent::Form::ValidationContext
+
+  # All standard Rails form helpers
+  include ViewComponent::Form::Helpers::Rails
+
+  # Backports of Rails 7 form helpers (can be removed if you're running Rails >= 7)
+  # include ViewComponent::Form::Helpers::Rails7Backports
+
+  # Additional form helpers provided by ViewComponent::Form
+  # include ViewComponent::Form::Helpers::Custom
+
+  # Set the namespace you want to use for your own components
+  namespace "AnotherCustom::Form"
 end
 ```
 
