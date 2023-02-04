@@ -28,6 +28,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "actionview", [">= 6.0.0", "< 7.1"]
   spec.add_dependency "activesupport", [">= 6.0.0", "< 7.1"]
-  spec.add_dependency "view_component", [">= 2.34.0", "< 3.0"]
+  spec.add_dependency "view_component", [">= 2.34.0", "< 4.0"]
   spec.add_dependency "zeitwerk", ["~> 2.5"]
 end
