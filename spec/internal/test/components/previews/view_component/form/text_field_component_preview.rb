@@ -10,7 +10,8 @@ module ViewComponent
       def default
         @object = User.new
 
-        # TODO: maybe stop passing object_name to components since it is accessing from form_builder (delegate in BaseComponent)
+        # TODO: maybe stop passing object_name to components since
+        # it is accessing from form_builder (delegated in BaseComponent)
         render_f ViewComponent::Form::TextFieldComponent, :first_name
       end
 
@@ -19,7 +20,6 @@ module ViewComponent
 
         render_f ViewComponent::Form::TextFieldComponent, :first_name
       end
-
 
       private
 

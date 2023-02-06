@@ -8,7 +8,8 @@ module ViewComponent
       include ViewComponent::Form::TestHelpers
 
       def default
-        # TODO: maybe stop passing object_name to components since it is accessing from form_builder (delegate in BaseComponent)
+        # TODO: maybe stop passing object_name to components since
+        # it is accessing from form_builder (delegated in BaseComponent)
         render ViewComponent::Form::LabelComponent.new(form_builder, form_builder.object_name, :first_name)
       end
 
