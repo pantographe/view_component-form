@@ -13,10 +13,10 @@ module ViewComponent
       def form_with(model: nil, scope: nil, **options)
         if model
           model   = model.last if model.is_a?(Array)
-          scope ||= model_name_from_record_or_class(model).param_key
+          scope ||= model_name_from_record_or_class(model)&.param_key
         end
 
-        instanciate_form_builder(scope, model, options)
+        instanciate_form_builder(scope, model, **options)
       end
 
       # See: https://github.com/rails/rails/blob/83217025a171593547d1268651b446d3533e2019/actionview/lib/action_view/helpers/form_helper.rb#L1561

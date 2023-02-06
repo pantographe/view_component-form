@@ -18,10 +18,10 @@ RSpec.describe ViewComponent::Form::BaseComponent, type: :component do
   end
 
   let(:object)  { object_klass.new }
-  let(:form)    { form_with(object) }
+  let(:form)    { form_with(model: object) }
   let(:options) { {} }
 
-  let(:component) { described_class.new(form, object_name, options) }
+  let(:component) { described_class.new(form, :user, options) }
 
   describe "#object_errors?" do
     context "with valid object" do

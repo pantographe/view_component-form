@@ -2,7 +2,7 @@
 
 RSpec.describe ViewComponent::Form::CollectionCheckBoxesComponent, type: :component do
   let(:object)       { OpenStruct.new }
-  let(:form)         { form_with(object) }
+  let(:form)         { form_with(model: object) }
   let(:collection)   { [OpenStruct.new(name: "Belgium", code: "BE"), OpenStruct.new(name: "France", code: "FR")] }
   let(:options)      { {} }
   let(:html_options) { {} }
@@ -10,7 +10,7 @@ RSpec.describe ViewComponent::Form::CollectionCheckBoxesComponent, type: :compon
   let(:component) do
     render_inline(described_class.new(
                     form,
-                    object_name,
+                    :user,
                     :nationalities,
                     collection,
                     :code,

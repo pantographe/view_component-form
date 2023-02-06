@@ -2,10 +2,10 @@
 
 RSpec.describe ViewComponent::Form::FileFieldComponent, type: :component do
   let(:object)  { OpenStruct.new }
-  let(:form)    { form_with(object) }
+  let(:form)    { form_with(model: object) }
   let(:options) { {} }
 
-  let(:component) { render_inline(described_class.new(form, object_name, :avatar, options)) }
+  let(:component) { render_inline(described_class.new(form, :user, :avatar, options)) }
   let(:component_html_attributes) { component.css("input").first.attributes }
 
   context "with simple args" do

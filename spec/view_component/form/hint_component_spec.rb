@@ -3,9 +3,9 @@
 RSpec.describe ViewComponent::Form::HintComponent, type: :component do
   subject(:rendered_component) { render_inline(component) }
 
-  let(:component) { described_class.new(form, object_name, :birth_date, "this is my hint for you", options) }
+  let(:component) { described_class.new(form, :user, :birth_date, "this is my hint for you", options) }
   let(:object)  { OpenStruct.new }
-  let(:form)    { form_with(object) }
+  let(:form)    { form_with(model: object) }
   let(:options) { {} }
   let(:component_html_attributes) { rendered_component.css("div").first.attributes }
 

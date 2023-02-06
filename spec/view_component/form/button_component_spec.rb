@@ -2,7 +2,7 @@
 
 RSpec.describe ViewComponent::Form::ButtonComponent, type: :component do
   let(:object)  { OpenStruct.new }
-  let(:form)    { form_with(object) }
+  let(:form)    { form_with(model: object) }
   let(:options) { {} }
   let(:value)   { "Send" }
   let(:block)   { nil }

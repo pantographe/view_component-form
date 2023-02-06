@@ -20,11 +20,11 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
   end
 
   let(:object)      { object_klass.new }
-  let(:form)        { form_with(object) }
+  let(:form)        { form_with(model: object) }
   let(:method_name) { :first_name }
   let(:options)     { {} }
 
-  let(:component) { described_class.new(form, object_name, method_name, options) }
+  let(:component) { described_class.new(form, :user, method_name, options) }
 
   describe "#tag_klass" do
     subject { Class.new(ChildClass).tag_klass }
@@ -136,7 +136,7 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     end
 
     context "with context from the form" do
-      let(:form) { form_with(object, validation_context: :custom_context) }
+      let(:form) { form_with(model: object, validation_context: :custom_context) }
       let(:method_name) { :email }
 
       it { expect(component.optional?).to be(false) }
@@ -174,7 +174,7 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     end
 
     context "with context from the form" do
-      let(:form) { form_with(object, validation_context: :custom_context) }
+      let(:form) { form_with(model: object, validation_context: :custom_context) }
       let(:method_name) { :email }
 
       it { expect(component.required?).to be(true) }
@@ -207,7 +207,7 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     end
 
     context "with context from the form" do
-      let(:form) { form_with(object, validation_context: :custom_context) }
+      let(:form) { form_with(model: object, validation_context: :custom_context) }
       let(:method_name) { :email }
 
       it do
@@ -239,7 +239,7 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     end
 
     context "with context from the form" do
-      let(:form) { form_with(object, validation_context: :custom_context) }
+      let(:form) { form_with(model: object, validation_context: :custom_context) }
 
       it { expect(component.validation_context).to eq(:custom_context) }
     end

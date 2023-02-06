@@ -389,10 +389,10 @@ end
 # spec/components/form/text_field_component_spec.rb
 RSpec.describe Form::TextFieldComponent, type: :component do
   let(:object)  { User.new } # replace with a model of your choice
-  let(:form)    { form_with(object) }
+  let(:form)    { form_with(model: object) }
   let(:options) { {} }
 
-  let(:component) { render_inline(described_class.new(form, object_name, :first_name, options)) }
+  let(:component) { render_inline(described_class.new(form, :user, :first_name, options)) }
 
   context "with simple args" do
     it do

@@ -2,7 +2,7 @@
 
 RSpec.describe ViewComponent::Form::CollectionRadioButtonsComponent, type: :component do
   let(:object)       { OpenStruct.new }
-  let(:form)         { form_with(object) }
+  let(:form)         { form_with(model: object) }
   let(:collection)   { [OpenStruct.new(name: "Belgium", code: "BE"), OpenStruct.new(name: "France", code: "FR")] }
   let(:options)      { {} }
   let(:html_options) { {} }
@@ -10,7 +10,7 @@ RSpec.describe ViewComponent::Form::CollectionRadioButtonsComponent, type: :comp
   let(:component) do
     render_inline(described_class.new(
                     form,
-                    object_name,
+                    :user,
                     :nationality,
                     collection,
                     :code,

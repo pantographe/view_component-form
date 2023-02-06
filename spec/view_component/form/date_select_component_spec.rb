@@ -2,11 +2,11 @@
 
 RSpec.describe ViewComponent::Form::DateSelectComponent, type: :component do
   let(:object)  { OpenStruct.new }
-  let(:form)    { form_with(object) }
+  let(:form)    { form_with(model: object) }
   let(:options) { {} }
   let(:html_options) { {} }
 
-  let(:component) { render_inline(described_class.new(form, object_name, :birth_date, options, html_options)) }
+  let(:component) { render_inline(described_class.new(form, :user, :birth_date, options, html_options)) }
   let(:component_html_attributes) { component.css("select").first.attributes }
 
   context "with simple args" do
