@@ -20,8 +20,12 @@ gem "sqlite3"
 group :development do
   gem "view_component"
 
-  gem "lookbook"
+  gem "lookbook", ">= 2.0.0.beta.3"
   gem "puma"
+
+  # Optional dependencies of Lookbook 2.0
+  gem "listen"
+  gem "actioncable"
 end
 
 # Specify your gem's dependencies in view_component-form.gemspec
