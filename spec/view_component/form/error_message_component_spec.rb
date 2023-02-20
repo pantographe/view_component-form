@@ -3,7 +3,7 @@
 RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
   subject(:rendered_component) { render_inline(component) }
 
-  let(:component) { described_class.new(form, object_name, :first_name, options) }
+  let(:component) { described_class.new(form, :user, :first_name, options) }
 
   let(:object_klass) do
     Class.new do
@@ -22,7 +22,7 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
   end
 
   let(:object)  { object_klass.new }
-  let(:form)    { form_with(object) }
+  let(:form)    { form_with(model: object) }
   let(:options) { {} }
   let(:component_html_attributes) { rendered_component.css("div").first.attributes }
 

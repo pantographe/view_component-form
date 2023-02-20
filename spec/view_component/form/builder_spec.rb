@@ -4,7 +4,7 @@ require_relative "../../fixtures/test_model"
 
 RSpec.describe ViewComponent::Form::Builder, type: :builder do
   let(:object)  { OpenStruct.new }
-  let(:form)    { form_with(object) }
+  let(:form)    { form_with(model: object) }
   let(:options) { {} }
 
   shared_examples "the default form builder" do |method_name, *args, rspec_around: lambda { |example|
@@ -13,7 +13,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     around(&rspec_around)
     subject { form.public_send(method_name, *args, **kwargs, &block) }
 
-    let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
+    let(:default_form_builder) { form_with(model: object, builder: ActionView::Helpers::FormBuilder) }
     let(:default_form_builder_output) { default_form_builder.public_send(method_name, *args, **kwargs, &block) }
 
     context "when calling ##{method_name}" do
@@ -145,7 +145,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
   describe "#component_klass" do
     context "with gem Builder" do
-      let(:builder) { described_class.new(object_name, object, template, options) }
+      let(:builder) { described_class.new(:user, object, template, options) }
 
       it { expect(builder.send(:component_klass, :label)).to eq(ViewComponent::Form::LabelComponent) }
       it { expect(builder.send(:component_klass, :text_field)).to eq(ViewComponent::Form::TextFieldComponent) }
@@ -153,7 +153,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     end
 
     context "with custom Builder" do
-      let(:builder) { CustomFormBuilder.new(object_name, object, template, options) }
+      let(:builder) { CustomFormBuilder.new(:user, object, template, options) }
 
       it { expect(builder.send(:component_klass, :label)).to eq(Form::LabelComponent) }
       it { expect(builder.send(:component_klass, :text_field)).to eq(Form::TextFieldComponent) }
@@ -161,7 +161,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     end
 
     context "with embeded builder" do
-      let(:builder) { InlineCustomFormBuilder.new(object_name, object, template, options) }
+      let(:builder) { InlineCustomFormBuilder.new(:user, object, template, options) }
 
       it { expect(builder.send(:component_klass, :label)).to eq(InlineForm::LabelComponent) }
       it { expect(builder.send(:component_klass, :text_field)).to eq(Form::TextFieldComponent) }
@@ -173,14 +173,14 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     if Rails::VERSION::MAJOR >= 7
       it_behaves_like "the default form builder", :field_id, :first_name, :hint
     else
-      let(:builder) { described_class.new(object_name, object, template, options) }
+      let(:builder) { described_class.new(:user, object, template, options) }
 
       it { expect(builder.send(:field_id, :first_name, :hint)).to eq("first_name_hint") }
     end
   end
 
   describe "#validation_context" do
-    let(:builder) { described_class.new(object_name, object, template, options) }
+    let(:builder) { described_class.new(:user, object, template, options) }
 
     context "without context" do
       it { expect(builder.send(:validation_context)).to be_nil }

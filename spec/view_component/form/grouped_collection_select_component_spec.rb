@@ -2,7 +2,7 @@
 
 RSpec.describe ViewComponent::Form::GroupedCollectionSelectComponent, type: :component do
   let(:object)       { OpenStruct.new }
-  let(:form)         { form_with(object) }
+  let(:form)         { form_with(model: object) }
   let(:collection)   do
     [
       OpenStruct.new(
@@ -26,7 +26,7 @@ RSpec.describe ViewComponent::Form::GroupedCollectionSelectComponent, type: :com
   let(:component) do
     render_inline(described_class.new(
                     form,
-                    object_name,
+                    :user,
                     :country,
                     collection,
                     :countries,

@@ -2,10 +2,10 @@
 
 RSpec.describe ViewComponent::Form::CheckBoxComponent, type: :component do
   let(:object)  { OpenStruct.new }
-  let(:form)    { form_with(object) }
+  let(:form)    { form_with(model: object) }
   let(:options) { {} }
 
-  let(:component) { render_inline(described_class.new(form, object_name, :admin, "1", "0", options)) }
+  let(:component) { render_inline(described_class.new(form, :user, :admin, "1", "0", options)) }
   let(:component_html_attributes) { component.css("input").last.attributes }
 
   context "with simple args" do

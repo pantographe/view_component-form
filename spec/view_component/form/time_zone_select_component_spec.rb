@@ -2,11 +2,11 @@
 
 RSpec.describe ViewComponent::Form::TimeZoneSelectComponent, type: :component do
   let(:object)  { OpenStruct.new }
-  let(:form)    { form_with(object) }
+  let(:form)    { form_with(model: object) }
   let(:options) { {} }
   let(:html_options) { {} }
 
-  let(:component) { render_inline(described_class.new(form, object_name, :time_zone, nil, options, html_options)) }
+  let(:component) { render_inline(described_class.new(form, :user, :time_zone, nil, options, html_options)) }
   let(:component_html_attributes) { component.css("select").first.attributes }
 
   context "with simple args" do

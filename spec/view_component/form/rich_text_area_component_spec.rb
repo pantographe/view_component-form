@@ -3,10 +3,10 @@
 if defined?(ActionView::Helpers::Tags::ActionText)
   RSpec.describe ViewComponent::Form::RichTextAreaComponent, type: :component do
     let(:object)  { OpenStruct.new }
-    let(:form)    { form_with(object) }
+    let(:form)    { form_with(model: object) }
     let(:options) { {} }
 
-    let(:component) { render_inline(described_class.new(form, object_name, :bio, options)) }
+    let(:component) { render_inline(described_class.new(form, :user, :bio, options)) }
     let(:component_html_attributes) { component.css("trix-editor").first.attributes }
 
     context "with simple args" do

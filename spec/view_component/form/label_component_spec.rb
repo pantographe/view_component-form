@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe ViewComponent::Form::LabelComponent, type: :component do
-  let(:object)  { OpenStruct.new(errors: []) }
-  let(:form)    { form_with(object) }
+  let(:object)  { User.new }
+  let(:form)    { form_with(model: object) }
   let(:options) { {} }
   let(:block)   { nil }
 
-  let(:component) { render_inline(described_class.new(form, object_name, :first_name, options), &block) }
+  let(:component) { render_inline(described_class.new(form, :user, :first_name, options), &block) }
   let(:component_html_attributes) { component.css("label").first.attributes }
 
   context "with simple args" do
@@ -19,7 +19,7 @@ RSpec.describe ViewComponent::Form::LabelComponent, type: :component do
 
   context "with content and options" do
     let(:options) { { class: "custom-label" } }
-    let(:component) { render_inline(described_class.new(form, object_name, :first_name, "Your first name", options)) }
+    let(:component) { render_inline(described_class.new(form, :user, :first_name, "Your first name", options)) }
 
     it do
       expect(component).to eq_html <<~HTML

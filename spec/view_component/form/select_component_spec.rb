@@ -2,14 +2,14 @@
 
 RSpec.describe ViewComponent::Form::SelectComponent, type: :component do
   let(:object)  { OpenStruct.new }
-  let(:form)    { form_with(object) }
+  let(:form)    { form_with(model: object) }
   let(:options) { {} }
   let(:html_options) { {} }
 
   let(:component) do
     render_inline(described_class.new(
                     form,
-                    object_name,
+                    :user,
                     :role,
                     [["Admin", :admin], ["Manager", :manager]],
                     options,
