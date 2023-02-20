@@ -24,8 +24,8 @@ group :development do
   gem "puma"
 
   # Optional dependencies of Lookbook 2.0
-  gem "listen"
   gem "actioncable"
+  gem "listen"
 end
 
 # Specify your gem's dependencies in view_component-form.gemspec
