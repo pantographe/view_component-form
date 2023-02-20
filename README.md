@@ -91,13 +91,13 @@ First, generate your own `FormBuilder`:
 ```console
 bin/rails generate vcf:builder CustomFormBuilder
 
-      create  lib/custom_form_builder.rb
+      create  app/helpers/custom_form_builder.rb
 ```
 
 This allows you to pick the namespace your components will be loaded from.
 
 ```rb
-# lib/custom_form_builder.rb
+# app/helpers/custom_form_builder.rb
 class CustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
   namespace "Custom::Form"
