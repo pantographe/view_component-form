@@ -18,6 +18,7 @@ Combustion.initialize! :all do
   config.view_component.preview_paths << Rails.root.join("test/components/previews")
   config.view_component.default_preview_layout = "component_preview"
 
+  config.lookbook.project_name = "ViewComponent::Form"
   config.lookbook.listen_paths << Rails.root.join("../../app/components")
 end
 
