@@ -4,6 +4,11 @@
 
 :warning: **This is an early release: the API is subject to change until we reach `v1.0.0`.**
 
+Development of this gem is sponsored by:
+
+<a href="https://etamin.studio/?ref=view_component-form">
+<img src="https://etamin.studio/images/logo.svg" alt="Sponsored by Etamin Studio" width="184" height="22"></a>
+
 ## Compatibility
 
 This gem is tested on:
