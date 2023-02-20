@@ -40,7 +40,7 @@ module ViewComponent
         def template
           lookup_context = ActionView::LookupContext.new(ActionController::Base.view_paths)
 
-          ActionView::Base.new(lookup_context, {}, ApplicationController.new)
+          ActionView::Base.new(lookup_context, {}, ActionController::Base.view_paths)
         end
       else
         def template
