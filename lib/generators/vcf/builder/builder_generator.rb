@@ -6,7 +6,7 @@ module Vcf
       source_root File.join(File.dirname(__FILE__), "templates")
 
       class_option :namespace, default: "Form"
-      class_option :path,      default: "lib"
+      class_option :path,      default: "app/helpers"
 
       def create_builder_from_template
         template "builder.rb.erb", destination

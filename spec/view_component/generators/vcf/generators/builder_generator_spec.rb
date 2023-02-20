@@ -17,7 +17,7 @@ RSpec.describe Vcf::Generators::BuilderGenerator, type: :generator do
       end
 
       it do
-        assert_file "lib/custom_form_builder.rb" do |builder|
+        assert_file "app/helper/custom_form_builder.rb" do |builder|
           assert_match(/class CustomFormBuilder < ViewComponent::Form::Builder/, builder)
           assert_match(/namespace "Form"/, builder)
         end
@@ -30,7 +30,7 @@ RSpec.describe Vcf::Generators::BuilderGenerator, type: :generator do
       end
 
       it do
-        assert_file "lib/custom_form_builder.rb" do |builder|
+        assert_file "app/helper/custom_form_builder.rb" do |builder|
           assert_match(/namespace "CustomForm"/, builder)
         end
       end
