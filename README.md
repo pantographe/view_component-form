@@ -6,13 +6,7 @@
 
 Development of this gem is sponsored by:
 
-<a href="https://etamin.studio/?ref=view_component-form">
-  <img src="https://etamin.studio/images/logo.svg"
-       alt="Sponsored by Etamin Studio" width="184" height="22">
-</a>      <a href="https://pantographe.studio/?ref=view_component-form">
-  <img src="https://static.s3.office.pantographe.cloud/logofull.svg"
-       alt="Sponsored by Pantographe" width="138" height="22">
-</a>
+<a href="https://etamin.studio/?ref=view_component-form"><img src="https://etamin.studio/images/logo.svg" alt="Sponsored by Etamin Studio" width="184" height="22"></a>      <a href="https://pantographe.studio/?ref=view_component-form"><img src="https://static.s3.office.pantographe.cloud/logofull.svg" alt="Sponsored by Pantographe" width="181" height="29"></a>
 
 ## Compatibility
 
