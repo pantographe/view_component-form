@@ -53,6 +53,27 @@ RSpec.describe ViewComponent::Form::CollectionCheckBoxesComponent, type: :compon
     end
   end
 
+  context "with a build proc" do
+    let(:options) do
+      {
+        build_proc: proc do |b|
+          "<div class='wrapper'>
+            #{b.check_box}
+            #{b.label}
+          </div>".html_safe
+        end
+      }
+    end
+
+    it do
+      expect(component.to_html)
+        .to have_tag(".wrapper input", with: {
+                       type: "checkbox", value: "BE",
+                       id: "user_nationalities_be", name: "user[nationalities][]"
+                     })
+    end
+  end
+
   include_examples "component with custom html classes", :html_options
   include_examples "component with custom data attributes", :html_options
 end
