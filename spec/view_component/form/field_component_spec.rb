@@ -52,7 +52,7 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       before { object.validate }
 
-      it { expect(component.method_errors).to eq(["Can't be blank", "Is too short (minimum is 2 characters)"]) }
+      it { expect(component.method_errors).to eq([I18n.t("errors.messages.blank").upcase_first, "Is too short (minimum is 2 characters)"]) }
     end
 
     context "without object" do
