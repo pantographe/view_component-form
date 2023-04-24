@@ -52,7 +52,10 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       before { object.validate }
 
-      it { expect(component.method_errors).to eq(["Can't be blank", "Is too short (minimum is 2 characters)"]) }
+      it {
+        expect(component.method_errors).to eq([I18n.t("errors.messages.blank").upcase_first,
+                                               "Is too short (minimum is 2 characters)"])
+      }
     end
 
     context "without object" do
@@ -95,8 +98,8 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
   describe "#object_method_names" do
     it { expect(component.object_method_names).to eq(%i[first_name]) }
 
-    pending "test with belongs_to for _id"
-    pending "test with has_many for _ids"
+    it "works with belongs_to for _id", skip: "still to be implemented"
+    it "works with has_many for _ids", skip: "still to be implemented"
   end
 
   describe "#label_text" do
