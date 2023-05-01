@@ -4,37 +4,43 @@ on: [push,pull_request]
 
 jobs:
   build:
-    name: "Ruby ${{ matrix.versions.ruby }}, Rails ${{ matrix.versions.rails }}, ${{ matrix.action_text }} ActionText"
+    name: "Ruby ${{ matrix.versions.ruby }}, Rails ${{ matrix.versions.rails }}, VC ${{ matrix.view_component }}, ${{ matrix.action_text }} ActionText"
     runs-on: ubuntu-latest
     strategy:
       matrix:
         versions:
-          - { ruby: "2.7", rails: "6.0.x" }
-          - { ruby: "3.0", rails: "6.0.x" }
-          - { ruby: "2.7", rails: "6.1.x" }
-          - { ruby: "3.0", rails: "6.1.x" }
-          - { ruby: "2.7", rails: "7.0.x" }
-          - { ruby: "3.0", rails: "7.0.x" }
-          - { ruby: "2.7", rails: "head" }
-          - { ruby: "3.0", rails: "head" }
+          - { ruby: "2.7", rails: "6.0", rubygems: "default" }
+          - { ruby: "3.0", rails: "6.0", rubygems: "default" }
+          - { ruby: "2.7", rails: "6.1", rubygems: "default" }
+          - { ruby: "3.0", rails: "6.1", rubygems: "default" }
+          - { ruby: "3.1", rails: "6.1", rubygems: "default" }
+          - { ruby: "2.7", rails: "7.0", rubygems: "default" }
+          - { ruby: "3.0", rails: "7.0", rubygems: "default" }
+          - { ruby: "3.1", rails: "7.0", rubygems: "default" }
+          - { ruby: "3.2", rails: "7.0", rubygems: "default" }
+          - { ruby: "3.0", rails: "head", rubygems: "latest" }
+          - { ruby: "3.1", rails: "head", rubygems: "latest" }
+          - { ruby: "3.2", rails: "head", rubygems: "latest" }
         action_text: ['with', 'without']
+        view_component: ['2.0', '3.0']
 
     env:
-      BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.versions.rails }}.gemfile
+      BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.versions.rails }}_vc_${{ matrix.view_component }}.gemfile
       VIEW_COMPONENT_FORM_USE_ACTIONTEXT: ${{ matrix.action_text == 'with' && 'true' || 'false' }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Update gemspec to test in head version
       if: matrix.versions.rails == 'head'
       run: |
-        sed -i -e 's/, "< 7.0"//g' view_component-form.gemspec
+        sed -i -e 's/, "< 7.1"//g' view_component-form.gemspec
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.versions.ruby }}
+        rubygems: ${{ matrix.versions.rubygems }}
         bundler-cache: true
 
     - name: Test with Rake
@@ -42,8 +48,8 @@ jobs:
         COVERAGE=true bundle exec rake
 
     - name: Upload coverage results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: coverage-report-ruby-${{ matrix.versions.ruby }}-rails-${{ matrix.versions.rails }}
+        name: coverage-report-ruby-${{ matrix.versions.ruby }}-rails-${{ matrix.versions.rails }}-vc-${{ matrix.view_component }}-actiontext-${{ matrix.action_text }}
         path: coverage

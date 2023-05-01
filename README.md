@@ -4,6 +4,10 @@
 
 :warning: **This is an early release: the API is subject to change until we reach `v1.0.0`.**
 
+Development of this gem is sponsored by:
+
+<a href="https://etamin.studio/?ref=view_component-form"><img src="https://etamin.studio/images/logo.svg" alt="Sponsored by Etamin Studio" width="184" height="22"></a>      <a href="https://pantographe.studio/?ref=view_component-form"><img src="https://static.s3.office.pantographe.cloud/logofull.svg" alt="Sponsored by Pantographe" width="156" height="25"></a>
+
 ## Compatibility
 
 This gem is tested on:
@@ -91,16 +95,16 @@ First, generate your own `FormBuilder`:
 ```console
 bin/rails generate vcf:builder CustomFormBuilder
 
-      create  lib/custom_form_builder.rb
+      create  app/helpers/custom_form_builder.rb
 ```
 
 This allows you to pick the namespace your components will be loaded from.
 
 ```rb
-# lib/custom_form_builder.rb
+# app/helpers/custom_form_builder.rb
 class CustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  namespace Custom::Form
+  namespace "Custom::Form"
 end
 ```
 
@@ -116,7 +120,32 @@ bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace AnotherCusto
 # app/forms/another_custom_form_builder.rb
 class AnotherCustomFormBuilder < ViewComponent::Form::Builder
   # Set the namespace you want to use for your own components
-  namespace AnotherCustom::Form
+  namespace "AnotherCustom::Form"
+end
+```
+
+Another approach is to include only some modules instead of inheriting from the whole class:
+
+```rb
+# app/forms/modular_custom_form_builder.rb
+class ModularCustomFormBuilder < ActionView::Helpers::FormBuilder
+  # Provides `render_component` method and namespace management
+  include ViewComponent::Form::Renderer
+
+  # Exposes a `validation_context` to your components
+  include ViewComponent::Form::ValidationContext
+
+  # All standard Rails form helpers
+  include ViewComponent::Form::Helpers::Rails
+
+  # Backports of Rails 7 form helpers (can be removed if you're running Rails >= 7)
+  # include ViewComponent::Form::Helpers::Rails7Backports
+
+  # Additional form helpers provided by ViewComponent::Form
+  # include ViewComponent::Form::Helpers::Custom
+
+  # Set the namespace you want to use for your own components
+  namespace "AnotherCustom::Form"
 end
 ```
 

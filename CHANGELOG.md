@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 Nothing yet
 
+## [0.2.5] - 2023-05-01
+### Changed
+- Split `Form::Builder` into modules, to allow including only some modules instead of inheriting the whole class (#134)
+- Using the `Form::Builder` generator now creates the file in `app/helpers` by default, instead of `lib` previously, so that it's autoloaded by Rails without further configuration (#137)
+- Support for `view_component` 3.0 (#136, #147)
+
+### Fixed
+- Update dependencies (#128)
+- Add Ruby 3.2 to CI (#128)
+- Fix specs for Rails 7.1 (#128)
+
+## [0.2.4] - 2022-04-27
+### Changed
+- Add Ruby 3.1 to CI (#123)
+
+### Fixed
+- Fix `FileFieldComponent` options for `direct_upload` and `include_hidden` (#122)
+
 ## [0.2.3] - 2022-03-24
 ### Fixed
 - Declare empty RichTextAreaComponent if ActionText is not installed, to fix Zeitwerk error (#120)
@@ -81,7 +99,9 @@ Nothing yet
 - Add CHANGELOG (#50)
 - Add CI (#2)
 
-[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.2.3...HEAD
+[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.2.5...HEAD
+[0.2.5]: https://github.com/pantographe/view_component-form/compare/v0.2.4...v0.2.5
+[0.2.4]: https://github.com/pantographe/view_component-form/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/pantographe/view_component-form/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/pantographe/view_component-form/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/pantographe/view_component-form/compare/v0.2.0...v0.2.1
