@@ -53,6 +53,49 @@ RSpec.describe ViewComponent::Form::CollectionCheckBoxesComponent, type: :compon
     end
   end
 
+  context "with a block" do
+    let(:block) do
+      proc do |c|
+        c.builder.label { c.builder.check_box + c.builder.text }
+      end
+    end
+
+    it do
+      expect(component).to eq_html <<~HTML
+        <input type="hidden" name="user[nationalities][]" value="" autocomplete="off"><label for="user_nationalities_be"><input type="checkbox" value="BE" name="user[nationalities][]" id="user_nationalities_be">Belgium</label><label for="user_nationalities_fr"><input type="checkbox" value="FR" name="user[nationalities][]" id="user_nationalities_fr">France</label>
+      HTML
+    end
+  end
+
+  # context "with a block and translation param" do
+  #   let(:block) do
+  #     proc do |component|
+  #       "<span class=\"translated-label\">#{component.translation}</span>".html_safe
+  #     end
+  #   end
+
+  #   it do
+  #     expect(component).to eq_html <<~HTML
+  #       <label for="user_first_name"><span class="translated-label">First name</span></label>
+  #     HTML
+  #   end
+  # end
+
+  # context "with a block and builder param" do
+  #   let(:block) do
+  #     proc do |component|
+  #       "<span class=\"translated-label#{" has-error" if component.builder.object.errors.include?(:first_name)}\">" \
+  #       "#{component.builder.translation}</span>".html_safe
+  #     end
+  #   end
+
+  #   it do
+  #     expect(component).to eq_html <<~HTML
+  #       <label for="user_first_name"><span class="translated-label">First name</span></label>
+  #     HTML
+  #   end
+  # end
+
   include_examples "component with custom html classes", :html_options
   include_examples "component with custom data attributes", :html_options
 end

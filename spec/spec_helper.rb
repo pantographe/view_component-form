@@ -23,6 +23,7 @@ modules << :action_text if ENV.fetch("VIEW_COMPONENT_FORM_USE_ACTIONTEXT", "fals
 Combustion.initialize!(*modules) do
   config.logger = ActiveSupport::TaggedLogging.new(Logger.new(nil))
   config.log_level = :fatal
+  config.capture_compatibility_patch_enabled = true
 end
 
 require "generator_spec"
