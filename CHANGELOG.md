@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Split `Form::Builder` into modules, to allow including only some modules instead of inheriting the whole class (#134)
 - Using the `Form::Builder` generator now creates the file in `app/helpers` by default, instead of `lib` previously, so that it's autoloaded by Rails without further configuration (#137)
+- Bump to `view_component` 3.0 (#136, #147)
 
 ### Fixed
 - Update dependencies (#128)
