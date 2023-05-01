@@ -34,8 +34,7 @@ module ViewComponent
           value_method,
           text_method,
           options,
-          html_options,
-          &content
+          html_options
         ).render
       end
 
