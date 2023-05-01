@@ -5,6 +5,9 @@ module ViewComponent
     class CollectionCheckBoxesComponent < FieldComponent
       attr_reader :collection, :value_method, :text_method, :html_options
 
+      # IDEA: maybe we can use a slot here to render the collection items?
+      # renders_many :collection_items
+
       def initialize( # rubocop:disable Metrics/ParameterLists
         form,
         object_name,
@@ -34,8 +37,7 @@ module ViewComponent
           value_method,
           text_method,
           options,
-          html_options,
-          &content
+          html_options
         ).render
       end
 
