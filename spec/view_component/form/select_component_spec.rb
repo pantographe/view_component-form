@@ -5,6 +5,7 @@ RSpec.describe ViewComponent::Form::SelectComponent, type: :component do
   let(:form)    { form_with(object) }
   let(:options) { {} }
   let(:html_options) { {} }
+  let(:choices)   { [["Admin", :admin], ["Manager", :manager]] }
   let(:block)   { nil }
 
   let(:component) do
@@ -12,7 +13,7 @@ RSpec.describe ViewComponent::Form::SelectComponent, type: :component do
                     form,
                     object_name,
                     :role,
-                    [["Admin", :admin], ["Manager", :manager]],
+                    choices,
                     options,
                     html_options
                   ), &block)
@@ -55,7 +56,7 @@ RSpec.describe ViewComponent::Form::SelectComponent, type: :component do
   context "with a block" do
     let(:block) do
       proc do
-        [["Admin", :admin], ["Manager", :manager]].map do |name, value|
+        choices.map do |name, value|
           "<option value=\"#{value}\" data-test=\"#{value}\">#{name}</option>".html_safe
         end.join.html_safe
       end
