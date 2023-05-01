@@ -3,7 +3,6 @@
 require_relative "../../fixtures/test_model"
 
 RSpec.describe ViewComponent::Form::Builder, type: :builder do
-  let(:object)  { OpenStruct.new }
   let(:form)    { form_with(object) }
   let(:options) { {} }
 
@@ -11,6 +10,9 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
                                                                                      example.run
                                                                                    }, **kwargs, &block|
     around(&rspec_around)
+
+    let(:object) { OpenStruct.new(args.first ? {args.first => nil} : {}) } unless method_defined?(:object)
+
     subject { form.public_send(method_name, *args, **kwargs, &block) }
 
     let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
@@ -21,9 +23,10 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     end
   end
 
-  it_behaves_like "the default form builder", :check_box, "validated"
-  it_behaves_like "the default form builder", :check_box, "gooddog", {}, "yes", "no"
-  it_behaves_like "the default form builder", :check_box, "accepted", { class: "eula_check" }, "yes", "no"
+  it_behaves_like "the default form builder", :check_box, :validated
+  it_behaves_like "the default form builder", :check_box, :gooddog, {}, "yes", "no"
+  it_behaves_like "the default form builder", :check_box, :accepted, { class: "eula_check" }, "yes", "no"
+
   context "with model-dependent fields" do
     before do
       Author.create(name_with_initial: "Touma K.")
@@ -133,33 +136,23 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
   it_behaves_like "the default form builder", :submit
   it_behaves_like "the default form builder", :text_area, :detail
-  if defined?(ActionView::Helpers::Tags::ActionText)
-    let(:object_klass) do
-      Class.new(ActiveRecord::Base) do
-        has_rich_text :content
-
-        class << self
-          def name
-            "Message"
-          end
-        end
-      end
-    end
-
-    let(:object)  { object_klass.new }
-
-    context "with a model with rich text" do
-      it_behaves_like "the default form builder", :rich_text_area, :content
-    end
-  end
   it_behaves_like "the default form builder", :text_field, :name
   it_behaves_like "the default form builder", :time_field, :born_at
   it_behaves_like "the default form builder", :time_select, :average_lap
   it_behaves_like "the default form builder", :time_zone_select, :time_zone, nil, { include_blank: true }
   it_behaves_like "the default form builder", :url_field, :homepage
   it_behaves_like "the default form builder", :week_field, :birthday_week
+
   if Rails::VERSION::MAJOR >= 7
     it_behaves_like "the default form builder", :weekday_select, :weekday, { include_blank: true }
+  end
+
+  if defined?(ActionView::Helpers::Tags::ActionText)
+    let(:object) { Message.new }
+
+    context "with a model with rich text" do
+      it_behaves_like "the default form builder", :rich_text_area, :content
+    end
   end
 
   describe "#component_klass" do
