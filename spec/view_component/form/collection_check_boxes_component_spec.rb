@@ -53,7 +53,7 @@ RSpec.describe ViewComponent::Form::CollectionCheckBoxesComponent, type: :compon
     end
   end
 
-  context "with a build proc" do
+  context "with an element proc" do
     let(:options) do
       {
         element_proc: proc do |b|

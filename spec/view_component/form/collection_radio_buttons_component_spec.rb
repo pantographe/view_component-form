@@ -53,6 +53,27 @@ RSpec.describe ViewComponent::Form::CollectionRadioButtonsComponent, type: :comp
     end
   end
 
+  context "with an element proc" do
+    let(:options) do
+      {
+        element_proc: proc do |b|
+          "<div class='wrapper'>
+            #{b.radio_button}
+            #{b.label}
+          </div>".html_safe
+        end
+      }
+    end
+
+    it do
+      expect(component.to_html)
+        .to have_tag(".wrapper input", with: {
+                       type: "radio", value: "BE",
+                       id: "user_nationality_be", name: "user[nationality]"
+                     })
+    end
+  end
+
   include_examples "component with custom html classes", :html_options
   include_examples "component with custom data attributes", :html_options
 end

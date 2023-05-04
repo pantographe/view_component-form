@@ -26,6 +26,8 @@ module ViewComponent
       end
 
       def call # rubocop:disable Metrics/MethodLength
+        element_proc = options.delete(:element_proc)
+
         ActionView::Helpers::Tags::CollectionRadioButtons.new(
           object_name,
           method_name,
@@ -36,7 +38,7 @@ module ViewComponent
           options,
           html_options,
           &content
-        ).render
+        ).render(&element_proc)
       end
 
       protected

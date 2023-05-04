@@ -38,7 +38,7 @@ module ViewComponent
           options,
           html_options,
           &content
-        ).render(&build_proc)
+        ).render(&element_proc)
       end
 
       protected
