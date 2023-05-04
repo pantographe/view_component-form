@@ -26,7 +26,7 @@ module ViewComponent
       end
 
       def call # rubocop:disable Metrics/MethodLength
-        build_proc = options.delete(:build_proc)
+        element_proc = options.delete(:element_proc)
 
         ActionView::Helpers::Tags::CollectionCheckBoxes.new(
           object_name,
