@@ -56,7 +56,7 @@ RSpec.describe ViewComponent::Form::CollectionCheckBoxesComponent, type: :compon
   context "with a build proc" do
     let(:options) do
       {
-        build_proc: proc do |b|
+        element_proc: proc do |b|
           "<div class='wrapper'>
             #{b.check_box}
             #{b.label}
