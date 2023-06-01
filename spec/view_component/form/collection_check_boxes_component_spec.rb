@@ -1,13 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe ViewComponent::Form::CollectionCheckBoxesComponent, type: :component do
-  let(:object)       { OpenStruct.new }
-  let(:form)         { form_with(object) }
-  let(:collection)   { [OpenStruct.new(name: "Belgium", code: "BE"), OpenStruct.new(name: "France", code: "FR")] }
-  let(:options)      { {} }
-  let(:html_options) { {} }
-
-  let(:component) do
+  subject(:component) do
     render_inline(described_class.new(
                     form,
                     object_name,
@@ -19,7 +13,13 @@ RSpec.describe ViewComponent::Form::CollectionCheckBoxesComponent, type: :compon
                     html_options
                   ))
   end
+
+  let(:object) { OpenStruct.new }
   let(:component_html_attributes) { component.css("input").last.attributes }
+  let(:form)         { form_with(object) }
+  let(:collection)   { [OpenStruct.new(name: "Belgium", code: "BE"), OpenStruct.new(name: "France", code: "FR")] }
+  let(:options)      { {} }
+  let(:html_options) { {} }
 
   context "with simple args" do
     it do
@@ -54,23 +54,43 @@ RSpec.describe ViewComponent::Form::CollectionCheckBoxesComponent, type: :compon
   end
 
   context "with an element proc" do
-    let(:options) do
-      {
-        element_proc: proc do |b|
-          "<div class='wrapper'>
-            #{b.check_box}
-            #{b.label}
-          </div>".html_safe
-        end
-      }
+    let(:element_proc) do
+      proc do |b|
+        "<div class='wrapper'>
+          #{b.check_box}
+          #{b.label}
+        </div>".html_safe
+      end
     end
 
-    it do
-      expect(component.to_html)
-        .to have_tag(".wrapper input", with: {
-                       type: "checkbox", value: "BE",
-                       id: "user_nationalities_be", name: "user[nationalities][]"
-                     })
+    %i[options html_options].each do |option_arg|
+      context "when passed via #{option_arg}" do
+        before do
+          public_send(option_arg)[:element_proc] = element_proc
+        end
+
+        it do
+          expect(component.to_html)
+            .to have_tag(".wrapper input", with: {
+                           type: "checkbox", value: "BE",
+                           id: "user_nationalities_be", name: "user[nationalities][]"
+                         })
+        end
+      end
+    end
+
+    context "when passed via both options and html_options" do
+      before do
+        options[:element_proc] = element_proc
+        html_options[:element_proc] = element_proc
+      end
+
+      it do
+        expect { component }
+          .to raise_error(ArgumentError,
+                          "ViewComponent::Form::CollectionCheckBoxesComponent " \
+                          "received :element_proc twice, expected only once")
+      end
     end
   end
 

@@ -3,7 +3,7 @@
 module ViewComponent
   module Form
     class CollectionCheckBoxesComponent < FieldComponent
-      attr_reader :collection, :value_method, :text_method, :html_options
+      attr_reader :collection, :value_method, :text_method, :html_options, :element_proc
 
       def initialize( # rubocop:disable Metrics/ParameterLists
         form,
@@ -22,12 +22,11 @@ module ViewComponent
 
         super(form, object_name, method_name, options)
 
+        set_element_proc!
         set_html_options!
       end
 
       def call # rubocop:disable Metrics/MethodLength
-        element_proc = options.delete(:element_proc)
-
         ActionView::Helpers::Tags::CollectionCheckBoxes.new(
           object_name,
           method_name,
@@ -42,6 +41,17 @@ module ViewComponent
       end
 
       protected
+
+      def set_element_proc!
+        options_element_proc = options.delete(:element_proc)
+        html_options_element_proc = html_options.delete(:element_proc)
+
+        if options_element_proc && html_options_element_proc
+          raise ArgumentError, "#{self.class.name} received :element_proc twice, expected only once"
+        end
+
+        @element_proc = options_element_proc || html_options_element_proc
+      end
 
       def set_html_options!
         @html_options[:class] = class_names(html_options[:class], html_class)
