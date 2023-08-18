@@ -3,6 +3,8 @@
 module ViewComponent
   module Form
     class CollectionRadioButtonsComponent < FieldComponent
+      include ElementProc
+
       attr_reader :collection, :value_method, :text_method, :html_options
 
       def initialize( # rubocop:disable Metrics/ParameterLists
@@ -36,7 +38,7 @@ module ViewComponent
           options,
           html_options,
           &content
-        ).render
+        ).render(&element_proc)
       end
 
       protected
