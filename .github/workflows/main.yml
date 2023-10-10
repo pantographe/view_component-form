@@ -38,7 +38,7 @@ jobs:
     - name: Update gemspec to test in head version
       if: matrix.versions.rails == 'head'
       run: |
-        sed -i -e 's/, "<= 7.1"//g' view_component-form.gemspec
+        sed -i -e 's/, "< 7.2"//g' view_component-form.gemspec
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
