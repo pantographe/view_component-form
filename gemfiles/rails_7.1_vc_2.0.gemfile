@@ -6,7 +6,7 @@ gem "appraisal", require: false
 gem "capybara", require: false
 gem "combustion", "~> 1.3.7"
 gem "generator_spec"
-gem "rails", "~> 7.0.0"
+gem "rails", "~> 7.1.0"
 gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0", require: false
 gem "rspec-html-matchers"
