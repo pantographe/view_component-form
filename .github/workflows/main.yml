@@ -18,6 +18,10 @@ jobs:
           - { ruby: "3.0", rails: "7.0", rubygems: "default" }
           - { ruby: "3.1", rails: "7.0", rubygems: "default" }
           - { ruby: "3.2", rails: "7.0", rubygems: "default" }
+          - { ruby: "2.7", rails: "7.1", rubygems: "default" }
+          - { ruby: "3.0", rails: "7.1", rubygems: "default" }
+          - { ruby: "3.1", rails: "7.1", rubygems: "default" }
+          - { ruby: "3.2", rails: "7.1", rubygems: "default" }
           - { ruby: "3.0", rails: "head", rubygems: "latest" }
           - { ruby: "3.1", rails: "head", rubygems: "latest" }
           - { ruby: "3.2", rails: "head", rubygems: "latest" }
@@ -34,7 +38,7 @@ jobs:
     - name: Update gemspec to test in head version
       if: matrix.versions.rails == 'head'
       run: |
-        sed -i -e 's/, "< 7.1"//g' view_component-form.gemspec
+        sed -i -e 's/, "< 7.2"//g' view_component-form.gemspec
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
