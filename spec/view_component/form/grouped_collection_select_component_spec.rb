@@ -39,6 +39,7 @@ RSpec.describe ViewComponent::Form::GroupedCollectionSelectComponent, type: :com
   end
   let(:component_html_attributes) { component.css("select").last.attributes }
 
+  # rubocop:disable RSpec/ExampleLength
   context "with simple args" do
     it do
       expect(component).to eq_html <<~HTML
@@ -50,6 +51,7 @@ RSpec.describe ViewComponent::Form::GroupedCollectionSelectComponent, type: :com
       HTML
     end
   end
+  # rubocop:enable RSpec/ExampleLength
 
   include_examples "component with custom html classes", :html_options
   include_examples "component with custom data attributes", :html_options
