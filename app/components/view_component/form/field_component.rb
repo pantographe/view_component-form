@@ -71,13 +71,13 @@ module ViewComponent
       end
 
       def optional?(context: validation_context)
-        return nil if object.nil?
+        return false if object.nil?
 
         !required?(context: context)
       end
 
       def required?(context: validation_context)
-        return nil if object.nil?
+        return false if object.nil?
 
         validators(context: context).any?(ActiveModel::Validations::PresenceValidator)
       end
