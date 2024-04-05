@@ -192,4 +192,12 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
       it { expect(builder.send(:validation_context)).to eq(:create) }
     end
   end
+
+  describe "base component parent" do
+    subject(:field) { described_class.new(object_name, object, template, options).send(:component_klass, :text_field) }
+
+    it "is configured via initializer" do
+      expect(field.ancestors).to include(ApplicationFormComponent)
+    end
+  end
 end

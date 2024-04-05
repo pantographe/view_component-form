@@ -46,4 +46,12 @@ RSpec.describe ViewComponent::Form::BaseComponent, type: :component do
       it { expect(component.object_errors?).to be(false) }
     end
   end
+
+  describe "parent_component" do
+    subject { described_class }
+
+    context "without configured parent_component" do
+      it { is_expected.to be < ViewComponent::Base }
+    end
+  end
 end

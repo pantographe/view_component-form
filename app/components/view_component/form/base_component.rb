@@ -2,7 +2,7 @@
 
 module ViewComponent
   module Form
-    class BaseComponent < ViewComponent::Base
+    class BaseComponent < ViewComponent::Form.configuration.parent_component.constantize
       class << self
         attr_accessor :default_options
       end
