@@ -194,6 +194,12 @@ You can use the same approach to inject options, wrap the input in a `<div>`, et
 
 We'll add more use cases to the documentation soon.
 
+### Configuration
+
+| Attribute          | Purpose                                         | Default               |
+| ------------------ | ----------------------------------------------- | --------------------- |
+| `parent_component` | Inherited by all ViewComponent::Form components | `ViewComponent::Base` |
+
 ### Building your own components
 
 When building your own ViewComponents for using in forms, it's recommended to inherit from `ViewComponent::Form::FieldComponent`, so you get access to the following helpers:
@@ -336,6 +342,33 @@ Alternatively, you can pass the context to the helpers:
 ```rb
 def length_validator
   validators(context: :registration).find { |v| v.is_a?(ActiveModel::Validations::LengthValidator) }
+end
+```
+
+### Setting up your own base component class
+
+1. Setup some base component from which the form components will inherit from
+```rb
+class ApplicationFormComponent < ViewComponent::Base
+  include Heroicon::Engine.helpers
+
+  alias_method :icon, :heroicon
+
+  def html_class
+    class_names(
+      "block w-full rounded-md border-0 py-1.5 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6",
+      "text-gray-900 ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600",
+      "pr-10 text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500": method_errors?,
+    )
+  end
+end
+```
+2. Configure the parent component class
+```rb
+# config/initializers/vcf.rb
+
+ViewComponent::Form.configure do |config|
+  config.parent_component = 'ApplicationFormComponent'
 end
 ```
 
