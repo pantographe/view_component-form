@@ -198,7 +198,7 @@ We'll add more use cases to the documentation soon.
 
 | Attribute          | Purpose                                         | Default               |
 | ------------------ | ----------------------------------------------- | --------------------- |
-| `parent_component` | Inherited by all ViewComponent::Form components | `ViewComponent::Base` |
+| `parent_component` (string) | Parent class for all `ViewComponent::Form` components | `"ViewComponent::Base"` |
 
 ### Building your own components
 
