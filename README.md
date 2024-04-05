@@ -350,17 +350,6 @@ end
 1. Setup some base component from which the form components will inherit from
 ```rb
 class ApplicationFormComponent < ViewComponent::Base
-  include Heroicon::Engine.helpers
-
-  alias_method :icon, :heroicon
-
-  def html_class
-    class_names(
-      "block w-full rounded-md border-0 py-1.5 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6",
-      "text-gray-900 ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600",
-      "pr-10 text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500": method_errors?,
-    )
-  end
 end
 ```
 2. Configure the parent component class
