@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "view_component"
-require_relative "form/configuration"
 require "zeitwerk"
 
 module ViewComponent
