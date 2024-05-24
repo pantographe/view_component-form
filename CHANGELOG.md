@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added parent_component configuration for field components (#160)
 - Added Ruby 3.3 support (#164)
+- Add `lookup_chain` customizability (#162)
 
 ### Removed
 - Drop Ruby 2.7 support (#164)

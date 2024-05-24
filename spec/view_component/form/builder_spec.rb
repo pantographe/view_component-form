@@ -170,6 +170,27 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
       it { expect(builder.send(:component_klass, :text_field)).to eq(Form::TextFieldComponent) }
       it { expect(builder.send(:component_klass, :submit)).to eq(ViewComponent::Form::SubmitComponent) }
     end
+
+    context "with a custom lookup_chain" do
+      let(:builder) { CustomFormBuilder.new(object_name, object, template, options) }
+
+      around do |example|
+        original = ViewComponent::Form.configuration.lookup_chain
+        ViewComponent::Form.configuration.lookup_chain.prepend(lambda do |component_name, namespaces: []|
+          namespaces.lazy.map do |namespace|
+            "#{namespace}::#{component_name.to_s.camelize}".safe_constantize
+          end.find(&:itself)
+        end)
+
+        example.run
+
+        ViewComponent::Form.configuration.lookup_chain = original
+      end
+
+      it { expect(builder.send(:component_klass, :label)).to eq(Form::LabelComponent) }
+      it { expect(builder.send(:component_klass, :text_field)).to eq(Form::TextField) }
+      it { expect(builder.send(:component_klass, :submit)).to eq(ViewComponent::Form::SubmitComponent) }
+    end
   end
 
   describe "#field_id" do
