@@ -130,8 +130,8 @@ end
 
 Add your component which can optionally inherit from:
 
-- ViewComponent::Form::FieldComponent (suggested when adding a field because of helpers)
-- ViewComponent::Form::BaseComponent
+- `ViewComponent::Form::FieldComponent` (suggested when adding a field because of helpers)
+- `ViewComponent::Form::BaseComponent`
 - or any of the `ViewComponent::Form::*Component` such as `ViewComponent::Form::TextFieldComponent`
 
 ```rb
