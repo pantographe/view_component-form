@@ -24,6 +24,14 @@ bundle add view_component-form
 
 ### Configuration
 
+```ruby
+# config/initializers/vcf.rb
+
+ViewComponent::Form.configure do |config|
+  config.parent_component = 'ApplicationFormComponent'
+end
+```
+
 | Attribute                   | Purpose                                               | Default                 |
 | --------------------------- | ----------------------------------------------------- | ----------------------- |
 | `parent_component` (string) | Parent class for all `ViewComponent::Form` components | `"ViewComponent::Base"` |
@@ -135,8 +143,8 @@ Add your component which can optionally inherit from:
 - or any of the `ViewComponent::Form::*Component` such as `ViewComponent::Form::TextFieldComponent`
 
 ```rb
-#
-class YearFieldComponent < ViewComponent::Form::FieldComponent # or ViewComponent::Form::BaseComponent
+# app/components/form/year_field_component.rb
+class Form::YearFieldComponent < ViewComponent::Form::FieldComponent # or ViewComponent::Form::BaseComponent
 end
 ```
 
@@ -183,11 +191,22 @@ en:
 Renders:
 
 ```html
-<form class="edit_user" id="edit_user_1" action="/users/1" accept-charset="UTF-8" method="post">
+<form
+  class="edit_user"
+  id="edit_user_1"
+  action="/users/1"
+  accept-charset="UTF-8"
+  method="post"
+>
   <!-- ... -->
   <label>
     Your first name<br />
-    <input type="text" value="John" name="user[first_name]" id="user_first_name" />
+    <input
+      type="text"
+      value="John"
+      name="user[first_name]"
+      id="user_first_name"
+    />
   </label>
 </form>
 ```
