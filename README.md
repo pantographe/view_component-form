@@ -1,8 +1,6 @@
 # ViewComponent::Form
 
-**ViewComponent::Form** provides a `FormBuilder` with the same interface as [`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html), but using [ViewComponent](https://github.com/github/view_component)s for rendering the fields. It's a starting point for writing your own custom ViewComponents.
-
-:warning: **This is an early release: the API is subject to change until we reach `v1.0.0`.**
+**`ViewComponent::Form`** is a customizable form builder using the same interface as [`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html) but with extensible [ViewComponent](https://github.com/github/view_component) components.
 
 Development of this gem is sponsored by:
 
@@ -10,34 +8,62 @@ Development of this gem is sponsored by:
 
 ## Compatibility
 
+> [!WARNING]  
+> **This is an early release, and the API is subject to change until `v1.0.0`.**
+
 This gem is tested on:
+
 - Rails 6.0+ (with or without ActionText)
 - Ruby 2.7+
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'view_component-form'
+```shell
+bundle add view_component-form
 ```
 
-And then execute:
+### Configuration
 
-    $ bundle install
+```ruby
+# config/initializers/vcf.rb
+
+ViewComponent::Form.configure do |config|
+  config.parent_component = 'ApplicationFormComponent'
+end
+```
+
+| Attribute                   | Purpose                                               | Default                 |
+| --------------------------- | ----------------------------------------------------- | ----------------------- |
+| `parent_component` (string) | Parent class for all `ViewComponent::Form` components | `"ViewComponent::Base"` |
 
 ## Usage
 
-Add a `builder` param to your `form_for`, `form_with`, `fields_for` or `fields`:
+Add your own form builder.
+
+```shell
+bin/rails generate vcf:builder FormBuilder
+      create  app/helpers/form_builder.rb
+```
+
+To use the form builder:
+
+- add a `builder` param to your `form_for`, `form_with`, `fields_for` or `fields`:
 
 ```diff
 - <%= form_for @user do |f| %>
-+ <%= form_for @user, builder: ViewComponent::Form::Builder do |f| %>
++ <%= form_for @user, builder: FormBuilder do |f| %>
 ```
 
-You can also define a default FormBuilder at the controller level using [default_form_builder](https://api.rubyonrails.org/classes/ActionController/FormBuilder.html#method-i-default_form_builder).
+- or; set it as a default in your controller using [default_form_builder](https://api.rubyonrails.org/classes/ActionController/FormBuilder.html#method-i-default_form_builder).
 
-Then call your helpers as usual:
+```ruby
+# app/controllers/application_controller.rb
+class ApplicationController < ActionController::Base
+  default_form_builder FormBuilder
+end
+```
+
+Then use ActionView form builder helpers as you would normally:
 
 ```erb
 <%# app/views/users/_form.html.erb %>
@@ -62,147 +88,67 @@ Then call your helpers as usual:
 <% end %>
 ```
 
-It should work out of the box, but does nothing particularly interesting for now.
+### Customizing built-in components
 
-```html
-<form class="edit_user" id="edit_user_1" action="/users/1" accept-charset="UTF-8" method="post">
-  <input type="hidden" name="_method" value="patch" />
-  <input type="hidden" name="authenticity_token" value="[...]" />
+The `ViewComponent::Form::Builder` will use the provided `namespace` to find any components you've customized.
 
-  <label for="user_first_name">First name</label>
-  <input type="text" value="John" name="user[first_name]" id="user_first_name" />
-
-  <label for="user_last_name">Last name</label>
-  <input type="text" value="Doe" name="user[last_name]" id="user_last_name" />
-
-  <label for="user_email">E-mail</label>
-  <input type="email" value="john.doe@example.com" name="user[email]" id="user_email" />
-
-  <label for="user_password">Password</label>
-  <input type="password" name="user[password]" id="user_password" aria-describedby="user_password_description" />
-  <div id="user_password_description">
-    <div>The password should be at least 8 characters long</div>
-  </div>
-</form>
-```
-
-The `ViewComponent::Form::*` components are included in the gem.
-
-### Customizing the `FormBuilder` and the components
-
-First, generate your own `FormBuilder`:
-
-```console
-bin/rails generate vcf:builder CustomFormBuilder
-
-      create  app/helpers/custom_form_builder.rb
-```
-
-This allows you to pick the namespace your components will be loaded from.
-
-```rb
-# app/helpers/custom_form_builder.rb
-class CustomFormBuilder < ViewComponent::Form::Builder
-  # Set the namespace you want to use for your own components
-  namespace "Custom::Form"
+```ruby
+# app/helpers/form_builder.rb
+class FormBuilder < ViewComponent::Form::Builder
+  namespace Form
 end
 ```
 
-Use the generator options to change the default namespace or the path where the file will be created:
+Let's customize the `text_field` helper by generating a new [ViewComponent](https://github.com/github/view_component) in the namespace defined within the builder.
 
-```console
-bin/rails generate vcf:builder AnotherCustomFormBuilder --namespace AnotherCustom::Form --path app/forms
-
-      create  app/forms/another_custom_form_builder.rb
+```shell
+bin/rails generate component Form::TextField --parent ViewComponent::Form::TextFieldComponent --inline
 ```
 
-```rb
-# app/forms/another_custom_form_builder.rb
-class AnotherCustomFormBuilder < ViewComponent::Form::Builder
-  # Set the namespace you want to use for your own components
-  namespace "AnotherCustom::Form"
-end
-```
-
-Another approach is to include only some modules instead of inheriting from the whole class:
-
-```rb
-# app/forms/modular_custom_form_builder.rb
-class ModularCustomFormBuilder < ActionView::Helpers::FormBuilder
-  # Provides `render_component` method and namespace management
-  include ViewComponent::Form::Renderer
-
-  # Exposes a `validation_context` to your components
-  include ViewComponent::Form::ValidationContext
-
-  # All standard Rails form helpers
-  include ViewComponent::Form::Helpers::Rails
-
-  # Backports of Rails 7 form helpers (can be removed if you're running Rails >= 7)
-  # include ViewComponent::Form::Helpers::Rails7Backports
-
-  # Additional form helpers provided by ViewComponent::Form
-  # include ViewComponent::Form::Helpers::Custom
-
-  # Set the namespace you want to use for your own components
-  namespace "AnotherCustom::Form"
-end
-```
-
-Now let's generate your own components to customize their rendering. We can use the standard view_component generator:
-
-```console
-bin/rails generate component Custom::Form::TextField --inline --parent ViewComponent::Form::TextFieldComponent
-
-      invoke  test_unit
-      create  test/components/custom/form/text_field_component_test.rb
-      create  app/components/custom/form/text_field_component.rb
-```
-
-:warning: The `--parent` option is available since ViewComponent [`v2.41.0`](https://viewcomponent.org/CHANGELOG.html#2410). If you're using a previous version, you can always edit the generated `Custom::Form::CustomTextFieldComponent` class to make it inherit from `ViewComponent::Form::TextFieldComponent`.
-
-Change your forms to use your new builder:
-
-```diff
-- <%= form_for @user, builder: ViewComponent::Form::Builder do |f| %>
-+ <%= form_for @user, builder: CustomFormBuilder do |f| %>
-```
-
-You can then customize the behavior of your `Custom::Form::CustomTextFieldComponent`:
-
-```rb
-# app/components/custom/form/text_field_component.rb
-
-class Admin::Form::TextFieldComponent < ViewComponent::Form::TextFieldComponent
+```ruby
+# app/components/form/text_field_component.rb
+class Form::TextFieldComponent < ViewComponent::Form::TextFieldComponent
   def html_class
     class_names("custom-text-field", "has-error": method_errors?)
   end
 end
 ```
 
-In this case we leverage the [`#class_names`](https://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-class_names) helper to:
+In this case we're leveraging the [`#class_names`](https://api.rubyonrails.org/classes/ActionView/Helpers/TagHelper.html#method-i-class_names) helper to:
+
 - always add the `custom-text-field` class;
 - add the `has-error` class if there is an error on the attribute (using `ViewComponent::Form::FieldComponent#method_errors?`).
 
-The rendered form field will now look like this:
+### Adding your own custom helpers and components
 
-```html
-<input class="custom-text-field" type="text" value="John" name="user[first_name]" id="user_first_name">
+Add the helper method to your `ViewComponent::Form::Builder`
+
+```rb
+# app/helpers/form_builder.rb
+class FormBuilder < ViewComponent::Form::Builder
+  def year_field(method, options = {})
+    render_component(:year_field, @object_name, method, objectify_options(options))
+  end
+
+  def money_field(method, currencies = [], options = {})
+    render_component(:money_field, @object_name, method, currencies, objectify_options(options))
+  end
+end
 ```
 
-You can use the same approach to inject options, wrap the input in a `<div>`, etc.
+Add your component which can optionally inherit from:
 
-We'll add more use cases to the documentation soon.
+- `ViewComponent::Form::FieldComponent` (suggested when adding a field because of helpers)
+- `ViewComponent::Form::BaseComponent`
+- or any of the `ViewComponent::Form::*Component` such as `ViewComponent::Form::TextFieldComponent`
 
-### Configuration
+```rb
+# app/components/form/year_field_component.rb
+class Form::YearFieldComponent < ViewComponent::Form::FieldComponent # or ViewComponent::Form::BaseComponent
+end
+```
 
-| Attribute          | Purpose                                         | Default               |
-| ------------------ | ----------------------------------------------- | --------------------- |
-| `parent_component` (string) | Parent class for all `ViewComponent::Form` components | `"ViewComponent::Base"` |
-
-### Building your own components
-
-When building your own ViewComponents for using in forms, it's recommended to inherit from `ViewComponent::Form::FieldComponent`, so you get access to the following helpers:
+When inheriting from `ViewComponent::Form::FieldComponent`, you get access to the following helpers:
 
 #### `#label_text`
 
@@ -245,16 +191,27 @@ en:
 Renders:
 
 ```html
-<form class="edit_user" id="edit_user_1" action="/users/1" accept-charset="UTF-8" method="post">
+<form
+  class="edit_user"
+  id="edit_user_1"
+  action="/users/1"
+  accept-charset="UTF-8"
+  method="post"
+>
   <!-- ... -->
   <label>
     Your first name<br />
-    <input type="text" value="John" name="user[first_name]" id="user_first_name" />
+    <input
+      type="text"
+      value="John"
+      name="user[first_name]"
+      id="user_first_name"
+    />
   </label>
 </form>
 ```
 
-#### Validations
+### Validations
 
 Let's consider the following model for the examples below.
 
@@ -348,11 +305,14 @@ end
 ### Setting up your own base component class
 
 1. Setup some base component from which the form components will inherit from
+
 ```rb
 class ApplicationFormComponent < ViewComponent::Base
 end
 ```
+
 2. Configure the parent component class
+
 ```rb
 # config/initializers/vcf.rb
 
