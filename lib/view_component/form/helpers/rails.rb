@@ -46,7 +46,7 @@ module ViewComponent
             :datetime_local_field, @object_name, method, objectify_options(options)
           )
         end
-        alias datetime_locale_field datetime_field
+        alias datetime_local_field datetime_field
 
         def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
           render_component(
