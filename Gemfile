@@ -18,4 +18,4 @@ gem "rubocop", require: false
 gem "rubocop-performance", require: false
 gem "rubocop-rspec", require: false
 gem "simplecov", require: false, group: :test
-gem "sqlite3", require: false, group: :test
+gem "sqlite3", "~> 1.4", group: :test

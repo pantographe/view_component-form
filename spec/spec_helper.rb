@@ -33,6 +33,7 @@ end
 require "view_component/test_helpers"
 require "view_component/form/test_helpers"
 require "capybara/rspec"
+require "ostruct"
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 

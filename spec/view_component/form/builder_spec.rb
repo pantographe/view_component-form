@@ -7,9 +7,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   let(:form)    { form_with(object) }
   let(:options) { {} }
 
-  shared_examples "the default form builder" do |method_name, *args, rspec_around: lambda { |example|
-                                                                                     example.run
-                                                                                   }, **kwargs, &block|
+  shared_examples "the default form builder" do |method_name, *args, rspec_around: lambda(&:run), **kwargs, &block|
     around(&rspec_around)
     subject { form.public_send(method_name, *args, **kwargs, &block) }
 
