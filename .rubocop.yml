@@ -6,7 +6,7 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   SuggestExtensions: false
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.0
   NewCops: enable
   Exclude:
     - '.git/**/*'

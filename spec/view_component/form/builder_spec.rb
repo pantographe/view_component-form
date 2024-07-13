@@ -7,9 +7,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   let(:form)    { form_with(object) }
   let(:options) { {} }
 
-  shared_examples "the default form builder" do |method_name, *args, rspec_around: lambda { |example|
-                                                                                     example.run
-                                                                                   }, **kwargs, &block|
+  shared_examples "the default form builder" do |method_name, *args, rspec_around: lambda(&:run), **kwargs, &block|
     around(&rspec_around)
     subject { form.public_send(method_name, *args, **kwargs, &block) }
 
@@ -17,7 +15,12 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     let(:default_form_builder_output) { default_form_builder.public_send(method_name, *args, **kwargs, &block) }
 
     context "when calling ##{method_name}" do
-      it { is_expected.to eq(default_form_builder_output) }
+      # NOTE: freeze time to force #time_select test use same time
+      it do
+        freeze_time do
+          expect(subject).to eq(default_form_builder_output)
+        end
+      end
     end
   end
 

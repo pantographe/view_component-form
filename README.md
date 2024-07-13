@@ -8,13 +8,13 @@ Development of this gem is sponsored by:
 
 ## Compatibility
 
-> [!WARNING]  
+> [!WARNING]
 > **This is an early release, and the API is subject to change until `v1.0.0`.**
 
 This gem is tested on:
 
-- Rails 6.0+ (with or without ActionText)
-- Ruby 2.7+
+- Rails 6.1+ (with or without ActionText)
+- Ruby 3.0+
 
 ## Installation
 

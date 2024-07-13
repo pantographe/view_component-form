@@ -5,8 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
+### Added
 - Added parent_component configuration for field components (#160)
+- Added Ruby 3.3 support (#164)
+
+### Removed
+- Drop Ruby 2.7 support (#164)
+- Drop Rails 6.0 support (#164)
 
 ## [0.2.6] - 2023-10-11
 ### Added
