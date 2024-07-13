@@ -35,7 +35,7 @@ require "view_component/form/test_helpers"
 require "capybara/rspec"
 require "ostruct"
 
-Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
+Dir["./spec/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -53,4 +53,8 @@ RSpec.configure do |config|
   config.include ViewComponent::Form::TestHelpers, type: :builder
   config.include Capybara::RSpecMatchers, type: :component
   config.include RSpecHtmlMatchers, type: :component
+
+  config.include ActiveSupport::Testing::TimeHelpers
+
+  config.after { travel_back }
 end

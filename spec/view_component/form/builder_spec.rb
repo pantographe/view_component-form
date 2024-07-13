@@ -15,7 +15,12 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     let(:default_form_builder_output) { default_form_builder.public_send(method_name, *args, **kwargs, &block) }
 
     context "when calling ##{method_name}" do
-      it { is_expected.to eq(default_form_builder_output) }
+      # NOTE: freeze time to force #time_select test use same time
+      it do
+        freeze_time do
+          expect(subject).to eq(default_form_builder_output)
+        end
+      end
     end
   end
 
