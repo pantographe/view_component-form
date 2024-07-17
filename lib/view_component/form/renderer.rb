@@ -52,9 +52,9 @@ module ViewComponent
 
       def component_klass(component_name)
         @__component_klass_cache[component_name] ||= begin
-          component_klass = self.class.lookup_namespaces.filter_map do |namespace|
-            "#{namespace}::#{component_name.to_s.camelize}Component".safe_constantize || false
-          end.first
+          component_klass = ViewComponent::Form.configuration.lookup_chain.lazy.map do |lookup|
+            lookup.call(component_name, namespaces: lookup_namespaces)
+          end.find(&:itself)
 
           unless component_klass.is_a?(Class) && component_klass < ViewComponent::Base
             raise NotImplementedComponentError, "Component named #{component_name} doesn't exist " \

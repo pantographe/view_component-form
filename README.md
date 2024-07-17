@@ -8,8 +8,7 @@ Development of this gem is sponsored by:
 
 ## Compatibility
 
-> [!WARNING]
-> **This is an early release, and the API is subject to change until `v1.0.0`.**
+> [!WARNING] > **This is an early release, and the API is subject to change until `v1.0.0`.**
 
 This gem is tested on:
 
@@ -35,6 +34,26 @@ end
 | Attribute                   | Purpose                                               | Default                 |
 | --------------------------- | ----------------------------------------------------- | ----------------------- |
 | `parent_component` (string) | Parent class for all `ViewComponent::Form` components | `"ViewComponent::Base"` |
+
+#### Configuring component lookup
+
+`ViewComponent::Form` will automatically infer the component class with a `Component` suffix. You can customize the lookup using the `lookup_chain`:
+
+```rb
+# config/initializers/vcf.rb
+
+ViewComponent::Form.configure do |config|
+  without_component_suffix = lambda do |component_name, namespaces: []|
+    namespaces.lazy.map do |namespace|
+      "#{namespace}::#{component_name.to_s.camelize}".safe_constantize
+    end.find(&:itself)
+  end
+
+  config.lookup_chain.prepend(without_component_suffix)
+end
+```
+
+`ViewComponent::Form` will iterate through the `lookup_chain` until a value is returned. By using `prepend` we can fallback on the default `ViewComponent::Form` lookup.
 
 ## Usage
 
