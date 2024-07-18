@@ -16,11 +16,13 @@ module ViewComponent # rubocop:disable Style/OneClassPerFile
   module Form
     module TestHelpers
       def form_with(object, builder: ViewComponent::Form::Builder, **options)
+        object_name = if object.class.respond_to?(:model_name)
+          object.class.model_name.param_key
+        else
+          :user
+        end
+  
         builder.new(object_name, object, template, options)
-      end
-
-      def object_name
-        :user
       end
 
       def template
