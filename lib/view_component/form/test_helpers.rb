@@ -8,11 +8,13 @@ module ViewComponent
   module Form
     module TestHelpers
       def form_with(object, builder: ViewComponent::Form::Builder, **options)
+        object_name = if object.class.respond_to?(:model_name)
+          object.class.model_name.param_key
+        else
+          :user
+        end
+  
         builder.new(object_name, object, template, options)
-      end
-
-      def object_name
-        :user
       end
 
       if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("6.1")

@@ -410,6 +410,29 @@ end
 
 For more complex components, we recommend the [`rspec-html-matchers` gem](https://github.com/kucaahbe/rspec-html-matchers).
 
+### Minitest
+
+#### Configuration
+
+```rb
+  # test/test_helper.rb
+  ViewComponent::TestCase.include(ViewComponent::Form::TestHelpers)
+```
+
+#### Example
+
+```rb
+test "renders a text field" do
+  object = User.new # replace with a model of your choice
+  form = form_with(object)
+  options = {}
+
+  render_inline(described_class.new(form, object_name, :first_name, options))
+
+  assert_selector "input[type=text][name='user[first_name]'][id='user_first_name']"
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
