@@ -27,6 +27,15 @@ appraise "rails-7.1_vc-3.0" do
   gem "view_component", ">= 3.0.0", "< 4.0"
 end
 
+appraise "rails-7.2_vc-2.0" do
+  gem "rails", "~> 7.2.0"
+end
+
+appraise "rails-7.2_vc-3.0" do
+  gem "rails", "~> 7.2.0"
+  gem "view_component", ">= 3.0.0", "< 4.0"
+end
+
 appraise "rails-head_vc-2.0" do
   gem "rails", github: "rails/rails", branch: "main"
 end
