@@ -8,7 +8,8 @@ Development of this gem is sponsored by:
 
 ## Compatibility
 
-> [!WARNING] > **This is an early release, and the API is subject to change until `v1.0.0`.**
+> [!WARNING]
+> **This is an early release, and the API is subject to change until `v1.0.0`.**
 
 This gem is tested on:
 
