@@ -21,9 +21,8 @@ module ViewComponent
           @view_context,
           choices,
           options,
-          html_options,
-          &content
-        ).render
+          html_options
+        ).render(&content)
       end
 
       protected
