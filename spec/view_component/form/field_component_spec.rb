@@ -87,6 +87,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       it { expect(component.method_errors?).to be(false) }
     end
+
+    context "with false" do
+      let(:object) { false }
+
+      it { expect(component.method_errors?).to be(false) }
+    end
   end
 
   describe "#value" do
