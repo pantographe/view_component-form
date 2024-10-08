@@ -38,9 +38,11 @@ end
 
 appraise "rails-head_vc-2.0" do
   gem "rails", github: "rails/rails", branch: "main"
+  gem "sqlite3", "~> 2.1", group: :test
 end
 
 appraise "rails-head_vc-3.0" do
   gem "rails", github: "rails/rails", branch: "main"
   gem "view_component", ">= 3.0.0", "< 4.0"
+  gem "sqlite3", "~> 2.1", group: :test
 end
