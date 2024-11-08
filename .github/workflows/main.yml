@@ -34,7 +34,7 @@ jobs:
       VIEW_COMPONENT_FORM_USE_ACTIONTEXT: ${{ matrix.action_text == 'with' && 'true' || 'false' }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Update gemspec to test in head version
       if: matrix.versions.rails == 'head'
@@ -53,7 +53,7 @@ jobs:
         COVERAGE=true bundle exec rake
 
     - name: Upload coverage results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: coverage-report-ruby-${{ matrix.versions.ruby }}-rails-${{ matrix.versions.rails }}-vc-${{ matrix.view_component }}-actiontext-${{ matrix.action_text }}
