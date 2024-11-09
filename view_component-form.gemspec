@@ -26,8 +26,8 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = Gem::Requirement.new(">= 3.0.0")
 
-  spec.add_dependency "actionview", [">= 6.1.0", "< 8.0"]
-  spec.add_dependency "activesupport", [">= 6.1.0", "< 8.0"]
+  spec.add_dependency "actionview", [">= 6.1.0", "< 8.1"]
+  spec.add_dependency "activesupport", [">= 6.1.0", "< 8.1"]
   spec.add_dependency "view_component", [">= 2.34.0", "< 4.0"]
   spec.add_dependency "zeitwerk", ["~> 2.5"]
 end
