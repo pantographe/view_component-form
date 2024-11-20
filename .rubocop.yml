@@ -14,6 +14,7 @@ AllCops:
     - 'gemfiles/**/*'
     - 'lib/generators/**/templates/**/*'
     - 'node_modules/**/*'
+    - 'spec/internal/db/schema.rb'
     - 'tmp/**/*'
     - 'vendor/**/*'
 
@@ -34,4 +35,3 @@ RSpec/MultipleMemoizedHelpers:
 Metrics/BlockLength:
   Exclude:
     - 'spec/view_component/**/*'
-    - 'spec/internal/db/schema.rb'
