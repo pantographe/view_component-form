@@ -19,6 +19,7 @@ module ViewComponent
               label
               phone_field
               radio_button
+              textarea
             ]).each do |selector|
               class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
                 def #{selector}(method, options = {}) # def text_field(method, options = {})
@@ -47,6 +48,13 @@ module ViewComponent
           )
         end
         alias datetime_local_field datetime_field
+
+        def textarea(method, options = {})
+          render_component(
+            :text_area, @object_name, method, objectify_options(options)
+          )
+        end
+        alias text_area textarea
 
         def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
           render_component(
