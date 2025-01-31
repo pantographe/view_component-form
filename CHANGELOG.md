@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Removed
+- Drop Ruby 3.0 support
 - Drop Rails 6.1 support
 
 ## [0.2.9] - 2024-11-09
