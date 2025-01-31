@@ -13,18 +13,14 @@ module ViewComponent
         set_html_options!
       end
 
-      def call # rubocop:disable Metrics/MethodLength
-        if Rails::VERSION::MAJOR >= 7 # rubocop:disable Style/GuardClause
-          ActionView::Helpers::Tags::WeekdaySelect.new(
-            object_name,
-            method_name,
-            @view_context,
-            options,
-            html_options
-          ).render
-        else
-          raise NotImplementedError, "#{self.class} is only available in Rails >= 7"
-        end
+      def call
+        ActionView::Helpers::Tags::WeekdaySelect.new(
+          object_name,
+          method_name,
+          @view_context,
+          options,
+          html_options
+        ).render
       end
 
       protected

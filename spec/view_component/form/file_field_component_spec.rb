@@ -26,15 +26,13 @@ RSpec.describe ViewComponent::Form::FileFieldComponent, type: :component do
     end
   end
 
-  if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("7.0")
-    context "with multiple and include hidden" do
-      let(:options) { { multiple: true, include_hidden: true } }
+  context "with multiple and include hidden" do
+    let(:options) { { multiple: true, include_hidden: true } }
 
-      it do
-        expect(component).to eq_html <<~HTML
-          <input name="user[avatar][]" type="hidden" value="" autocomplete="off"><input multiple type="file" name="user[avatar][]" id="user_avatar">
-        HTML
-      end
+    it do
+      expect(component).to eq_html <<~HTML
+        <input name="user[avatar][]" type="hidden" value="" autocomplete="off"><input multiple type="file" name="user[avatar][]" id="user_avatar">
+      HTML
     end
   end
 

@@ -15,18 +15,10 @@ module ViewComponent
         :user
       end
 
-      if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("6.1")
-        def template
-          lookup_context = ActionView::LookupContext.new(ActionController::Base.view_paths)
+      def template
+        lookup_context = ActionView::LookupContext.new(ActionController::Base.view_paths)
 
-          ActionView::Base.new(lookup_context, {}, ApplicationController.new)
-        end
-      else
-        def template
-          lookup_context = ActionView::LookupContext.new(ActionController::Base.view_paths)
-
-          ActionView::Base.new(lookup_context, {})
-        end
+        ActionView::Base.new(lookup_context, {}, ApplicationController.new)
       end
     end
   end
