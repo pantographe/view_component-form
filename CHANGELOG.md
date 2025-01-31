@@ -5,7 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-Nothing yet.
+### Added
+- Support for Ruby 3.4 (#186)
+### Removed
+- Drop Ruby 3.0 support (#186)
+- Drop Rails 6.1 support (#186)
 
 ## [0.2.9] - 2024-11-09
 ### Added

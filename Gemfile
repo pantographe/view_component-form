@@ -19,3 +19,6 @@ gem "rubocop-performance", require: false
 gem "rubocop-rspec", require: false
 gem "simplecov", require: false, group: :test
 gem "sqlite3", "~> 1.4", group: :test
+
+# Temporarilly fi for "uninitialized constant ActiveSupport::LoggerThreadSafeLevel::Logger" error
+gem "concurrent-ruby", "= 1.3.4"

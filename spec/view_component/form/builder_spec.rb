@@ -142,9 +142,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :time_zone_select, :time_zone, nil, { include_blank: true }
   it_behaves_like "the default form builder", :url_field, :homepage
   it_behaves_like "the default form builder", :week_field, :birthday_week
-  if Rails::VERSION::MAJOR >= 7
-    it_behaves_like "the default form builder", :weekday_select, :weekday, { include_blank: true }
-  end
+  it_behaves_like "the default form builder", :weekday_select, :weekday, { include_blank: true }
 
   describe "#component_klass" do
     context "with gem Builder" do
@@ -194,13 +192,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   end
 
   describe "#field_id" do
-    if Rails::VERSION::MAJOR >= 7
-      it_behaves_like "the default form builder", :field_id, :first_name, :hint
-    else
-      let(:builder) { described_class.new(object_name, object, template, options) }
-
-      it { expect(builder.send(:field_id, :first_name, :hint)).to eq("first_name_hint") }
-    end
+    it_behaves_like "the default form builder", :field_id, :first_name, :hint
   end
 
   describe "#validation_context" do

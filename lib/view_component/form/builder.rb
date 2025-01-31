@@ -6,7 +6,6 @@ module ViewComponent
       include ViewComponent::Form::Renderer
       include ViewComponent::Form::ValidationContext
       include ViewComponent::Form::Helpers::Rails
-      include ViewComponent::Form::Helpers::Rails7Backports if ::Rails::VERSION::MAJOR < 7
       include ViewComponent::Form::Helpers::Custom
     end
   end
