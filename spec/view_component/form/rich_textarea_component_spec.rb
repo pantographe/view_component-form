@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if defined?(ActionView::Helpers::Tags::ActionText)
-  RSpec.describe ViewComponent::Form::RichTextAreaComponent, type: :component do
+  RSpec.describe ViewComponent::Form::RichTextareaComponent, type: :component do
     let(:object)  { OpenStruct.new }
     let(:form)    { form_with(object) }
     let(:options) { {} }

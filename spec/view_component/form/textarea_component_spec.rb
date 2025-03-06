@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ViewComponent::Form::TextAreaComponent, type: :component do
+RSpec.describe ViewComponent::Form::TextareaComponent, type: :component do
   let(:object)  { OpenStruct.new }
   let(:form)    { form_with(object) }
   let(:options) { {} }
