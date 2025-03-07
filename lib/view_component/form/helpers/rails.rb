@@ -161,9 +161,10 @@ module ViewComponent
         end
 
         if defined?(ActionView::Helpers::Tags::ActionText)
-          def rich_text_area(method, options = {})
+          def rich_textarea(method, options = {})
             render_component(:rich_text_area, @object_name, method, objectify_options(options))
           end
+          alias rich_text_area rich_textarea
         end
       end
       # rubocop:enable Metrics/ModuleLength
