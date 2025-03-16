@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-module ViewComponent
-  module Form
-    class TextAreaComponent < FieldComponent
-      self.tag_klass = ActionView::Helpers::Tags::TextArea
+if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new("8.0")
+  module ViewComponent
+    module Form
+      class TextAreaComponent < TextareaComponent
+      end
     end
   end
 end

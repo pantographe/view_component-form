@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Drop Ruby 3.0 support (#186)
 - Drop Rails 6.1 support (#186)
+### Fixed
+- Add `text_area` alias to `textarea` helper to follow Rails 8.0 change (#181)
 
 ## [0.2.9] - 2024-11-09
 ### Added

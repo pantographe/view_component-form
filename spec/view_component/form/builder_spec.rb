@@ -118,6 +118,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :number_field, :age
   it_behaves_like "the default form builder", :password_field, :password
   it_behaves_like "the default form builder", :phone_field, :phone
+  it_behaves_like "the default form builder", :telephone_field, :phone
   it_behaves_like "the default form builder", :radio_button, "category", "rails"
   it_behaves_like "the default form builder", :radio_button, "category", "java"
   it_behaves_like "the default form builder", :radio_button, "receive_newsletter", "yes"
@@ -135,6 +136,9 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   end
 
   it_behaves_like "the default form builder", :submit
+  if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.0")
+    it_behaves_like "the default form builder", :textarea, :detail
+  end
   it_behaves_like "the default form builder", :text_area, :detail
   it_behaves_like "the default form builder", :text_field, :name
   it_behaves_like "the default form builder", :time_field, :born_at
