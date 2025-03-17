@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    view_component-form (0.2.9)
+    view_component-form (0.2.10)
       actionview (>= 7.0.0, < 8.1)
       activesupport (>= 7.0.0, < 8.1)
       view_component (>= 2.34.0, < 4.0)
