@@ -31,6 +31,8 @@ module ViewComponent
                 end                                   # end
               RUBY_EVAL
             end
+
+            alias_method :text_area, :textarea if method_defined?(:textarea)
             alias_method :phone_field, :telephone_field
           end
         end

@@ -136,10 +136,30 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   end
 
   it_behaves_like "the default form builder", :submit
+
+  it_behaves_like "the default form builder", :text_area, :detail
   if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.0")
     it_behaves_like "the default form builder", :textarea, :detail
+
+    it "text_area alias renders the TextareaComponent" do
+      instance_spy = instance_spy(ViewComponent::Form::TextareaComponent)
+      allow(ViewComponent::Form::TextareaComponent).to receive(:new).and_return(instance_spy)
+
+      form.text_area(:detail)
+
+      expect(ViewComponent::Form::TextareaComponent).to have_received(:new).once
+    end
+  else
+    it "text_area renders the TextAreaComponent" do
+      instance_spy = instance_spy(ViewComponent::Form::TextAreaComponent)
+      allow(ViewComponent::Form::TextAreaComponent).to receive(:new).and_return(instance_spy)
+
+      form.text_area(:detail)
+
+      expect(ViewComponent::Form::TextAreaComponent).to have_received(:new).once
+    end
   end
-  it_behaves_like "the default form builder", :text_area, :detail
+
   it_behaves_like "the default form builder", :text_field, :name
   it_behaves_like "the default form builder", :time_field, :born_at
   it_behaves_like "the default form builder", :time_select, :average_lap
