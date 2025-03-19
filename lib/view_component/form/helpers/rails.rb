@@ -7,8 +7,10 @@ module ViewComponent
       module Rails
         # rubocop:disable Metrics/MethodLength
         def self.included(base)
-          base.class_eval do
+          base.class_eval do # rubocop:disable Metrics/BlockLength
             (field_helpers - %i[
+              text_area
+              textarea
               check_box
               datetime_field
               datetime_local_field
@@ -32,11 +34,15 @@ module ViewComponent
               RUBY_EVAL
             end
 
-            alias_method :text_area, :textarea if method_defined?(:textarea)
             alias_method :phone_field, :telephone_field
           end
         end
         # rubocop:enable Metrics/MethodLength
+
+        def text_area(method, options = {})
+          render_component(:text_area, @object_name, method, objectify_options(options))
+        end
+        alias textarea text_area if Gem::Version.new(::Rails::VERSION::STRING) >= Gem::Version.new("8.0")
 
         # See: https://github.com/rails/rails/blob/33d60cb02dcac26d037332410eabaeeb0bdc384c/actionview/lib/action_view/helpers/form_helper.rb#L2280
         def label(method, text = nil, options = {}, &block)

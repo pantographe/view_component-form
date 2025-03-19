@@ -24,9 +24,26 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     end
   end
 
+  shared_examples "it renders a component" do |component_klass, method_name, *args, rspec_around: lambda(&:run), **kwargs, &block| # rubocop:disable Layout/LineLength
+    around(&rspec_around)
+    subject { form.public_send(method_name, *args, **kwargs, &block) }
+
+    context "when calling ##{method_name}" do
+      it "renders the #{component_klass}" do
+        instance_spy = instance_spy(component_klass)
+        allow(component_klass).to receive(:new).and_return(instance_spy)
+
+        subject
+
+        expect(instance_spy).to have_received(:render_in).once
+      end
+    end
+  end
+
   it_behaves_like "the default form builder", :check_box, "validated"
   it_behaves_like "the default form builder", :check_box, "gooddog", {}, "yes", "no"
   it_behaves_like "the default form builder", :check_box, "accepted", { class: "eula_check" }, "yes", "no"
+
   context "with model-dependent fields" do
     before do
       Author.create(name_with_initial: "Touma K.")
@@ -138,26 +155,10 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :submit
 
   it_behaves_like "the default form builder", :text_area, :detail
+  it_behaves_like "it renders a component", ViewComponent::Form::TextAreaComponent, :text_area, :detail
   if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.0")
     it_behaves_like "the default form builder", :textarea, :detail
-
-    it "text_area alias renders the TextareaComponent" do
-      instance_spy = instance_spy(ViewComponent::Form::TextareaComponent)
-      allow(ViewComponent::Form::TextareaComponent).to receive(:new).and_return(instance_spy)
-
-      form.text_area(:detail)
-
-      expect(ViewComponent::Form::TextareaComponent).to have_received(:new).once
-    end
-  else
-    it "text_area renders the TextAreaComponent" do
-      instance_spy = instance_spy(ViewComponent::Form::TextAreaComponent)
-      allow(ViewComponent::Form::TextAreaComponent).to receive(:new).and_return(instance_spy)
-
-      form.text_area(:detail)
-
-      expect(ViewComponent::Form::TextAreaComponent).to have_received(:new).once
-    end
+    it_behaves_like "it renders a component", ViewComponent::Form::TextAreaComponent, :textarea, :detail
   end
 
   it_behaves_like "the default form builder", :text_field, :name
