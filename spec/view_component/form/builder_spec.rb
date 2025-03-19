@@ -44,6 +44,12 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :check_box, "gooddog", {}, "yes", "no"
   it_behaves_like "the default form builder", :check_box, "accepted", { class: "eula_check" }, "yes", "no"
 
+  it_behaves_like "it renders a component", ViewComponent::Form::CheckBoxComponent, :check_box, "validated"
+  if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.0")
+    it_behaves_like "the default form builder", :checkbox, "validated"
+    it_behaves_like "it renders a component", ViewComponent::Form::CheckBoxComponent, :checkbox, "validated"
+  end
+
   context "with model-dependent fields" do
     before do
       Author.create(name_with_initial: "Touma K.")

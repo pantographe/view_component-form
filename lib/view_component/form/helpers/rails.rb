@@ -12,6 +12,7 @@ module ViewComponent
               text_area
               textarea
               check_box
+              checkbox
               datetime_field
               datetime_local_field
               fields
@@ -57,10 +58,9 @@ module ViewComponent
         alias datetime_local_field datetime_field
 
         def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
-          render_component(
-            :check_box, @object_name, method, checked_value, unchecked_value, objectify_options(options)
-          )
+          render_component(:check_box, @object_name, method, checked_value, unchecked_value, objectify_options(options))
         end
+        alias checkbox check_box if Gem::Version.new(::Rails::VERSION::STRING) >= Gem::Version.new("8.0")
 
         def radio_button(method, tag_value, options = {})
           render_component(
