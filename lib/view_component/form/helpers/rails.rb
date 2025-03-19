@@ -126,6 +126,9 @@ module ViewComponent
             objectify_options(options), @default_html_options.merge(html_options), &block
           )
         end
+        if Gem::Version.new(::Rails::VERSION::STRING) >= Gem::Version.new("8.0")
+          alias collection_checkboxes collection_check_boxes
+        end
 
         def collection_radio_buttons(
           method, collection,

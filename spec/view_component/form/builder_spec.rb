@@ -59,6 +59,16 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
     it_behaves_like "the default form builder", :collection_check_boxes, :author_ids, Author.all, :id,
                     :name_with_initial
+    it_behaves_like "it renders a component", ViewComponent::Form::CollectionCheckBoxesComponent,
+                    :collection_check_boxes, :author_ids, Author.all, :id, :name_with_initial
+
+    if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.0")
+      it_behaves_like "it renders a component", ViewComponent::Form::CollectionCheckBoxesComponent,
+                      :collection_checkboxes, :author_ids, Author.all, :id, :name_with_initial
+      it_behaves_like "the default form builder", :collection_checkboxes,
+                      :author_ids, Author.all, :id, :name_with_initial
+    end
+
     it_behaves_like "the default form builder", :collection_radio_buttons, :author_id, Author.all, :id,
                     :name_with_initial
     it_behaves_like "the default form builder", :collection_select, :person_id, Author.all, :id, :name_with_initial,
