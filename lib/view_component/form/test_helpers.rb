@@ -4,6 +4,10 @@ require "action_controller"
 require "action_controller/test_case"
 require "action_view"
 
+class TestView < ActionView::Base
+  include ActionText::TagHelper if defined?(ActionText)
+end
+
 module ViewComponent
   module Form
     module TestHelpers
@@ -18,7 +22,7 @@ module ViewComponent
       def template
         lookup_context = ActionView::LookupContext.new(ActionController::Base.view_paths)
 
-        ActionView::Base.new(lookup_context, {}, ApplicationController.new)
+        TestView.new(lookup_context, {}, ApplicationController.new)
       end
     end
   end

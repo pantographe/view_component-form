@@ -7,9 +7,12 @@ module ViewComponent
       module Rails
         # rubocop:disable Metrics/MethodLength
         def self.included(base)
-          base.class_eval do
+          base.class_eval do # rubocop:disable Metrics/BlockLength
             (field_helpers - %i[
+              text_area
+              textarea
               check_box
+              checkbox
               datetime_field
               datetime_local_field
               fields
@@ -31,10 +34,15 @@ module ViewComponent
                 end                                   # end
               RUBY_EVAL
             end
+
             alias_method :phone_field, :telephone_field
           end
         end
         # rubocop:enable Metrics/MethodLength
+
+        def text_area(method, options = {})
+          render_component(:text_area, @object_name, method, objectify_options(options))
+        end
 
         # See: https://github.com/rails/rails/blob/33d60cb02dcac26d037332410eabaeeb0bdc384c/actionview/lib/action_view/helpers/form_helper.rb#L2280
         def label(method, text = nil, options = {}, &block)
@@ -49,9 +57,7 @@ module ViewComponent
         alias datetime_local_field datetime_field
 
         def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
-          render_component(
-            :check_box, @object_name, method, checked_value, unchecked_value, objectify_options(options)
-          )
+          render_component(:check_box, @object_name, method, checked_value, unchecked_value, objectify_options(options))
         end
 
         def radio_button(method, tag_value, options = {})
@@ -161,10 +167,9 @@ module ViewComponent
         end
 
         if defined?(ActionView::Helpers::Tags::ActionText)
-          def rich_textarea(method, options = {})
+          def rich_text_area(method, options = {})
             render_component(:rich_text_area, @object_name, method, objectify_options(options))
           end
-          alias rich_text_area rich_textarea
         end
       end
       # rubocop:enable Metrics/ModuleLength
