@@ -40,12 +40,9 @@ module ViewComponent
         end
         # rubocop:enable Metrics/MethodLength
 
-        rails8_or_newer = Gem::Version.new(::Rails::VERSION::STRING) >= Gem::Version.new("8.0")
-
         def text_area(method, options = {})
           render_component(:text_area, @object_name, method, objectify_options(options))
         end
-        alias textarea text_area if rails8_or_newer
 
         # See: https://github.com/rails/rails/blob/33d60cb02dcac26d037332410eabaeeb0bdc384c/actionview/lib/action_view/helpers/form_helper.rb#L2280
         def label(method, text = nil, options = {}, &block)
@@ -62,7 +59,6 @@ module ViewComponent
         def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
           render_component(:check_box, @object_name, method, checked_value, unchecked_value, objectify_options(options))
         end
-        alias checkbox check_box if rails8_or_newer
 
         def radio_button(method, tag_value, options = {})
           render_component(
@@ -128,7 +124,6 @@ module ViewComponent
             objectify_options(options), @default_html_options.merge(html_options), &block
           )
         end
-        alias collection_checkboxes collection_check_boxes if rails8_or_newer
 
         def collection_radio_buttons(
           method, collection,
@@ -175,7 +170,6 @@ module ViewComponent
           def rich_text_area(method, options = {})
             render_component(:rich_text_area, @object_name, method, objectify_options(options))
           end
-          alias rich_textarea rich_text_area if rails8_or_newer
         end
       end
       # rubocop:enable Metrics/ModuleLength
