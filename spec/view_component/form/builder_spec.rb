@@ -177,6 +177,23 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     it_behaves_like "it renders a component", ViewComponent::Form::TextAreaComponent, :textarea, :detail
   end
 
+  if defined?(ActionView::Helpers::Tags::ActionText)
+    context "with ActionText" do
+      let(:object) { TestModel.new }
+
+      it_behaves_like "the default form builder", :rich_text_area, :foo,
+                      data: { direct_upload_url: ".", blob_url_template: "." }
+      it_behaves_like "it renders a component", ViewComponent::Form::RichTextAreaComponent, :rich_text_area, :foo,
+                      data: { direct_upload_url: ".", blob_url_template: "." }
+      if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.0")
+        it_behaves_like "the default form builder", :rich_textarea, :foo,
+                        data: { direct_upload_url: ".", blob_url_template: "." }
+        it_behaves_like "it renders a component", ViewComponent::Form::RichTextAreaComponent, :rich_textarea, :foo,
+                        data: { direct_upload_url: ".", blob_url_template: "." }
+      end
+    end
+  end
+
   it_behaves_like "the default form builder", :text_field, :name
   it_behaves_like "the default form builder", :time_field, :born_at
   it_behaves_like "the default form builder", :time_select, :average_lap
