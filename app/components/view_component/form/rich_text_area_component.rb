@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new("8.0")
-  module ViewComponent
-    module Form
-      class RichTextAreaComponent < RichTextareaComponent
+module ViewComponent
+  module Form
+    class RichTextAreaComponent < FieldComponent
+      if defined?(ActionView::Helpers::Tags::ActionText) # rubocop:disable Style/IfUnlessModifier
+        self.tag_klass = ActionView::Helpers::Tags::ActionText
       end
     end
   end
