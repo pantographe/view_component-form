@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 Nothing yet
 
-## [0.2.10] - 2025-03-17
+## [0.2.11] - 2025-04-05
+### Fixed
+- Fix Rails 8 integration (#189)
+
+## [0.2.10] - 2025-03-17 (yanked)
 ### Added
 - Support for Ruby 3.4 (#186)
 ### Removed
