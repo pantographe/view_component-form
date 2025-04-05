@@ -137,7 +137,8 @@ Nothing yet
 - Add CHANGELOG (#50)
 - Add CI (#2)
 
-[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.2.10...HEAD
+[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.2.11...HEAD
+[0.2.11]: https://github.com/pantographe/view_component-form/compare/v0.2.10...v0.2.11
 [0.2.10]: https://github.com/pantographe/view_component-form/compare/v0.2.9...v0.2.10
 [0.2.9]: https://github.com/pantographe/view_component-form/compare/v0.2.8...v0.2.9
 [0.2.8]: https://github.com/pantographe/view_component-form/compare/v0.2.7...v0.2.8
