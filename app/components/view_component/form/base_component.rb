@@ -23,12 +23,14 @@ module ViewComponent
 
       def object_errors?
         return false unless object
+        return false unless object.respond_to?(:errors)
 
         object.errors.any?
       end
 
       def object_errors
         return nil unless object
+        return nil unless object.respond_to?(:errors)
 
         object.errors
       end
