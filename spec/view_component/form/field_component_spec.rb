@@ -19,12 +19,34 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     end
   end
 
-  let(:object)      { object_klass.new }
+  let(:plain_object_klass) do
+    Class.new do      
+      attr_accessor :first_name, :last_name, :email, :city
+
+      def initialize(first_name: nil, last_name: nil, email: nil, city: nil)
+        @first_name = first_name
+        @last_name = last_name
+        @email = email
+        @city = city
+      end
+
+      class << self
+        def name
+          "PlainUser"
+        end
+      end
+    end
+  end
+
+  let(:object)      { object_klass.new }  
+  let(:plain_object)      { plain_object_klass.new }  
   let(:form)        { form_with(object) }
+  let(:plain_form)        { form_with(plain_object) }
   let(:method_name) { :first_name }
   let(:options)     { {} }
 
   let(:component) { described_class.new(form, object_name, method_name, options) }
+  let(:plain_component) { described_class.new(plain_form, object_name, method_name, options) }
 
   describe "#tag_klass" do
     subject { Class.new(ChildClass).tag_klass }
@@ -63,6 +85,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       it { expect(component.method_errors).to eq([]) }
     end
+
+    context "with plain object" do
+      let(:object) { plain_object_klass.new(first_name: "John") }      
+
+      it { expect(component.method_errors).to eq([]) }
+    end
   end
 
   describe "#method_errors?" do
@@ -93,16 +121,36 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       it { expect(component.method_errors?).to be(false) }
     end
+
+    context "with plain object" do
+      let(:object) { plain_object_klass.new(first_name: "John") }      
+
+      it { expect(component.method_errors?).to be(false) }
+    end
   end
 
   describe "#value" do
-    let(:object) { object_klass.new(first_name: "John") }
+    context "with ActiveModel object" do
+      let(:object) { object_klass.new(first_name: "John") }
 
-    it { expect(component.value).to eq("John") }
+      it { expect(component.value).to eq("John") }
+    end
+
+    context "with plain object" do
+      let(:object) { plain_object_klass.new(first_name: "John") }
+
+      it { expect(component.value).to eq("John") }
+    end
   end
 
   describe "#object_method_names" do
-    it { expect(component.object_method_names).to eq(%i[first_name]) }
+    context "with ActiveModel object" do
+      it { expect(component.object_method_names).to eq(%i[first_name]) }
+    end
+
+    context "with plain object" do
+      it { expect(plain_component.object_method_names).to eq(%i[first_name]) }
+    end
 
     it "works with belongs_to for _id", skip: "still to be implemented"
     it "works with has_many for _ids", skip: "still to be implemented"
@@ -120,6 +168,10 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       it { expect(component.label_text).to eq("Your first name") }
     end
+
+    context "with plain object" do
+      it { expect(component.label_text).to eq("First name") }
+    end    
   end
 
   describe "#optional?" do
@@ -158,6 +210,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       it { expect(component.optional?(context: :custom_context)).to be(false) }
       it { expect(component.optional?(context: :another_context)).to be(false) }
     end
+
+    context "with plain object" do
+      let(:method_name) { :first_name }
+
+      it { expect(plain_component.optional?).to be(true) }
+    end
   end
 
   describe "#required?" do
@@ -195,6 +253,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       it { expect(component.required?).to be(false) }
       it { expect(component.required?(context: :custom_context)).to be(true) }
       it { expect(component.required?(context: :another_context)).to be(true) }
+    end
+
+    context "with plain object" do
+      let(:method_name) { :first_name }
+
+      it { expect(plain_component.required?).to be(false) }
     end
   end
 
@@ -238,7 +302,13 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       it do
         expect(component.validators(context: :another_context).first)
           .to be_a(ActiveModel::Validations::PresenceValidator)
-      end
+      end      
+    end
+
+    context "with plain object" do
+      let(:method_name) { :first_name }
+
+      it { expect(plain_component.validators).to eq([]) }      
     end
   end
 
@@ -251,6 +321,10 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       let(:form) { form_with(object, validation_context: :custom_context) }
 
       it { expect(component.validation_context).to eq(:custom_context) }
+    end
+
+    context "with plain object" do
+      it { expect(plain_component.validation_context).to be_nil }
     end
   end
 end
