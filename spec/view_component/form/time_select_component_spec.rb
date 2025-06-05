@@ -21,6 +21,6 @@ RSpec.describe ViewComponent::Form::TimeSelectComponent, type: :component do
     end
   end
 
-  include_examples "component with custom html classes", :html_options
-  include_examples "component with custom data attributes", :html_options
+  it_behaves_like "component with custom html classes", :html_options
+  it_behaves_like "component with custom data attributes", :html_options
 end

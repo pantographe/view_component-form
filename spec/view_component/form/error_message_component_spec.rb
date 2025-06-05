@@ -49,7 +49,7 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
       it { is_expected.to eq_html "<div>#{blank_error_message}<br>Is too short (minimum is 2 characters)</div>" }
     end
 
-    include_examples "component with custom html classes"
-    include_examples "component with custom data attributes"
+    it_behaves_like "component with custom html classes"
+    it_behaves_like "component with custom data attributes"
   end
 end

@@ -35,7 +35,7 @@ module ViewComponent
       def method_errors?
         return false unless object_errors
 
-        (object_errors.attribute_names & object_method_names).any?
+        object_errors.attribute_names.intersect?(object_method_names)
       end
 
       def value
