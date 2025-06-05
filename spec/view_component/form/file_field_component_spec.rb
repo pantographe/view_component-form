@@ -36,6 +36,6 @@ RSpec.describe ViewComponent::Form::FileFieldComponent, type: :component do
     end
   end
 
-  include_examples "component with custom html classes"
-  include_examples "component with custom data attributes"
+  it_behaves_like "component with custom html classes"
+  it_behaves_like "component with custom data attributes"
 end

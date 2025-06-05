@@ -41,9 +41,9 @@ module ViewComponent
 
       private
 
-      def render_component(component_name, *args, &block)
+      def render_component(component_name, *args, &)
         component = component_klass(component_name).new(self, *args)
-        component.render_in(@template, &block)
+        component.render_in(@template, &)
       end
 
       def objectify_options(options)

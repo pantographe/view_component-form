@@ -23,6 +23,6 @@ RSpec.describe ViewComponent::Form::TextAreaComponent, type: :component do
     it { expect(component.css("textarea").first.content).to include("Hello World") }
   end
 
-  include_examples "component with custom html classes"
-  include_examples "component with custom data attributes"
+  it_behaves_like "component with custom html classes"
+  it_behaves_like "component with custom data attributes"
 end

@@ -17,10 +17,10 @@ module ViewComponent
         end
 
         def collection_checkboxes(method, collection, value_method, text_method, options = {}, html_options = {}, # rubocop:disable Metrics/ParameterLists
-                                  &block)
+                                  &)
           render_component(
             :collection_check_boxes, @object_name, method, collection, value_method, text_method,
-            objectify_options(options), @default_html_options.merge(html_options), &block
+            objectify_options(options), @default_html_options.merge(html_options), &
           )
         end
 

@@ -16,11 +16,11 @@ RSpec.describe ViewComponent::Form::MonthFieldComponent, type: :component do
     end
   end
 
-  include_examples "component with custom html classes"
-  include_examples "component with custom data attributes"
+  it_behaves_like "component with custom html classes"
+  it_behaves_like "component with custom data attributes"
 
   if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new("7.1.0.alpha")
-    include_examples "component with custom value"
+    it_behaves_like "component with custom value"
   else
     context "with custom value" do
       let(:options) { { value: DateTime.new(2004, 6, 15, 1, 2, 3) } }

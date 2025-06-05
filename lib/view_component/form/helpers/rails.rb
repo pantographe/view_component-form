@@ -45,8 +45,8 @@ module ViewComponent
         end
 
         # See: https://github.com/rails/rails/blob/33d60cb02dcac26d037332410eabaeeb0bdc384c/actionview/lib/action_view/helpers/form_helper.rb#L2280
-        def label(method, text = nil, options = {}, &block)
-          render_component(:label, @object_name, method, text, objectify_options(options), &block)
+        def label(method, text = nil, options = {}, &)
+          render_component(:label, @object_name, method, text, objectify_options(options), &)
         end
 
         def datetime_field(method, options = {})
@@ -80,20 +80,20 @@ module ViewComponent
           render_component(:submit, value, options)
         end
 
-        def button(value = nil, options = {}, &block)
+        def button(value = nil, options = {}, &)
           if value.is_a?(Hash)
             options = value
             value = nil
           end
           value ||= submit_default_value
-          render_component(:button, value, options, &block)
+          render_component(:button, value, options, &)
         end
 
         # See: https://github.com/rails/rails/blob/fe76a95b0d252a2d7c25e69498b720c96b243ea2/actionview/lib/action_view/helpers/form_options_helper.rb
-        def select(method, choices = nil, options = {}, html_options = {}, &block)
+        def select(method, choices = nil, options = {}, html_options = {}, &)
           render_component(
             :select, @object_name, method, choices, objectify_options(options),
-            @default_html_options.merge(html_options), &block
+            @default_html_options.merge(html_options), &
           )
         end
 
@@ -118,10 +118,10 @@ module ViewComponent
         end
 
         def collection_check_boxes(method, collection, value_method, text_method, options = {}, html_options = {},
-                                   &block)
+                                   &)
           render_component(
             :collection_check_boxes, @object_name, method, collection, value_method, text_method,
-            objectify_options(options), @default_html_options.merge(html_options), &block
+            objectify_options(options), @default_html_options.merge(html_options), &
           )
         end
 
@@ -129,11 +129,11 @@ module ViewComponent
           method, collection,
           value_method, text_method,
           options = {}, html_options = {},
-          &block
+          &
         )
           render_component(
             :collection_radio_buttons, @object_name, method, collection, value_method, text_method,
-            objectify_options(options), @default_html_options.merge(html_options), &block
+            objectify_options(options), @default_html_options.merge(html_options), &
           )
         end
         # rubocop:enable Metrics/ParameterLists

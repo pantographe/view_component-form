@@ -53,6 +53,6 @@ RSpec.describe ViewComponent::Form::GroupedCollectionSelectComponent, type: :com
   end
   # rubocop:enable RSpec/ExampleLength
 
-  include_examples "component with custom html classes", :html_options
-  include_examples "component with custom data attributes", :html_options
+  it_behaves_like "component with custom html classes", :html_options
+  it_behaves_like "component with custom data attributes", :html_options
 end

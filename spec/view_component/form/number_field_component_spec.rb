@@ -16,7 +16,7 @@ RSpec.describe ViewComponent::Form::NumberFieldComponent, type: :component do
     end
   end
 
-  include_examples "component with custom html classes"
-  include_examples "component with custom data attributes"
-  include_examples "component with custom value"
+  it_behaves_like "component with custom html classes"
+  it_behaves_like "component with custom data attributes"
+  it_behaves_like "component with custom value"
 end
