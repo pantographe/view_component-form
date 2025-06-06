@@ -95,7 +95,7 @@ module ViewComponent
       end
 
       def method_validators
-        @method_validators ||= if object.nil?
+        @method_validators ||= unless object.class.respond_to?(:validators_on)
                                  []
                                else
                                  object.class.validators_on(method_name)
