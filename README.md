@@ -341,6 +341,32 @@ ViewComponent::Form.configure do |config|
 end
 ```
 
+### Using plain Ruby object as model
+
+You can use plain Ruby object not implementing ActiveModel::Validations.
+
+```rb
+# app/models/post.rb
+class Post
+  attr_accessor :title, :body
+
+  def initialize(title:, body:)
+    @title = title
+    @body = body
+  end
+end
+```
+
+```erb
+<%# app/views/posts/_form.html.erb %>
+<%= form_with model: @post, builder: ViewComponent::Form::Builder do |f| %>
+  <%= f.label :title %> 
+  <%= f.text_field :title %
+  <%= f.label :body %> 
+  <%= f.text_field :body %  
+<% end %>
+```
+
 ### Using your form components without a backing model
 
 If you want to ensure that your fields display consistently across your app, you'll need to lean on Rails' own helpers. You may be used to using form tag helpers such as `text_field_tag` to generate tags, or even writing out plain HTML tags. These can't be integrated with a form builder, so they won't offer you the benefits of this gem.
