@@ -41,7 +41,12 @@ jobs:
             view_component: '4.0'
           - versions: { ruby: "3.3", rails: "7.0" }
             view_component: '4.0'
-          # view_component 2.x and 3.x don't support Rails 8.1
+          # view_component 2.x doesn't support Rails 8.0+ (requires activesupport < 8.0)
+          - versions: { ruby: "3.3", rails: "8.0" }
+            view_component: '2.0'
+          - versions: { ruby: "3.4", rails: "8.0" }
+            view_component: '2.0'
+          # view_component 2.x and 3.x don't support Rails 8.1 (require activesupport < 8.1)
           - versions: { ruby: "3.3", rails: "8.1" }
             view_component: '2.0'
           - versions: { ruby: "3.4", rails: "8.1" }

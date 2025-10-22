@@ -45,10 +45,6 @@ appraise "rails-7.2_vc-4.0" do
   gem "sqlite3", "~> 1.4", group: :test
 end
 
-appraise "rails-8.0_vc-2.0" do
-  gem "rails", "~> 8.0.0"
-end
-
 appraise "rails-8.0_vc-3.0" do
   gem "rails", "~> 8.0.0"
   gem "view_component", ">= 3.0.0", "< 4.0"
