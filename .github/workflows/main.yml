@@ -27,6 +27,8 @@ jobs:
           - { ruby: "3.4", rails: "7.2", rubygems: "default" }
           - { ruby: "3.3", rails: "8.0", rubygems: "default" }
           - { ruby: "3.4", rails: "8.0", rubygems: "default" }
+          - { ruby: "3.3", rails: "8.1", rubygems: "default" }
+          - { ruby: "3.4", rails: "8.1", rubygems: "default" }
           - { ruby: "3.3", rails: "head", rubygems: "latest" }
           - { ruby: "3.4", rails: "head", rubygems: "latest" }
         action_text: ['with', 'without']
@@ -42,7 +44,7 @@ jobs:
     - name: Update gemspec to test in head version
       if: matrix.versions.rails == 'head'
       run: |
-        sed -i -e 's/, "< 8.1"//g' view_component-form.gemspec
+        sed -i -e 's/, "< 8.2"//g' view_component-form.gemspec
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
