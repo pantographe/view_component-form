@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Support for Rails 8.1
+- Support for view_component 4.x
 
 ## [0.2.11] - 2025-04-05
 ### Fixed
