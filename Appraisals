@@ -1,23 +1,5 @@
 # frozen_string_literal: true
 
-appraise "rails-7.0_vc-3.0" do
-  gem "rails", "~> 7.0.0"
-  gem "view_component", ">= 3.0.0", "< 4.0"
-  gem "sqlite3", "~> 1.4", group: :test
-end
-
-appraise "rails-7.1_vc-3.0" do
-  gem "rails", "~> 7.1.0"
-  gem "view_component", ">= 3.0.0", "< 4.0"
-  gem "sqlite3", "~> 1.4", group: :test
-end
-
-appraise "rails-7.1_vc-4.0" do
-  gem "rails", "~> 7.1.0"
-  gem "view_component", ">= 4.0.0", "< 5.0"
-  gem "sqlite3", "~> 1.4", group: :test
-end
-
 appraise "rails-7.2_vc-3.0" do
   gem "rails", "~> 7.2.0"
   gem "view_component", ">= 3.0.0", "< 4.0"

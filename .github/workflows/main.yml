@@ -14,14 +14,6 @@ jobs:
     strategy:
       matrix:
         versions:
-          - { ruby: "3.1", rails: "7.0", rubygems: "default" }
-          - { ruby: "3.2", rails: "7.0", rubygems: "default" }
-          - { ruby: "3.3", rails: "7.0", rubygems: "default" }
-          - { ruby: "3.1", rails: "7.1", rubygems: "default" }
-          - { ruby: "3.2", rails: "7.1", rubygems: "default" }
-          - { ruby: "3.3", rails: "7.1", rubygems: "default" }
-          - { ruby: "3.4", rails: "7.1", rubygems: "default" }
-          - { ruby: "3.1", rails: "7.2", rubygems: "default" }
           - { ruby: "3.2", rails: "7.2", rubygems: "default" }
           - { ruby: "3.3", rails: "7.2", rubygems: "default" }
           - { ruby: "3.4", rails: "7.2", rubygems: "default" }
@@ -34,13 +26,6 @@ jobs:
         action_text: ['with', 'without']
         view_component: ['3.0', '4.0']
         exclude:
-          # view_component 4.x requires Rails >= 7.1
-          - versions: { ruby: "3.1", rails: "7.0" }
-            view_component: '4.0'
-          - versions: { ruby: "3.2", rails: "7.0" }
-            view_component: '4.0'
-          - versions: { ruby: "3.3", rails: "7.0" }
-            view_component: '4.0'
           # view_component 3.x doesn't support Rails 8.1 (requires activesupport < 8.1)
           - versions: { ruby: "3.3", rails: "8.1" }
             view_component: '3.0'
