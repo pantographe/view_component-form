@@ -23,6 +23,5 @@ fi
 git push
 git tag v$VERSION
 git push --tags
-gem build view_component-form.gemspec
-gem push "view_component-form-$VERSION.gem" --host https://rubygems.org
-rm "view_component-form-$VERSION.gem"
+echo "The gem will be pushed to RubyGems automatically by"
+echo "Github Actions, using Trusted Publishing."
