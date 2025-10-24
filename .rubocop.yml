@@ -28,10 +28,13 @@ Style/StringLiteralsInInterpolation:
 Layout/LineLength:
   Max: 120
 
+RSpec/MultipleExpectations:
+  Max: 2
+
 RSpec/MultipleMemoizedHelpers:
   Max: 7
 
 Metrics/BlockLength:
   Exclude:
-    - 'spec/view_component/**/*'
-    - 'spec/internal/db/schema.rb'
+    - "spec/view_component/**/*"
+    - "spec/internal/db/schema.rb"

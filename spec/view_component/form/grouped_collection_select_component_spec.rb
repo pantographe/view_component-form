@@ -39,10 +39,9 @@ RSpec.describe ViewComponent::Form::GroupedCollectionSelectComponent, type: :com
   end
   let(:component_html_attributes) { component.css("select").last.attributes }
 
-  # rubocop:disable RSpec/ExampleLength
   context "with simple args" do
     it do
-      if Gem::Version.new(::ViewComponent::VERSION::STRING) >= Gem::Version.new("4.0")
+      if Gem::Version.new(ViewComponent::VERSION::STRING) >= Gem::Version.new("4.0")
         expect(component).to eq_html <<~HTML
           <select name="user[country]" id="user_country"><optgroup label="Europe"><option value="BE">Belgium</option>
           <option value="FR">France</option></optgroup><optgroup label="Asia"><option value="JP">Japan</option></optgroup></select>

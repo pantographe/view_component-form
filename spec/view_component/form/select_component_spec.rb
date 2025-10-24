@@ -31,7 +31,7 @@ RSpec.describe ViewComponent::Form::SelectComponent, type: :component do
     let(:options) { { selected: "manager" } }
 
     it do
-      if Gem::Version.new(::ViewComponent::VERSION::STRING) >= Gem::Version.new("4.0")
+      if Gem::Version.new(ViewComponent::VERSION::STRING) >= Gem::Version.new("4.0")
         expect(component).to eq_html <<~HTML
           <select name="user[role]" id="user_role"><option value="admin">Admin</option>
           <option selected="selected" value="manager">Manager</option></select>

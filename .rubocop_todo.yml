@@ -6,3 +6,6 @@ Metrics/ClassLength:
 
 Style/OpenStructUse:
   Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false

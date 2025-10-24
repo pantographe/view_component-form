@@ -10,7 +10,7 @@ RSpec.describe ViewComponent::Form::TextAreaComponent, type: :component do
 
   context "with simple args" do
     it do
-      if Gem::Version.new(::ViewComponent::VERSION::STRING) >= Gem::Version.new("4.0")
+      if Gem::Version.new(ViewComponent::VERSION::STRING) >= Gem::Version.new("4.0")
         expect(component).to eq_html <<~HTML
           <textarea name="user[bio]" id="user_bio"></textarea>
         HTML
