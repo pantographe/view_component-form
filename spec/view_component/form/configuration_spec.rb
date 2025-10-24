@@ -21,7 +21,7 @@ RSpec.describe ViewComponent::Form::Configuration do
         ).to be(ViewComponent::Form::TextFieldComponent)
       end
 
-      it "finds the first klass that exists when given a list of namespaces" do # rubocop:disable RSpec/ExampleLength
+      it "finds the first klass that exists when given a list of namespaces" do
         expect(
           lookup_chain.first.call(
             :text_field,

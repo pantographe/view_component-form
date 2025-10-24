@@ -24,10 +24,10 @@ Gem::Specification.new do |spec|
   spec.files         = Dir["CHANGELOG.md", "LICENSE.txt", "README.md", "app/**/*", "lib/**/*"]
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = Gem::Requirement.new(">= 3.1.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.2.0")
 
-  spec.add_dependency "actionview", [">= 7.0.0", "< 8.1"]
-  spec.add_dependency "activesupport", [">= 7.0.0", "< 8.1"]
+  spec.add_dependency "actionview", [">= 7.2.0", "< 8.2"]
+  spec.add_dependency "activesupport", [">= 7.2.0", "< 8.2"]
   spec.add_dependency "view_component", [">= 2.34.0", "< 5.0"]
   spec.add_dependency "zeitwerk", ["~> 2.5"]
 end

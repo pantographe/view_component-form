@@ -129,7 +129,6 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :label, :title, "A short title"
   it_behaves_like "the default form builder", :label, :privacy, "Public Post", value: "public"
 
-  # rubocop:disable RSpec/ExampleLength
   # rubocop:disable RSpec/PendingWithoutReason
   skip "These helpers also take blocks" do
     it_behaves_like("the default form builder", :label, [:cost]) do |translation|

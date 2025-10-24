@@ -5,7 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-Nothing yet
+### Added
+- Support for Rails 8.1
+- Support for view_component 4.x
+### Removed
+- Drop Ruby 3.1 support (EOL March 31, 2025)
+- Drop Rails 7.0 support (EOL)
+- Drop Rails 7.1 support (EOL)
 
 ## [0.2.11] - 2025-04-05
 ### Fixed
