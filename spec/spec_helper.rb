@@ -12,6 +12,7 @@ end
 
 require "view_component/engine"
 require "view_component/form"
+require "view_component/version"
 
 require "combustion"
 
