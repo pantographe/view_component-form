@@ -10,6 +10,7 @@
 /spec/internal/db/*.sqlite
 /spec/internal/db/*.sqlite-*
 /tmp/
+/vendor/
 
 # appraisal
 /gemfiles/*.gemfile.lock
