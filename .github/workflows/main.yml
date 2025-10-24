@@ -23,14 +23,18 @@ jobs:
           - { ruby: "3.4", rails: "8.1", rubygems: "default" }
           - { ruby: "3.3", rails: "head", rubygems: "latest" }
           - { ruby: "3.4", rails: "head", rubygems: "latest" }
-        action_text: ['with', 'without']
-        view_component: ['3.0', '4.0']
+        action_text: ["with", "without"]
+        view_component: ["3.0", "4.0"]
         exclude:
           # view_component 3.x doesn't support Rails 8.1 (requires activesupport < 8.1)
           - versions: { ruby: "3.3", rails: "8.1" }
-            view_component: '3.0'
+            view_component: "3.0"
           - versions: { ruby: "3.4", rails: "8.1" }
-            view_component: '3.0'
+            view_component: "3.0"
+          - versions: { ruby: "3.3", rails: "head" }
+            view_component: "3.0"
+          - versions: { ruby: "3.4", rails: "head" }
+            view_component: "3.0"
 
     env:
       BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.versions.rails }}_vc_${{ matrix.view_component }}.gemfile
