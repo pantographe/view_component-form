@@ -8,7 +8,7 @@ class TestView < ActionView::Base
   include ActionText::TagHelper if defined?(ActionText)
 end
 
-module ViewComponent
+module ViewComponent # rubocop:disable Style/OneClassPerFile
   module Form
     module TestHelpers
       def form_with(object, builder: ViewComponent::Form::Builder, **options)
