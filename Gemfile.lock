@@ -115,7 +115,7 @@ GEM
     diff-lcs (1.6.2)
     docile (1.4.1)
     drb (2.2.3)
-    erb (6.0.2)
+    erb (6.0.4)
     erubi (1.13.1)
     generator_spec (0.10.0)
       activesupport (>= 3.0.0)
