@@ -24,14 +24,15 @@ module ViewComponent
               radio_button
             ]).each do |selector|
               class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
-                def #{selector}(method, options = {}) # def text_field(method, options = {})
-                  render_component(                   #   render_component(
-                    :#{selector},                     #     :text_field,
-                    @object_name,                     #     @object_name,
-                    method,                           #     method,
-                    objectify_options(options),       #     objectify_options(options),
-                  )                                   #   )
-                end                                   # end
+                def #{selector}(method, options = {}, &block) # def text_field(method, options = {})
+                  render_component(                           #   render_component(
+                    :#{selector},                             #     :text_field,
+                    @object_name,                             #     @object_name,
+                    method,                                   #     method,
+                    objectify_options(options),               #     objectify_options(options),
+                    &block                                    #     &block,
+                  )                                           #   )
+                end                                           # end
               RUBY_EVAL
             end
 
