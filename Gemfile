@@ -25,4 +25,4 @@ gem "rake", "~> 13.0"
 gem "sqlite3", "~> 2.1", group: :test
 
 # Temporarilly fi for "uninitialized constant ActiveSupport::LoggerThreadSafeLevel::Logger" error
-gem "concurrent-ruby", "= 1.3.4"
+gem "concurrent-ruby", "1.3.7"
