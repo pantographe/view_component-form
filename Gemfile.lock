@@ -280,10 +280,10 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
-    sqlite3 (2.9.2)
+    sqlite3 (2.9.5)
       mini_portile2 (~> 2.8.0)
-    sqlite3 (2.9.2-x86_64-darwin)
-    sqlite3 (2.9.2-x86_64-linux-gnu)
+    sqlite3 (2.9.5-x86_64-darwin)
+    sqlite3 (2.9.5-x86_64-linux-gnu)
     stringio (3.2.0)
     thor (1.5.0)
     timeout (0.6.1)
@@ -328,7 +328,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rspec
   simplecov
-  sqlite3 (~> 2.1)
+  sqlite3 (~> 2.9)
   view_component-form!
 
 BUNDLED WITH
