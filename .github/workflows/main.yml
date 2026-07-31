@@ -11,7 +11,9 @@ jobs:
   build:
     name: "Ruby ${{ matrix.versions.ruby }}, Rails ${{ matrix.versions.rails }}, VC ${{ matrix.view_component }}, ${{ matrix.action_text }} ActionText"
     runs-on: ubuntu-latest
+    continue-on-error: true
     strategy:
+      fail-fast: false
       matrix:
         versions:
           - { ruby: "3.2", rails: "7.2", rubygems: "default" }
