@@ -5,11 +5,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     Class.new do
       include ActiveModel::Model
 
-      attr_accessor :first_name, :last_name, :email, :city
+      attr_accessor :first_name, :last_name, :email, :city, :country_id, :country, :tag_ids, :tags
 
       validates :first_name, presence: true, length: { minimum: 2 }
       validates :email, presence: true, on: :custom_context
       validates :city, presence: true, on: %i[custom_context another_context]
+      validates :country, :tags, presence: true
 
       class << self
         def name
@@ -173,6 +174,18 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       let(:method_name) { :last_name }
 
       it { expect(component.required?).to be(false) }
+    end
+
+    context "with a required belongs_to association" do
+      let(:method_name) { :country_id }
+
+      it { expect(component.required?).to be(true) }
+    end
+
+    context "with a required has_many association" do
+      let(:method_name) { :tag_ids }
+
+      it { expect(component.required?).to be(true) }
     end
 
     context "with context" do
