@@ -98,7 +98,7 @@ module ViewComponent
         @method_validators ||= if object.nil?
                                  []
                                else
-                                 object.class.validators_on(method_name)
+                                 object.class.validators_on(*object_method_names)
                                end
       end
     end
