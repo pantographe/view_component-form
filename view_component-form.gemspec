@@ -5,7 +5,7 @@ require_relative "lib/view_component/form/version"
 Gem::Specification.new do |spec|
   spec.name        = "view_component-form"
   spec.version     = ViewComponent::Form::VERSION
-  spec.authors     = ["Pantographe"]
+  spec.authors     = ["Pantographe", "Hans Lemuet"]
   spec.email       = ["oss@pantographe.studio"]
 
   spec.summary       = "Rails FormBuilder for ViewComponent"
