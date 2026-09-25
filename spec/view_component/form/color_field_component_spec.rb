@@ -10,9 +10,10 @@ RSpec.describe ViewComponent::Form::ColorFieldComponent, type: :component do
 
   context "with simple args" do
     it do
-      expect(component).to eq_html <<~HTML
-        <input value="#000000" type="color" name="user[background_color]" id="user_background_color">
-      HTML
+      expect(component.to_html)
+        .to have_tag("input", with: {
+                       value: "#000000", type: "color", name: "user[background_color]", id: "user_background_color"
+                     })
     end
   end
 

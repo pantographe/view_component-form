@@ -7,7 +7,7 @@ module ViewComponent
       class NamespaceAlreadyAddedError < Error; end
       class NotImplementedComponentError < Error; end
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable-next Metrics/MethodLength
       def self.included(base)
         base.class_eval do
           original_initialize_method = instance_method(:initialize)
@@ -37,7 +37,6 @@ module ViewComponent
           end
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 

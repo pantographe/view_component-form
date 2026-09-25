@@ -3,9 +3,9 @@
 module ViewComponent
   module Form
     module Helpers
-      # rubocop:disable Metrics/ModuleLength
+      # rubocop:disable-next Metrics/ModuleLength
       module Rails
-        # rubocop:disable Metrics/MethodLength
+        # rubocop:disable-next Metrics/MethodLength
         def self.included(base)
           base.class_eval do # rubocop:disable Metrics/BlockLength
             (field_helpers - %i[
@@ -38,7 +38,6 @@ module ViewComponent
             alias_method :phone_field, :telephone_field
           end
         end
-        # rubocop:enable Metrics/MethodLength
 
         def text_area(method, options = {})
           render_component(:text_area, @object_name, method, objectify_options(options))
@@ -172,7 +171,6 @@ module ViewComponent
           end
         end
       end
-      # rubocop:enable Metrics/ModuleLength
     end
   end
 end

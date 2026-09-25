@@ -120,16 +120,15 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
   it_behaves_like "the default form builder", :label, :title
   it_behaves_like "the default form builder", :label, :body
-  # rubocop:disable RSpec/PendingWithoutReason
+  # rubocop:disable-next RSpec/PendingWithoutReason
   skip "This would demonstrate translations via i18n.yml" do
     it_behaves_like "the default form builder", :label, :cost
   end
-  # rubocop:enable RSpec/PendingWithoutReason
 
   it_behaves_like "the default form builder", :label, :title, "A short title"
   it_behaves_like "the default form builder", :label, :privacy, "Public Post", value: "public"
 
-  # rubocop:disable RSpec/PendingWithoutReason
+  # rubocop:disable-next RSpec/PendingWithoutReason
   skip "These helpers also take blocks" do
     it_behaves_like("the default form builder", :label, [:cost]) do |translation|
       content_tag(:span, translation, class: "cost_label")
@@ -145,7 +144,6 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     end
     it_behaves_like("the default form builder", :label, [:terms]) { raw('Accept <a href="/terms">Terms</a>.') }
   end
-  # rubocop:enable RSpec/PendingWithoutReason
   # rubocop:enable RSpec/ExampleLength
 
   it_behaves_like "the default form builder", :month_field, :birthday_month
