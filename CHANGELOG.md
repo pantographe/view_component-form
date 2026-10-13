@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Make rich_textarea accept block (#231)
+### Fixed
+- Handle `false` form object in `FieldComponent` (#233)
 
 ## [0.3.1] - 2026-08-07
 ### Fixed
