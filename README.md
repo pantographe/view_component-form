@@ -341,9 +341,22 @@ ViewComponent::Form.configure do |config|
 end
 ```
 
-### Using plain Ruby object as model
+### Using your form components without a backing model
 
-You can use plain Ruby object not implementing ActiveModel::Validations.
+If you want to ensure that your fields display consistently across your app, you'll need to lean on Rails' own helpers. You may be used to using form tag helpers such as `text_field_tag` to generate tags, or even writing out plain HTML tags. These can't be integrated with a form builder, so they won't offer you the benefits of this gem.
+
+You'll most likely want to use either:
+
+- [`form_with`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-form_with) and supply a route as the endpoint, e.g. `form_with url: users_path do |f| ...`, or
+- [`fields`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields), supplying a namespace if necessary. `fields do |f| ...` ought to work in the most basic case.
+
+[`fields_for`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for) may also be of interest. To make consistent use of `view_component-form`, you'll want to be using these three helpers to build your forms wherever possible.
+
+### Using a plain Ruby object as model
+
+The form object doesn't have to implement the ActiveModel API: a plain Ruby object works too. It has no errors or validators, so its fields are never shown with errors nor marked as required.
+
+As Rails can't infer the param key and the route from such an object, pass `scope:` and `url:` to `form_with`.
 
 ```rb
 # app/models/post.rb
@@ -359,24 +372,13 @@ end
 
 ```erb
 <%# app/views/posts/_form.html.erb %>
-<%= form_with model: @post, builder: ViewComponent::Form::Builder do |f| %>
-  <%= f.label :title %> 
-  <%= f.text_field :title %
-  <%= f.label :body %> 
-  <%= f.text_field :body %  
+<%= form_with model: @post, scope: :post, url: posts_path, builder: ViewComponent::Form::Builder do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <%= f.label :body %>
+  <%= f.text_field :body %>
 <% end %>
 ```
-
-### Using your form components without a backing model
-
-If you want to ensure that your fields display consistently across your app, you'll need to lean on Rails' own helpers. You may be used to using form tag helpers such as `text_field_tag` to generate tags, or even writing out plain HTML tags. These can't be integrated with a form builder, so they won't offer you the benefits of this gem.
-
-You'll most likely want to use either:
-
-- [`form_with`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-form_with) and supply a route as the endpoint, e.g. `form_with url: users_path do |f| ...`, or
-- [`fields`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields), supplying a namespace if necessary. `fields do |f| ...` ought to work in the most basic case.
-
-[`fields_for`](https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for) may also be of interest. To make consistent use of `view_component-form`, you'll want to be using these three helpers to build your forms wherever possible.
 
 ## Supported helpers
 

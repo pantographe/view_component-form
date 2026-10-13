@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Support for plain Ruby objects not implementing ActiveModel::Validations
+- Support for plain Ruby objects not implementing ActiveModel::Validations (#190)
 ### Changed
 - Make rich_textarea accept block (#231)
 ### Fixed
