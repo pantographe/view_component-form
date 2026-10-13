@@ -15,6 +15,9 @@ module ViewComponent
       end
 
       def call
+        # Tags::Select uses its block (if any) as option tags, in place of choices
+        options_block = proc { content } if content
+
         ActionView::Helpers::Tags::Select.new(
           object_name,
           method_name,
@@ -22,7 +25,7 @@ module ViewComponent
           choices,
           options,
           html_options,
-          &content
+          &options_block
         ).render
       end
 
