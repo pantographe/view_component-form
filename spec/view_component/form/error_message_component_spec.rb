@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../fixtures/plain_user"
+
 RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
   subject(:rendered_component) { render_inline(component) }
 
@@ -34,6 +36,12 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
     before { object.validate }
 
     it { is_expected.to have_attributes(method_errors: [], render?: false) }
+  end
+
+  context "with plain object" do
+    let(:object) { PlainUser.new(first_name: "John") }
+
+    it { expect(rendered_component.to_html).to be_empty }
   end
 
   context "with invalid object" do

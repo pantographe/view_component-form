@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../fixtures/plain_user"
+
 RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
   let(:object_klass) do
     Class.new do
@@ -70,6 +72,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       it { expect(component.method_errors).to eq([]) }
     end
+
+    context "with plain object" do
+      let(:object) { PlainUser.new(first_name: "John") }
+
+      it { expect(component.method_errors).to eq([]) }
+    end
   end
 
   describe "#method_errors?" do
@@ -100,12 +108,26 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       it { expect(component.method_errors?).to be(false) }
     end
+
+    context "with plain object" do
+      let(:object) { PlainUser.new(first_name: "John") }
+
+      it { expect(component.method_errors?).to be(false) }
+    end
   end
 
   describe "#value" do
-    let(:object) { object_klass.new(first_name: "John") }
+    context "with ActiveModel object" do
+      let(:object) { object_klass.new(first_name: "John") }
 
-    it { expect(component.value).to eq("John") }
+      it { expect(component.value).to eq("John") }
+    end
+
+    context "with plain object" do
+      let(:object) { PlainUser.new(first_name: "John") }
+
+      it { expect(component.value).to eq("John") }
+    end
 
     context "when object is nil" do
       let(:object) { nil }
@@ -121,7 +143,15 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
   end
 
   describe "#object_method_names" do
-    it { expect(component.object_method_names).to eq(%i[first_name]) }
+    context "with ActiveModel object" do
+      it { expect(component.object_method_names).to eq(%i[first_name]) }
+    end
+
+    context "with plain object" do
+      let(:object) { PlainUser.new }
+
+      it { expect(component.object_method_names).to eq(%i[first_name]) }
+    end
 
     it "works with belongs_to for _id", skip: "still to be implemented"
     it "works with has_many for _ids", skip: "still to be implemented"
@@ -138,6 +168,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       let(:translations) { { helpers: { label: { user: { first_name: "Your first name" } } } } }
 
       it { expect(component.label_text).to eq("Your first name") }
+    end
+
+    context "with plain object" do
+      let(:object) { PlainUser.new }
+
+      it { expect(component.label_text).to eq("First name") }
     end
   end
 
@@ -188,6 +224,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       let(:object) { false }
 
       it { expect(component.optional?).to be(false) }
+    end
+
+    context "with plain object" do
+      let(:object) { PlainUser.new }
+
+      it { expect(component.optional?).to be(true) }
     end
   end
 
@@ -251,6 +293,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       it { expect(component.required?).to be(false) }
     end
+
+    context "with plain object" do
+      let(:object) { PlainUser.new }
+
+      it { expect(component.required?).to be(false) }
+    end
   end
 
   describe "#validators" do
@@ -296,6 +344,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       end
     end
 
+    context "with plain object" do
+      let(:object) { PlainUser.new }
+
+      it { expect(component.validators).to eq([]) }
+    end
+
     context "when object is nil" do
       let(:object) { nil }
 
@@ -318,6 +372,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       let(:form) { form_with(object, validation_context: :custom_context) }
 
       it { expect(component.validation_context).to eq(:custom_context) }
+    end
+
+    context "with plain object" do
+      let(:object) { PlainUser.new }
+
+      it { expect(component.validation_context).to be_nil }
     end
   end
 end
