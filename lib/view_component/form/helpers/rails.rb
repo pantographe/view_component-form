@@ -116,11 +116,14 @@ module ViewComponent
           )
         end
 
+        # Like Rails, the block is called for each item with its builder (see ElementProc)
         def collection_check_boxes(method, collection, value_method, text_method, options = {}, html_options = {},
-                                   &)
+                                   &block)
+          options = options.merge(element_proc: block) if block
+
           render_component(
             :collection_check_boxes, @object_name, method, collection, value_method, text_method,
-            objectify_options(options), @default_html_options.merge(html_options), &
+            objectify_options(options), @default_html_options.merge(html_options)
           )
         end
 
@@ -128,11 +131,13 @@ module ViewComponent
           method, collection,
           value_method, text_method,
           options = {}, html_options = {},
-          &
+          &block
         )
+          options = options.merge(element_proc: block) if block
+
           render_component(
             :collection_radio_buttons, @object_name, method, collection, value_method, text_method,
-            objectify_options(options), @default_html_options.merge(html_options), &
+            objectify_options(options), @default_html_options.merge(html_options)
           )
         end
         # rubocop:enable Metrics/ParameterLists
