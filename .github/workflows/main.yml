@@ -8,6 +8,21 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    name: RuboCop
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+
+    - name: Lint with RuboCop
+      run: bundle exec rubocop
+
   build:
     name: "Ruby ${{ matrix.versions.ruby }}, Rails ${{ matrix.versions.rails }}, VC ${{ matrix.view_component }}, ${{ matrix.action_text }} ActionText"
     runs-on: ubuntu-latest
@@ -52,9 +67,9 @@ jobs:
         rubygems: ${{ matrix.versions.rubygems }}
         bundler-cache: true
 
-    - name: Test with Rake
+    - name: Test with RSpec
       run: |
-        COVERAGE=true bundle exec rake
+        COVERAGE=true bundle exec rake spec
 
     - name: Upload coverage results
       uses: actions/upload-artifact@v4
