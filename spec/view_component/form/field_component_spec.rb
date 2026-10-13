@@ -153,8 +153,17 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       it { expect(component.object_method_names).to eq(%i[first_name]) }
     end
 
-    it "works with belongs_to for _id", skip: "still to be implemented"
-    it "works with has_many for _ids", skip: "still to be implemented"
+    context "with a belongs_to association" do
+      let(:method_name) { :country_id }
+
+      it { expect(component.object_method_names).to eq(%i[country_id country]) }
+    end
+
+    context "with a has_many association" do
+      let(:method_name) { :tag_ids }
+
+      it { expect(component.object_method_names).to eq(%i[tag_ids tags]) }
+    end
   end
 
   describe "#label_text" do
