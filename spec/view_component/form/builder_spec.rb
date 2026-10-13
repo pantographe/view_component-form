@@ -77,6 +77,25 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
                     { prompt: true }
   end
 
+  context "when calling collection helpers with a block" do
+    let(:countries) { [%w[BE Belgium], %w[FR France]] }
+    let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
+
+    it "yields each item builder to #collection_check_boxes, like the default form builder" do
+      item_block = proc { |b| b.label(class: "item") { b.check_box + b.text } }
+
+      expect(form.collection_check_boxes(:nationalities, countries, :first, :last, &item_block))
+        .to eq(default_form_builder.collection_check_boxes(:nationalities, countries, :first, :last, &item_block))
+    end
+
+    it "yields each item builder to #collection_radio_buttons, like the default form builder" do
+      item_block = proc { |b| b.label(class: "item") { b.radio_button + b.text } }
+
+      expect(form.collection_radio_buttons(:nationality, countries, :first, :last, &item_block))
+        .to eq(default_form_builder.collection_radio_buttons(:nationality, countries, :first, :last, &item_block))
+    end
+  end
+
   it_behaves_like "the default form builder", :color_field, :favorite_color
   it_behaves_like "the default form builder", :date_field, :born_on
   it_behaves_like "the default form builder", :date_select, :birth_date
