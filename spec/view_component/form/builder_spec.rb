@@ -128,23 +128,38 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :label, :title, "A short title"
   it_behaves_like "the default form builder", :label, :privacy, "Public Post", value: "public"
 
-  # rubocop:disable-next RSpec/PendingWithoutReason
-  skip "These helpers also take blocks" do
-    it_behaves_like("the default form builder", :label, [:cost]) do |translation|
-      content_tag(:span, translation, class: "cost_label")
+  context "when calling #label with a block" do
+    let(:object) { TestModel.new }
+    let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
+    let(:helpers) { ApplicationController.helpers }
+
+    it "renders the block argument as the translation" do
+      label_block = proc { |translation| helpers.content_tag(:span, translation, class: "cost_label") }
+
+      expect(form.label(:cost, &label_block)).to eq(default_form_builder.label(:cost, &label_block))
     end
-    it_behaves_like("the default form builder", :label, [:cost]) do |builder|
-      content_tag(:span, builder, class: "cost_label")
+
+    it "interpolates the block argument as the translation" do
+      label_block = proc { |builder| "<em>#{ERB::Util.h(builder)}</em>".html_safe }
+
+      expect(form.label(:cost, &label_block)).to eq(default_form_builder.label(:cost, &label_block))
     end
-    it_behaves_like("the default form builder", :label, [:cost]) do |builder|
-      content_tag(:span, builder.translation, class: [
-                    "cost_label",
-                    ("error_label" if builder.object.errors.include?(:cost))
-                  ])
+
+    it "exposes the translation and object to the block" do
+      label_block = proc do |builder|
+        helpers.content_tag(:span, builder.translation,
+                            class: ["cost_label", ("error_label" if builder.object.errors.include?(:cost))])
+      end
+
+      expect(form.label(:cost, &label_block)).to eq(default_form_builder.label(:cost, &label_block))
     end
-    it_behaves_like("the default form builder", :label, [:terms]) { raw('Accept <a href="/terms">Terms</a>.') }
+
+    it "renders a block without argument" do
+      label_block = proc { 'Accept <a href="/terms">Terms</a>.'.html_safe }
+
+      expect(form.label(:terms, &label_block)).to eq(default_form_builder.label(:terms, &label_block))
+    end
   end
-  # rubocop:enable RSpec/ExampleLength
 
   it_behaves_like "the default form builder", :month_field, :birthday_month
   it_behaves_like "the default form builder", :number_field, :age
