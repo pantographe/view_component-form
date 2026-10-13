@@ -39,6 +39,8 @@ module ViewComponent
       end
 
       def value
+        return unless object
+
         object.public_send(method_name)
       end
 
@@ -63,13 +65,13 @@ module ViewComponent
       end
 
       def optional?(context: validation_context)
-        return false if object.nil?
+        return false unless object
 
         !required?(context: context)
       end
 
       def required?(context: validation_context)
-        return false if object.nil?
+        return false unless object
 
         validators(context: context).any?(ActiveModel::Validations::PresenceValidator)
       end
@@ -95,10 +97,10 @@ module ViewComponent
       end
 
       def method_validators
-        @method_validators ||= if object.nil?
-                                 []
-                               else
+        @method_validators ||= if object
                                  object.class.validators_on(*object_method_names)
+                               else
+                                 []
                                end
       end
     end

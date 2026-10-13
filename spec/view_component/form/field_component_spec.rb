@@ -64,6 +64,12 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
 
       it { expect(component.method_errors).to eq([]) }
     end
+
+    context "with false" do
+      let(:object) { false }
+
+      it { expect(component.method_errors).to eq([]) }
+    end
   end
 
   describe "#method_errors?" do
@@ -100,6 +106,18 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
     let(:object) { object_klass.new(first_name: "John") }
 
     it { expect(component.value).to eq("John") }
+
+    context "when object is nil" do
+      let(:object) { nil }
+
+      it { expect(component.value).to be_nil }
+    end
+
+    context "when object is false" do
+      let(:object) { false }
+
+      it { expect(component.value).to be_nil }
+    end
   end
 
   describe "#object_method_names" do
@@ -159,6 +177,18 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       it { expect(component.optional?(context: :custom_context)).to be(false) }
       it { expect(component.optional?(context: :another_context)).to be(false) }
     end
+
+    context "when object is nil" do
+      let(:object) { nil }
+
+      it { expect(component.optional?).to be(false) }
+    end
+
+    context "when object is false" do
+      let(:object) { false }
+
+      it { expect(component.optional?).to be(false) }
+    end
   end
 
   describe "#required?" do
@@ -209,6 +239,18 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
       it { expect(component.required?(context: :custom_context)).to be(true) }
       it { expect(component.required?(context: :another_context)).to be(true) }
     end
+
+    context "when object is nil" do
+      let(:object) { nil }
+
+      it { expect(component.required?).to be(false) }
+    end
+
+    context "when object is false" do
+      let(:object) { false }
+
+      it { expect(component.required?).to be(false) }
+    end
   end
 
   describe "#validators" do
@@ -252,6 +294,18 @@ RSpec.describe ViewComponent::Form::FieldComponent, type: :component do
         expect(component.validators(context: :another_context).first)
           .to be_a(ActiveModel::Validations::PresenceValidator)
       end
+    end
+
+    context "when object is nil" do
+      let(:object) { nil }
+
+      it { expect(component.validators).to be_empty }
+    end
+
+    context "when object is false" do
+      let(:object) { false }
+
+      it { expect(component.validators).to be_empty }
     end
   end
 
