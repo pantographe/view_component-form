@@ -120,9 +120,14 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
   it_behaves_like "the default form builder", :label, :title
   it_behaves_like "the default form builder", :label, :body
-  # rubocop:disable-next RSpec/PendingWithoutReason
-  skip "This would demonstrate translations via i18n.yml" do
+  context "with a label translation" do
+    include_context "with translations"
+
+    let(:translations) { { helpers: { label: { user: { cost: "Total cost" } } } } }
+
     it_behaves_like "the default form builder", :label, :cost
+
+    it { expect(form.label(:cost)).to eq('<label for="user_cost">Total cost</label>') }
   end
 
   it_behaves_like "the default form builder", :label, :title, "A short title"
