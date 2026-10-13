@@ -168,6 +168,28 @@ class Form::YearFieldComponent < ViewComponent::Form::FieldComponent # or ViewCo
 end
 ```
 
+`render_component` also passes keyword arguments on to your component:
+
+```rb
+# app/helpers/form_builder.rb
+class FormBuilder < ViewComponent::Form::Builder
+  def badge(method, label:, **options)
+    render_component(:badge, @object_name, method, label:, **objectify_options(options))
+  end
+end
+```
+
+```rb
+# app/components/form/badge_component.rb
+class Form::BadgeComponent < ViewComponent::Form::FieldComponent
+  def initialize(form, object_name, method_name, label:, **options)
+    @label = label
+
+    super(form, object_name, method_name, options)
+  end
+end
+```
+
 When inheriting from `ViewComponent::Form::FieldComponent`, you get access to the following helpers:
 
 #### `#label_text`

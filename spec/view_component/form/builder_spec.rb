@@ -210,6 +210,14 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :week_field, :birthday_week
   it_behaves_like "the default form builder", :weekday_select, :weekday, { include_blank: true }
 
+  describe "#render_component" do
+    let(:builder) { CustomFormBuilder.new(object_name, object, template, options) }
+
+    it "forwards keyword arguments to the component" do
+      expect(builder.badge(:name, label: "New")).to eq('<span class="badge-name">New</span>')
+    end
+  end
+
   describe "#component_klass" do
     context "with gem Builder" do
       let(:builder) { described_class.new(object_name, object, template, options) }
