@@ -411,6 +411,38 @@ end
 
 For more complex components, we recommend the [`rspec-html-matchers` gem](https://github.com/kucaahbe/rspec-html-matchers).
 
+### Minitest
+
+#### Configuration
+
+```rb
+# test/test_helper.rb
+require "view_component/test_case"
+require "view_component/form/test_helpers"
+
+ViewComponent::TestCase.include(ViewComponent::Form::TestHelpers)
+```
+
+#### Example
+
+```rb
+# test/components/form/text_field_component_test.rb
+class Form::TextFieldComponentTest < ViewComponent::TestCase
+  test "renders a text field" do
+    object = User.new # replace with a model of your choice
+    form = form_with(object)
+
+    render_inline(Form::TextFieldComponent.new(form, object_name, :first_name, {}))
+
+    assert_selector "input[type=text][name='user[first_name]'][id='user_first_name']"
+  end
+end
+```
+
+### Object name
+
+`form_with` names the form after the object's model (e.g. `user` for a `User`), like Rails' `form_with(model:)`. For objects that aren't models, it falls back to `object_name`, which returns `:user`. With another model than `User`, pass `form.object_name` to your components instead of `object_name`.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
