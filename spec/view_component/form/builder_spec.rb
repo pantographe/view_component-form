@@ -211,30 +211,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :weekday_select, :weekday, { include_blank: true }
 
   describe "#render_component" do
-    let(:builder) { KwargsFormBuilder.new(object_name, object, template, options) }
-
-    before do
-      stub_const("KwargsForm", Module.new)
-      stub_const("KwargsForm::BadgeComponent", Class.new(ViewComponent::Form::BaseComponent) do
-        def initialize(form, object_name, method_name, label:, **options)
-          @method_name = method_name
-          @label = label
-
-          super(form, object_name, options)
-        end
-
-        def call
-          content_tag(:span, @label, class: "badge-#{@method_name}")
-        end
-      end)
-      stub_const("KwargsFormBuilder", Class.new(described_class) do
-        namespace KwargsForm
-
-        def badge(method, label:, **options)
-          render_component(:badge, @object_name, method, label:, **objectify_options(options))
-        end
-      end)
-    end
+    let(:builder) { CustomFormBuilder.new(object_name, object, template, options) }
 
     it "forwards keyword arguments to the component" do
       expect(builder.badge(:name, label: "New")).to eq('<span class="badge-name">New</span>')
