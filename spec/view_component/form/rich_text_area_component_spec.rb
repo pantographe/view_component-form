@@ -2,6 +2,9 @@
 
 if defined?(ActionView::Helpers::Tags::ActionText)
   RSpec.describe ViewComponent::Form::RichTextAreaComponent, type: :component do
+    # Rails 8.2 derives the hidden input id from the field id instead of a global counter
+    let(:rails82_or_newer) { Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.2.0.alpha") }
+
     let(:object)  { OpenStruct.new }
     let(:form)    { form_with(object) }
     let(:options) { {} }
@@ -12,10 +15,12 @@ if defined?(ActionView::Helpers::Tags::ActionText)
 
     context "with simple args" do
       it "has a hidden field", :aggregate_failures do
+        input_id = rails82_or_newer ? "user_bio_trix_input_user" : "trix_input_1"
+
         expect(component.to_html)
-          .to have_tag("input", with: { type: "hidden", id: "trix_input_1", name: "user[bio]" })
+          .to have_tag("input", with: { type: "hidden", id: input_id, name: "user[bio]" })
         expect(component.to_html)
-          .to have_tag("trix-editor", with: { id: "user_bio", input: "trix_input_1", class: "trix-content" })
+          .to have_tag("trix-editor", with: { id: "user_bio", input: input_id, class: "trix-content" })
       end
     end
 
@@ -32,7 +37,8 @@ if defined?(ActionView::Helpers::Tags::ActionText)
       it do
         expect(component.to_html)
           .to have_tag("input", with: {
-                         type: "hidden", name: "user[bio]", id: "trix_input_4",
+                         type: "hidden", name: "user[bio]",
+                         id: rails82_or_newer ? "user_bio_trix_input_user" : "trix_input_4",
                          value: "Your <strong>first</strong> text", autocomplete: "off"
                        })
       end

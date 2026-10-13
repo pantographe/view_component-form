@@ -5,7 +5,11 @@ require "action_controller/test_case"
 require "action_view"
 
 class TestView < ActionView::Base
-  include ActionText::TagHelper if defined?(ActionText)
+  if defined?(ActionText)
+    include ActionText::TagHelper
+    # Rails 8.2+ `rich_textarea_tag` calls `main_app`; requires the Rails app to be initialized
+    include Rails.application.routes.mounted_helpers
+  end
 end
 
 module ViewComponent # rubocop:disable Style/OneClassPerFile
