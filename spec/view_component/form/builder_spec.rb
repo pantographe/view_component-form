@@ -167,6 +167,15 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     it_behaves_like "the default form builder", :select, :person_id, Person.pluck(:name, :id), { include_blank: true }
   end
 
+  context "when calling #select with a block" do
+    let(:options_block) { proc { '<option value="admin">Admin</option>'.html_safe } }
+    let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
+
+    it "renders the block as options, like the default form builder" do
+      expect(form.select(:role, &options_block)).to eq(default_form_builder.select(:role, &options_block))
+    end
+  end
+
   it_behaves_like "the default form builder", :submit
 
   it_behaves_like "the default form builder", :text_area, :detail

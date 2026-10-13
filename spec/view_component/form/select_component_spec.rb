@@ -58,6 +58,20 @@ RSpec.describe ViewComponent::Form::SelectComponent, type: :component do
     end
   end
 
+  context "with a block" do
+    let(:component) do
+      render_inline(described_class.new(form, object_name, :role, nil, options, html_options)) do
+        '<option value="admin" data-test="admin">Admin</option>'.html_safe
+      end
+    end
+
+    it do
+      expect(component).to eq_html <<~HTML
+        <select name="user[role]" id="user_role"><option value="admin" data-test="admin">Admin</option></select>
+      HTML
+    end
+  end
+
   it_behaves_like "component with custom html classes", :html_options
   it_behaves_like "component with custom data attributes", :html_options
 end
