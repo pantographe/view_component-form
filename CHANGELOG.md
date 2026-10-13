@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Handle `false` form object in `FieldComponent` (#233)
 - Fix `TestView` test helper with ActionText on Rails 8.2 (#234)
 - Fix `select` with a block (#236)
+- Render the `label` block argument as its translation, like Rails (#240)
 
 ## [0.3.1] - 2026-08-07
 ### Fixed
