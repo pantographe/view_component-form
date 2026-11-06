@@ -21,6 +21,7 @@ loader = Zeitwerk::Loader.for_gem
 form = "#{__dir__}/form.rb"
 loader.ignore(form)
 loader.push_dir("#{__dir__}/form", namespace: ViewComponent::Form)
+loader.do_not_eager_load("#{__dir__}/form/test_helpers.rb")
 loader.setup
 
 require_relative "form/engine"
