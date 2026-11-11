@@ -234,6 +234,24 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
                       data: { direct_upload_url: ".", blob_url_template: "." }
       it_behaves_like "it renders a component", ViewComponent::Form::RichTextAreaComponent, :rich_textarea, :foo,
                       data: { direct_upload_url: ".", blob_url_template: "." }
+
+      context "when calling #rich_textarea with a block" do
+        let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
+        let(:data) { { direct_upload_url: ".", blob_url_template: "." } }
+        let(:value_block) { proc { "<p>Default</p>".html_safe } }
+
+        it "renders the block as the value of an empty field, like the default form builder" do
+          expect(form.rich_textarea(:foo, data:, &value_block))
+            .to eq(default_form_builder.rich_textarea(:foo, data:, &value_block))
+        end
+
+        it "keeps the saved value over the block, like the default form builder" do
+          object.foo = "<p>Saved</p>"
+
+          expect(form.rich_textarea(:foo, data:, &value_block))
+            .to eq(default_form_builder.rich_textarea(:foo, data:, &value_block))
+        end
+      end
     end
   end
 
