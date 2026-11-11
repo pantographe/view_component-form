@@ -33,8 +33,10 @@ jobs:
         versions:
           - { ruby: "3.3", rails: "8.1", rubygems: "default" }
           - { ruby: "3.4", rails: "8.1", rubygems: "default" }
+          - { ruby: "4.0", rails: "8.1", rubygems: "default" }
           - { ruby: "3.3", rails: "head", rubygems: "latest" }
           - { ruby: "3.4", rails: "head", rubygems: "latest" }
+          - { ruby: "4.0", rails: "head", rubygems: "latest" }
         action_text: ["with", "without"]
 
     env:
@@ -42,7 +44,7 @@ jobs:
       VIEW_COMPONENT_FORM_USE_ACTIONTEXT: ${{ matrix.action_text == 'with' && 'true' || 'false' }}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
