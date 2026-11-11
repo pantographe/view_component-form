@@ -4,8 +4,5 @@ Style/Documentation:
 Metrics/ClassLength:
   Enabled: false
 
-Style/OpenStructUse:
-  Enabled: false
-
 RSpec/ExampleLength:
   Enabled: false

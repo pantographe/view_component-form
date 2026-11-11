@@ -20,7 +20,6 @@ group :development, :test do
 end
 
 gem "generator_spec"
-gem "ostruct"
 gem "rails"
 gem "rake", "~> 13.0"
 gem "sqlite3", "~> 2.9", group: :test

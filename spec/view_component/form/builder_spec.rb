@@ -3,7 +3,15 @@
 require_relative "../../fixtures/test_model"
 
 RSpec.describe ViewComponent::Form::Builder, type: :builder do
-  let(:object)  { OpenStruct.new }
+  # A plain object with the attributes the examples render fields for (the submit button's default value asks
+  # whether it's persisted)
+  let(:object) do
+    Struct.new(
+      :accepted, :address, :age, :author_id, :author_ids, :average_lap, :birth_date, :birthday_month, :birthday_week,
+      :born_at, :born_on, :category, :detail, :favorite_color, :gooddog, :graduation_day, :homepage, :last_request_at,
+      :name, :person_id, :phone, :receive_newsletter, :role, :time_zone, :validated, :weekday
+    ) { def persisted? = false }.new
+  end
   let(:form)    { form_with(object) }
   let(:options) { {} }
 
