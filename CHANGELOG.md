@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Support for plain Ruby objects not implementing ActiveModel::Validations (#190)
+- Forward keyword arguments in `render_component` to the component (#238)
 ### Changed
 - Make rich_textarea accept block (#231)
 - `form_with` test helper names the form after the object's model, falling back to `:user` (#165)

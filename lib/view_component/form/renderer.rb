@@ -40,8 +40,8 @@ module ViewComponent
 
       private
 
-      def render_component(component_name, *, &)
-        component = component_klass(component_name).new(self, *)
+      def render_component(component_name, *, **, &)
+        component = component_klass(component_name).new(self, *, **)
         component.render_in(@template, &)
       end
 
