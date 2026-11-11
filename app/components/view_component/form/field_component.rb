@@ -86,6 +86,17 @@ module ViewComponent
         end
       end
 
+      protected
+
+      # An id the field can reference in aria-describedby: `aria: { describedby: f.field_id(:title, :hint) }`
+      def html_attributes_with_default_id(suffix)
+        return html_attributes if options[:skip_default_ids] || options.key?(:id) || options.key?("id")
+
+        html_attributes.merge(
+          id: field_id(object_name, method_name, suffix, index: options[:index], namespace: options[:namespace])
+        )
+      end
+
       private
 
       def singular_association_method_name
