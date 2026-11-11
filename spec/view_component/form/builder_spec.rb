@@ -204,6 +204,20 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
       expect(form.hint(:name_with_initial, "Initial included", class: "hint"))
         .to eq('<div class="hint">Initial included</div>')
     end
+
+    context "with the builder's default ids" do
+      let(:form) { form_with(object, index: 1, namespace: "admin") }
+
+      it "gives the error messages the field's id, with the builder's namespace and index" do
+        expect(form.error_message(:name_with_initial))
+          .to eq('<div id="admin_author_1_name_with_initial_error">Is missing</div>')
+      end
+
+      it "gives the hint the field's id, with the builder's namespace and index" do
+        expect(form.hint(:name_with_initial, "Initial included"))
+          .to eq('<div id="admin_author_1_name_with_initial_hint">Initial included</div>')
+      end
+    end
   end
 
   context "when calling #select with a block" do

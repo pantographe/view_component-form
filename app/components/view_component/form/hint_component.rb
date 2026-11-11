@@ -26,7 +26,7 @@ module ViewComponent
       def call
         content_or_options = content.presence || attribute_content.presence
 
-        tag.public_send(self.class.tag, content_or_options, **html_attributes)
+        tag.public_send(self.class.tag, content_or_options, **html_attributes_with_default_id(:hint))
       end
 
       def render?

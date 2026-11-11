@@ -54,7 +54,23 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
       it { expect(component.method_errors).to eq([blank_error_message, "Is too short (minimum is 2 characters)"]) }
       it { expect(component.render?).to be true }
 
-      it { is_expected.to eq_html "<div>#{blank_error_message}<br>Is too short (minimum is 2 characters)</div>" }
+      it do
+        expect(rendered_component).to eq_html <<~HTML
+          <div id="user_first_name_error">#{blank_error_message}<br>Is too short (minimum is 2 characters)</div>
+        HTML
+      end
+    end
+
+    context "with an id" do
+      let(:options) { { id: "first_name_problems" } }
+
+      it { expect(component_html_attributes["id"].value).to eq("first_name_problems") }
+    end
+
+    context "with the builder's skip_default_ids" do
+      let(:options) { { skip_default_ids: true } }
+
+      it { expect(component_html_attributes).not_to have_key("id") }
     end
 
     it_behaves_like "component with custom html classes"
