@@ -5,7 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-Nothing yet
+### Changed
+- Move the components from `app/components` to `lib`, loaded by the gem's own Zeitwerk loader rather than the app's through an engine, so gems can build on them (#261). **Upgrade note:** `ViewComponent::Form::Engine` is removed; overriding components in your builder's namespace is unchanged
 
 ## [0.4.0] - 2026-11-11
 ### Added
