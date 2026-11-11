@@ -37,6 +37,11 @@ module ViewComponent
         end
       end
       delegate :translation, to: :builder
+
+      # The component is the block argument, so make it render like Rails' LabelBuilder
+      def to_s
+        translation
+      end
     end
   end
 end
