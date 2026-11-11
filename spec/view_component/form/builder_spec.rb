@@ -74,7 +74,7 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :color_field, :favorite_color
 
   context "with the country_select gem" do
-    let(:object) { OpenStruct.new(country: "FR") }
+    let(:object) { Struct.new(:country).new("FR") }
 
     it_behaves_like "the default form builder", :country_select, :country
     it_behaves_like "the default form builder", :country_select, :country,
