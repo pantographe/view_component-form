@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Fixed
-- Keep the saved value of `rich_textarea` over its block, which is only the default of an empty field, like Rails
+- Keep the saved value of `rich_textarea`, or its `value:`, over its block, used only when there's no rich text yet, like Rails
 - Leave the builder's options (`object`, `index`…) out of the HTML attributes of `error_message` and `hint` (#255)
 
 ## [0.4.0] - 2026-11-11
