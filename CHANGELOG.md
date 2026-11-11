@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Render a default id on `hint` and `error_message` (`f.field_id(:password, :hint)`, `f.field_id(:password, :error)`) for the field's `aria-describedby`; opt out with `id:` or the builder's `skip_default_ids` (#265)
 ### Fixed
 - Leave the builder's options (`object`, `index`…) out of the HTML attributes of `error_message` and `hint` (#255)
 

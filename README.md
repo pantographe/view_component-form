@@ -98,13 +98,12 @@ Then use ActionView form builder helpers as you would normally:
   <%= f.email_field :email %>       <%# renders a ViewComponent::Form::EmailFieldComponent %>
 
   <%= f.label :password %>          <%# renders a ViewComponent::Form::LabelComponent %>
-  <%= f.password_field :password, aria: { describedby: f.field_id(:password, :description) } %>
+  <%= f.password_field :password,
+                       aria: { describedby: [f.field_id(:password, :hint), f.field_id(:password, :error)] } %>
                                     <%# renders a ViewComponent::Form::PasswordFieldComponent %>
-  <div id="<%= f.field_id(:password, :description) %>">
-    <%= f.hint :password, 'The password should be at least 8 characters long' %>
-                                      <%# renders a ViewComponent::Form::HintComponent %>
-    <%= f.error_message :password %>  <%# renders a ViewComponent::Form::ErrorMessageComponent %>
-  </div>
+  <%= f.hint :password, 'The password should be at least 8 characters long' %>
+                                    <%# renders a ViewComponent::Form::HintComponent, with id="user_password_hint" %>
+  <%= f.error_message :password %>  <%# renders a ViewComponent::Form::ErrorMessageComponent, with id="user_password_error" %>
 <% end %>
 ```
 
