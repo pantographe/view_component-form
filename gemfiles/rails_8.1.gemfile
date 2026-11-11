@@ -4,11 +4,10 @@ source "https://rubygems.org"
 
 gem "generator_spec"
 gem "ostruct"
-gem "rails", "~> 8.0.0"
+gem "rails", "~> 8.1.0"
 gem "rake", "~> 13.0"
 gem "sqlite3", "~> 2.9", group: :test
 gem "concurrent-ruby", "1.3.7"
-gem "view_component", ">= 3.0.0", "< 4.0"
 
 group :development, :test do
   gem "appraisal", "~> 2"

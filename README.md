@@ -13,8 +13,8 @@ Development of this gem is sponsored by:
 
 This gem is tested on:
 
-- Rails 7.2+ (with or without ActionText)
-- Ruby 3.2+
+- Rails 8.1+ (with or without ActionText)
+- Ruby 3.3+
 
 ## Installation
 
@@ -165,6 +165,28 @@ Add your component which can optionally inherit from:
 ```rb
 # app/components/form/year_field_component.rb
 class Form::YearFieldComponent < ViewComponent::Form::FieldComponent # or ViewComponent::Form::BaseComponent
+end
+```
+
+`render_component` also passes keyword arguments on to your component:
+
+```rb
+# app/helpers/form_builder.rb
+class FormBuilder < ViewComponent::Form::Builder
+  def badge(method, label:, **options)
+    render_component(:badge, @object_name, method, label:, **objectify_options(options))
+  end
+end
+```
+
+```rb
+# app/components/form/badge_component.rb
+class Form::BadgeComponent < ViewComponent::Form::FieldComponent
+  def initialize(form, object_name, method_name, label:, **options)
+    @label = label
+
+    super(form, object_name, method_name, options)
+  end
 end
 ```
 

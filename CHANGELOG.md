@@ -6,15 +6,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Support for plain Ruby objects not implementing ActiveModel::Validations (#190)
 - Support blocks in `collection_check_boxes` and `collection_radio_buttons`, like Rails (#237)
+
+## [0.4.0] - 2026-11-11
+### Added
+- Support for plain Ruby objects not implementing ActiveModel::Validations (#190)
+- Forward keyword arguments in `render_component` to the component (#238)
+- Support for Ruby 4.0
 ### Changed
 - Make rich_textarea accept block (#231)
 - `form_with` test helper names the form after the object's model, falling back to `:user` (#165)
 ### Fixed
+- Prevent eager loading `test_helpers.rb` from altering `ActionController::Live` behavior (#243)
 - Handle `false` form object in `FieldComponent` (#233)
 - Fix `TestView` test helper with ActionText on Rails 8.2 (#234)
 - Fix `select` with a block (#236)
+- Render the `label` block argument as its translation, like Rails (#240)
+### Removed
+- Drop Ruby 3.2 support (EOL)
+- Drop Rails 7.2 support (EOL)
+- Drop Rails 8.0 support (EOL)
+- Drop view_component 3 (incompatible with Rails 8.1+)
 
 ## [0.3.1] - 2026-08-07
 ### Fixed
@@ -161,7 +173,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add CHANGELOG (#50)
 - Add CI (#2)
 
-[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/pantographe/view_component-form/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/pantographe/view_component-form/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/pantographe/view_component-form/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/pantographe/view_component-form/compare/v0.2.11...v0.3.0
 [0.2.11]: https://github.com/pantographe/view_component-form/compare/v0.2.10...v0.2.11

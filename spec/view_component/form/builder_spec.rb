@@ -7,8 +7,6 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   let(:form)    { form_with(object) }
   let(:options) { {} }
 
-  rails8_or_newer = Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.0")
-
   shared_examples "the default form builder" do |method_name, *args, rspec_around: lambda(&:run), **kwargs, &block|
     around(&rspec_around)
     subject { form.public_send(method_name, *args, **kwargs, &block) }
@@ -47,10 +45,8 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :check_box, "accepted", { class: "eula_check" }, "yes", "no"
 
   it_behaves_like "it renders a component", ViewComponent::Form::CheckBoxComponent, :check_box, "validated"
-  if rails8_or_newer
-    it_behaves_like "the default form builder", :checkbox, "validated"
-    it_behaves_like "it renders a component", ViewComponent::Form::CheckBoxComponent, :checkbox, "validated"
-  end
+  it_behaves_like "the default form builder", :checkbox, "validated"
+  it_behaves_like "it renders a component", ViewComponent::Form::CheckBoxComponent, :checkbox, "validated"
 
   context "with model-dependent fields" do
     before do
@@ -64,12 +60,10 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     it_behaves_like "it renders a component", ViewComponent::Form::CollectionCheckBoxesComponent,
                     :collection_check_boxes, :author_ids, Author.all, :id, :name_with_initial
 
-    if rails8_or_newer
-      it_behaves_like "it renders a component", ViewComponent::Form::CollectionCheckBoxesComponent,
-                      :collection_checkboxes, :author_ids, Author.all, :id, :name_with_initial
-      it_behaves_like "the default form builder", :collection_checkboxes,
-                      :author_ids, Author.all, :id, :name_with_initial
-    end
+    it_behaves_like "it renders a component", ViewComponent::Form::CollectionCheckBoxesComponent,
+                    :collection_checkboxes, :author_ids, Author.all, :id, :name_with_initial
+    it_behaves_like "the default form builder", :collection_checkboxes,
+                    :author_ids, Author.all, :id, :name_with_initial
 
     it_behaves_like "the default form builder", :collection_radio_buttons, :author_id, Author.all, :id,
                     :name_with_initial
@@ -139,31 +133,51 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
   it_behaves_like "the default form builder", :label, :title
   it_behaves_like "the default form builder", :label, :body
-  # rubocop:disable-next RSpec/PendingWithoutReason
-  skip "This would demonstrate translations via i18n.yml" do
+  context "with a label translation" do
+    include_context "with translations"
+
+    let(:translations) { { helpers: { label: { user: { cost: "Total cost" } } } } }
+
     it_behaves_like "the default form builder", :label, :cost
+
+    it { expect(form.label(:cost)).to eq('<label for="user_cost">Total cost</label>') }
   end
 
   it_behaves_like "the default form builder", :label, :title, "A short title"
   it_behaves_like "the default form builder", :label, :privacy, "Public Post", value: "public"
 
-  # rubocop:disable-next RSpec/PendingWithoutReason
-  skip "These helpers also take blocks" do
-    it_behaves_like("the default form builder", :label, [:cost]) do |translation|
-      content_tag(:span, translation, class: "cost_label")
+  context "when calling #label with a block" do
+    let(:object) { TestModel.new }
+    let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
+    let(:helpers) { ApplicationController.helpers }
+
+    it "renders the block argument as the translation" do
+      label_block = proc { |translation| helpers.content_tag(:span, translation, class: "cost_label") }
+
+      expect(form.label(:cost, &label_block)).to eq(default_form_builder.label(:cost, &label_block))
     end
-    it_behaves_like("the default form builder", :label, [:cost]) do |builder|
-      content_tag(:span, builder, class: "cost_label")
+
+    it "interpolates the block argument as the translation" do
+      label_block = proc { |builder| "<em>#{ERB::Util.h(builder)}</em>".html_safe }
+
+      expect(form.label(:cost, &label_block)).to eq(default_form_builder.label(:cost, &label_block))
     end
-    it_behaves_like("the default form builder", :label, [:cost]) do |builder|
-      content_tag(:span, builder.translation, class: [
-                    "cost_label",
-                    ("error_label" if builder.object.errors.include?(:cost))
-                  ])
+
+    it "exposes the translation and object to the block" do
+      label_block = proc do |builder|
+        helpers.content_tag(:span, builder.translation,
+                            class: ["cost_label", ("error_label" if builder.object.errors.include?(:cost))])
+      end
+
+      expect(form.label(:cost, &label_block)).to eq(default_form_builder.label(:cost, &label_block))
     end
-    it_behaves_like("the default form builder", :label, [:terms]) { raw('Accept <a href="/terms">Terms</a>.') }
+
+    it "renders a block without argument" do
+      label_block = proc { 'Accept <a href="/terms">Terms</a>.'.html_safe }
+
+      expect(form.label(:terms, &label_block)).to eq(default_form_builder.label(:terms, &label_block))
+    end
   end
-  # rubocop:enable RSpec/ExampleLength
 
   it_behaves_like "the default form builder", :month_field, :birthday_month
   it_behaves_like "the default form builder", :number_field, :age
@@ -199,10 +213,8 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
   it_behaves_like "the default form builder", :text_area, :detail
   it_behaves_like "it renders a component", ViewComponent::Form::TextAreaComponent, :text_area, :detail
-  if rails8_or_newer
-    it_behaves_like "the default form builder", :textarea, :detail
-    it_behaves_like "it renders a component", ViewComponent::Form::TextAreaComponent, :textarea, :detail
-  end
+  it_behaves_like "the default form builder", :textarea, :detail
+  it_behaves_like "it renders a component", ViewComponent::Form::TextAreaComponent, :textarea, :detail
 
   if defined?(ActionView::Helpers::Tags::ActionText)
     context "with ActionText" do
@@ -212,12 +224,10 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
                       data: { direct_upload_url: ".", blob_url_template: "." }
       it_behaves_like "it renders a component", ViewComponent::Form::RichTextAreaComponent, :rich_text_area, :foo,
                       data: { direct_upload_url: ".", blob_url_template: "." }
-      if rails8_or_newer
-        it_behaves_like "the default form builder", :rich_textarea, :foo,
-                        data: { direct_upload_url: ".", blob_url_template: "." }
-        it_behaves_like "it renders a component", ViewComponent::Form::RichTextAreaComponent, :rich_textarea, :foo,
-                        data: { direct_upload_url: ".", blob_url_template: "." }
-      end
+      it_behaves_like "the default form builder", :rich_textarea, :foo,
+                      data: { direct_upload_url: ".", blob_url_template: "." }
+      it_behaves_like "it renders a component", ViewComponent::Form::RichTextAreaComponent, :rich_textarea, :foo,
+                      data: { direct_upload_url: ".", blob_url_template: "." }
     end
   end
 
@@ -228,6 +238,14 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :url_field, :homepage
   it_behaves_like "the default form builder", :week_field, :birthday_week
   it_behaves_like "the default form builder", :weekday_select, :weekday, { include_blank: true }
+
+  describe "#render_component" do
+    let(:builder) { CustomFormBuilder.new(object_name, object, template, options) }
+
+    it "forwards keyword arguments to the component" do
+      expect(builder.badge(:name, label: "New")).to eq('<span class="badge-name">New</span>')
+    end
+  end
 
   describe "#component_klass" do
     context "with gem Builder" do
