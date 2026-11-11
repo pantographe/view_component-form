@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Make rich_textarea accept block (#231)
 - `form_with` test helper names the form after the object's model, falling back to `:user` (#165)
 ### Fixed
-- Prevent eager loading `test_helpers.rb` from altering `ActionController::Live` behavior
+- Prevent eager loading `test_helpers.rb` from altering `ActionController::Live` behavior (#243)
 - Handle `false` form object in `FieldComponent` (#233)
 - Fix `TestView` test helper with ActionText on Rails 8.2 (#234)
 - Fix `select` with a block (#236)
