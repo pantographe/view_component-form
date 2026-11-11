@@ -209,6 +209,47 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
                       data: { direct_upload_url: ".", blob_url_template: "." }
       it_behaves_like "it renders a component", ViewComponent::Form::RichTextAreaComponent, :rich_textarea, :foo,
                       data: { direct_upload_url: ".", blob_url_template: "." }
+
+      it "renders #rich_text_area with a block, like the default form builder" do
+        default_form_builder = form_with(object, builder: ActionView::Helpers::FormBuilder)
+        value_block = proc { "<p>Hello</p>".html_safe }
+        data = { direct_upload_url: ".", blob_url_template: "." }
+
+        expect(form.rich_text_area(:foo, data:, &value_block))
+          .to eq(default_form_builder.rich_text_area(:foo, data:, &value_block))
+      end
+    end
+  end
+
+  context "when a builder overrides the original spelling of a helper" do
+    let(:builder) do
+      Class.new(described_class) do
+        def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
+          "check_box #{method} #{options[:class]} #{checked_value} #{unchecked_value}"
+        end
+
+        def text_area(method, options = {})
+          "text_area #{method} #{options[:class]}"
+        end
+
+        def rich_text_area(method, options = {}, &block)
+          "rich_text_area #{method} #{options[:class]} #{block&.call}"
+        end
+      end.new(object_name, object, template, {})
+    end
+
+    it "renders #checkbox with it" do
+      expect(builder.checkbox(:terms, { class: "check" }, "yes", "no")).to eq("check_box terms check yes no")
+    end
+
+    it "renders #textarea with it" do
+      expect(builder.textarea(:detail, class: "area")).to eq("text_area detail area")
+    end
+
+    if defined?(ActionView::Helpers::Tags::ActionText)
+      it "renders #rich_textarea with it, block included" do
+        expect(builder.rich_textarea(:bio, class: "rich") { "Hello" }).to eq("rich_text_area bio rich Hello")
+      end
     end
   end
 
