@@ -408,7 +408,7 @@ The following helpers are currently supported by `ViewComponent::Form`.
 
 ### `ActionView::Helpers::FormBuilder`
 
-**Supported:** `button` `checkbox` (formerly `check_box` before Rails 8) `collection_checkboxes` (formerly `collection_check_boxes` before Rails 8) `collection_radio_buttons` `collection_select` `color_field` `date_field` `date_select` `datetime_field` `datetime_local_field` `datetime_select` `email_field` `fields` `fields_for` `file_field` `field_id` `field_name` `grouped_collection_select` `hidden_field` `label` `month_field` `number_field` `password_field` `phone_field` `radio_button` `range_field` `rich_textarea` (formerly `rich_text_area` before Rails 8) `search_field` `select` `submit` `telephone_field` `textarea` (formerly `text_area` before Rails 8) `text_field` `time_field` `time_select` `time_zone_select` `to_model` `to_partial_path` `url_field` `week_field` `weekday_select`
+**Supported:** `button` `checkbox` (formerly `check_box` before Rails 8) `collection_checkboxes` (formerly `collection_check_boxes` before Rails 8) `collection_radio_buttons` `collection_select` `color_field` `date_field` `date_select` `datetime_field` `datetime_local_field` `datetime_select` `email_field` `field_id` `field_name` `fields` `fields_for` `file_field` `grouped_collection_select` `hidden_field` `label` `month_field` `number_field` `password_field` `phone_field` `radio_button` `range_field` `rich_textarea` (formerly `rich_text_area` before Rails 8) `search_field` `select` `submit` `telephone_field` `textarea` (formerly `text_area` before Rails 8) `text_field` `time_field` `time_select` `time_zone_select` `to_model` `to_partial_path` `url_field` `week_field` `weekday_select`
 
 ### Specific to `ViewComponent::Form`
 
