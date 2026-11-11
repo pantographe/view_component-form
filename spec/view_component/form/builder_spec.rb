@@ -190,6 +190,33 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     end
   end
 
+  context "when calling collection helpers with a block" do
+    let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
+
+    before do
+      Author.create(name_with_initial: "Touma K.")
+      Author.create(name_with_initial: "Rintaro S.")
+    end
+
+    %i[collection_check_boxes collection_checkboxes].each do |method_name|
+      it "renders each item with the block in ##{method_name}, like the default form builder" do
+        item_block = proc { |item| item.label { item.check_box } }
+
+        expect(form.public_send(method_name, :author_ids, Author.all, :id, :name_with_initial, &item_block))
+          .to eq(default_form_builder.public_send(method_name, :author_ids, Author.all, :id, :name_with_initial,
+                                                  &item_block))
+      end
+    end
+
+    it "renders each item with the block in #collection_radio_buttons, like the default form builder" do
+      item_block = proc { |item| item.label { item.radio_button } }
+
+      expect(form.collection_radio_buttons(:author_id, Author.all, :id, :name_with_initial, &item_block))
+        .to eq(default_form_builder.collection_radio_buttons(:author_id, Author.all, :id, :name_with_initial,
+                                                             &item_block))
+    end
+  end
+
   it_behaves_like "the default form builder", :submit
 
   it_behaves_like "the default form builder", :text_area, :detail
