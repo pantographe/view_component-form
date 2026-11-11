@@ -7,8 +7,6 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   let(:form)    { form_with(object) }
   let(:options) { {} }
 
-  rails8_or_newer = Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.0")
-
   shared_examples "the default form builder" do |method_name, *args, rspec_around: lambda(&:run), **kwargs, &block|
     around(&rspec_around)
     subject { form.public_send(method_name, *args, **kwargs, &block) }
@@ -47,10 +45,8 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :check_box, "accepted", { class: "eula_check" }, "yes", "no"
 
   it_behaves_like "it renders a component", ViewComponent::Form::CheckBoxComponent, :check_box, "validated"
-  if rails8_or_newer
-    it_behaves_like "the default form builder", :checkbox, "validated"
-    it_behaves_like "it renders a component", ViewComponent::Form::CheckBoxComponent, :checkbox, "validated"
-  end
+  it_behaves_like "the default form builder", :checkbox, "validated"
+  it_behaves_like "it renders a component", ViewComponent::Form::CheckBoxComponent, :checkbox, "validated"
 
   context "with model-dependent fields" do
     before do
@@ -64,12 +60,10 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     it_behaves_like "it renders a component", ViewComponent::Form::CollectionCheckBoxesComponent,
                     :collection_check_boxes, :author_ids, Author.all, :id, :name_with_initial
 
-    if rails8_or_newer
-      it_behaves_like "it renders a component", ViewComponent::Form::CollectionCheckBoxesComponent,
-                      :collection_checkboxes, :author_ids, Author.all, :id, :name_with_initial
-      it_behaves_like "the default form builder", :collection_checkboxes,
-                      :author_ids, Author.all, :id, :name_with_initial
-    end
+    it_behaves_like "it renders a component", ViewComponent::Form::CollectionCheckBoxesComponent,
+                    :collection_checkboxes, :author_ids, Author.all, :id, :name_with_initial
+    it_behaves_like "the default form builder", :collection_checkboxes,
+                    :author_ids, Author.all, :id, :name_with_initial
 
     it_behaves_like "the default form builder", :collection_radio_buttons, :author_id, Author.all, :id,
                     :name_with_initial
@@ -200,10 +194,8 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
   it_behaves_like "the default form builder", :text_area, :detail
   it_behaves_like "it renders a component", ViewComponent::Form::TextAreaComponent, :text_area, :detail
-  if rails8_or_newer
-    it_behaves_like "the default form builder", :textarea, :detail
-    it_behaves_like "it renders a component", ViewComponent::Form::TextAreaComponent, :textarea, :detail
-  end
+  it_behaves_like "the default form builder", :textarea, :detail
+  it_behaves_like "it renders a component", ViewComponent::Form::TextAreaComponent, :textarea, :detail
 
   if defined?(ActionView::Helpers::Tags::ActionText)
     context "with ActionText" do
@@ -213,12 +205,10 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
                       data: { direct_upload_url: ".", blob_url_template: "." }
       it_behaves_like "it renders a component", ViewComponent::Form::RichTextAreaComponent, :rich_text_area, :foo,
                       data: { direct_upload_url: ".", blob_url_template: "." }
-      if rails8_or_newer
-        it_behaves_like "the default form builder", :rich_textarea, :foo,
-                        data: { direct_upload_url: ".", blob_url_template: "." }
-        it_behaves_like "it renders a component", ViewComponent::Form::RichTextAreaComponent, :rich_textarea, :foo,
-                        data: { direct_upload_url: ".", blob_url_template: "." }
-      end
+      it_behaves_like "the default form builder", :rich_textarea, :foo,
+                      data: { direct_upload_url: ".", blob_url_template: "." }
+      it_behaves_like "it renders a component", ViewComponent::Form::RichTextAreaComponent, :rich_textarea, :foo,
+                      data: { direct_upload_url: ".", blob_url_template: "." }
     end
   end
 

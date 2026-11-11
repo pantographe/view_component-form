@@ -19,13 +19,9 @@ RSpec.describe ViewComponent::Form::DateFieldComponent, type: :component do
   it_behaves_like "component with custom html classes"
   it_behaves_like "component with custom data attributes"
 
-  if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new("7.1.0.alpha")
-    it_behaves_like "component with custom value"
-  else
-    context "with custom value" do
-      let(:options) { { value: DateTime.new(2013, 6, 29) } }
+  context "with custom value" do
+    let(:options) { { value: DateTime.new(2013, 6, 29) } }
 
-      it { expect(component_html_attributes["value"].to_s).to eq("2013-06-29") }
-    end
+    it { expect(component_html_attributes["value"].to_s).to eq("2013-06-29") }
   end
 end

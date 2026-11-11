@@ -24,41 +24,27 @@ jobs:
       run: bundle exec rubocop
 
   build:
-    name: "Ruby ${{ matrix.versions.ruby }}, Rails ${{ matrix.versions.rails }}, VC ${{ matrix.view_component }}, ${{ matrix.action_text }} ActionText"
+    name: "Ruby ${{ matrix.versions.ruby }}, Rails ${{ matrix.versions.rails }}, ${{ matrix.action_text }} ActionText"
     runs-on: ubuntu-latest
     continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
         versions:
-          - { ruby: "3.2", rails: "7.2", rubygems: "default" }
-          - { ruby: "3.3", rails: "7.2", rubygems: "default" }
-          - { ruby: "3.4", rails: "7.2", rubygems: "default" }
-          - { ruby: "3.3", rails: "8.0", rubygems: "default" }
-          - { ruby: "3.4", rails: "8.0", rubygems: "default" }
           - { ruby: "3.3", rails: "8.1", rubygems: "default" }
           - { ruby: "3.4", rails: "8.1", rubygems: "default" }
+          - { ruby: "4.0", rails: "8.1", rubygems: "default" }
           - { ruby: "3.3", rails: "head", rubygems: "latest" }
           - { ruby: "3.4", rails: "head", rubygems: "latest" }
+          - { ruby: "4.0", rails: "head", rubygems: "latest" }
         action_text: ["with", "without"]
-        view_component: ["3.0", "4.0"]
-        exclude:
-          # view_component 3.x doesn't support Rails 8.1 (requires activesupport < 8.1)
-          - versions: { ruby: "3.3", rails: "8.1" }
-            view_component: "3.0"
-          - versions: { ruby: "3.4", rails: "8.1" }
-            view_component: "3.0"
-          - versions: { ruby: "3.3", rails: "head" }
-            view_component: "3.0"
-          - versions: { ruby: "3.4", rails: "head" }
-            view_component: "3.0"
 
     env:
-      BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.versions.rails }}_vc_${{ matrix.view_component }}.gemfile
+      BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.versions.rails }}.gemfile
       VIEW_COMPONENT_FORM_USE_ACTIONTEXT: ${{ matrix.action_text == 'with' && 'true' || 'false' }}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -75,5 +61,5 @@ jobs:
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: coverage-report-ruby-${{ matrix.versions.ruby }}-rails-${{ matrix.versions.rails }}-vc-${{ matrix.view_component }}-actiontext-${{ matrix.action_text }}
+        name: coverage-report-ruby-${{ matrix.versions.ruby }}-rails-${{ matrix.versions.rails }}-actiontext-${{ matrix.action_text }}
         path: coverage

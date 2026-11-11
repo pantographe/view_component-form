@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Support for plain Ruby objects not implementing ActiveModel::Validations (#190)
 - Forward keyword arguments in `render_component` to the component (#238)
+- Support for Ruby 4.0
 ### Changed
 - Make rich_textarea accept block (#231)
 - `form_with` test helper names the form after the object's model, falling back to `:user` (#165)
@@ -17,6 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix `TestView` test helper with ActionText on Rails 8.2 (#234)
 - Fix `select` with a block (#236)
 - Render the `label` block argument as its translation, like Rails (#240)
+### Removed
+- Drop Ruby 3.2 support (EOL)
+- Drop Rails 7.2 support (EOL)
+- Drop Rails 8.0 support (EOL)
+- Drop view_component 3 (incompatible with Rails 8.1+)
 
 ## [0.3.1] - 2026-08-07
 ### Fixed
