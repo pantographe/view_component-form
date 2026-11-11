@@ -15,7 +15,7 @@ RSpec.describe ViewComponent::Form::TestHelpers, type: :builder do
     end
 
     context "with a non-model object" do
-      let(:object) { OpenStruct.new }
+      let(:object) { Object.new }
 
       it "uses the default object name" do
         expect(form.object_name).to eq(object_name)

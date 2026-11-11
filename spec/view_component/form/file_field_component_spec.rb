@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe ViewComponent::Form::FileFieldComponent, type: :component do
-  let(:object)  { OpenStruct.new }
+  let(:object)  { Object.new }
   let(:form)    { form_with(object) }
   let(:options) { {} }
 

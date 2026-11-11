@@ -1,23 +1,15 @@
 # frozen_string_literal: true
 
 RSpec.describe ViewComponent::Form::GroupedCollectionSelectComponent, type: :component do
-  let(:object)       { OpenStruct.new }
+  let(:object)       { Object.new }
   let(:form)         { form_with(object) }
   let(:collection)   do
+    continent = Struct.new(:name, :countries)
+    country = Struct.new(:name, :code)
+
     [
-      OpenStruct.new(
-        name: "Europe",
-        countries: [
-          OpenStruct.new(name: "Belgium", code: "BE"),
-          OpenStruct.new(name: "France", code: "FR")
-        ]
-      ),
-      OpenStruct.new(
-        name: "Asia",
-        countries: [
-          OpenStruct.new(name: "Japan", code: "JP")
-        ]
-      )
+      continent.new("Europe", [country.new("Belgium", "BE"), country.new("France", "FR")]),
+      continent.new("Asia", [country.new("Japan", "JP")])
     ]
   end
   let(:options)      { {} }

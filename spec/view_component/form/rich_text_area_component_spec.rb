@@ -5,7 +5,7 @@ if defined?(ActionView::Helpers::Tags::ActionText)
     # Rails 8.2 derives the hidden input id from the field id instead of a global counter
     let(:rails82_or_newer) { Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.2.0.alpha") }
 
-    let(:object)  { OpenStruct.new }
+    let(:object)  { Object.new }
     let(:form)    { form_with(object) }
     let(:options) { {} }
     let(:block)   { nil }

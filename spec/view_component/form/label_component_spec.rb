@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe ViewComponent::Form::LabelComponent, type: :component do
-  let(:object)  { OpenStruct.new(errors: []) }
+  let(:object)  { Struct.new(:errors).new([]) }
   let(:form)    { form_with(object) }
   let(:options) { {} }
   let(:block)   { nil }
