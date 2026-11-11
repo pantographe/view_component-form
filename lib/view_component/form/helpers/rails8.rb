@@ -20,7 +20,7 @@ module ViewComponent
                                   &)
           render_component(
             :collection_check_boxes, @object_name, method, collection, value_method, text_method,
-            objectify_options(options), @default_html_options.merge(html_options), &
+            objectify_options(options), collection_html_options(html_options, &)
           )
         end
 

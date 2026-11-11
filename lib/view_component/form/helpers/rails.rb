@@ -120,7 +120,7 @@ module ViewComponent
                                    &)
           render_component(
             :collection_check_boxes, @object_name, method, collection, value_method, text_method,
-            objectify_options(options), @default_html_options.merge(html_options), &
+            objectify_options(options), collection_html_options(html_options, &)
           )
         end
 
@@ -132,7 +132,7 @@ module ViewComponent
         )
           render_component(
             :collection_radio_buttons, @object_name, method, collection, value_method, text_method,
-            objectify_options(options), @default_html_options.merge(html_options), &
+            objectify_options(options), collection_html_options(html_options, &)
           )
         end
         # rubocop:enable Metrics/ParameterLists
@@ -169,6 +169,16 @@ module ViewComponent
           def rich_text_area(method, options = {})
             render_component(:rich_text_area, @object_name, method, objectify_options(options))
           end
+        end
+
+        private
+
+        # Rails renders each item of a collection helper with its block, given the item's builder: hand it to the
+        # component as its element proc, rather than as the component's content.
+        def collection_html_options(html_options, &block)
+          html_options = @default_html_options.merge(html_options)
+          html_options[:element_proc] = block if block
+          html_options
         end
       end
     end
