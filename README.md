@@ -344,6 +344,17 @@ def length_validator
 end
 ```
 
+### Rails' error wrapper
+
+When a field has errors, Rails wraps it, and its label, in a `<div class="field_with_errors">`, including the fields rendered by `ViewComponent::Form`. If your components show errors themselves (with `error_message`, or `method_errors?` in `html_class`), you can turn this wrapper off:
+
+```rb
+# config/application.rb
+config.action_view.field_error_proc = proc { |html_tag, _instance| html_tag }
+```
+
+This Rails setting applies to all the app's forms, whatever their builder: it can't be set for a form builder only.
+
 ### Setting up your own base component class
 
 1. Setup some base component from which the form components will inherit from
