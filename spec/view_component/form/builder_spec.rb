@@ -287,6 +287,11 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     it_behaves_like "the default form builder", :field_id, :first_name, :hint
   end
 
+  describe "#field_name" do
+    it_behaves_like "the default form builder", :field_name, :first_name
+    it_behaves_like "the default form builder", :field_name, :tag_ids, multiple: true
+  end
+
   describe "#validation_context" do
     let(:builder) { described_class.new(object_name, object, template, options) }
 
