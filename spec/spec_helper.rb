@@ -24,6 +24,10 @@ Combustion.initialize!(*modules) do
   config.log_level = :fatal
 end
 
+# Once Action View is loaded, as it reopens its classes; before the builder's helpers, which define
+# country_select only when the gem is loaded
+require "country_select"
+
 require "generator_spec"
 
 class ApplicationController < ActionController::Base

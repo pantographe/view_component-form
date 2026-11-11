@@ -10,6 +10,7 @@ group :development, :test do
   gem "appraisal-run", "~> 1.0"
   gem "capybara", require: false
   gem "combustion", "~> 1.3.7"
+  gem "country_select", require: false
   gem "rspec", "~> 3.0", require: false
   gem "rspec-html-matchers"
   gem "rspec-rails", require: false

@@ -110,6 +110,10 @@ GEM
       thor (>= 0.14.6)
     concurrent-ruby (1.3.7)
     connection_pool (3.0.2)
+    countries (8.1.0)
+      unaccent (~> 0.3)
+    country_select (11.0.0)
+      countries (> 6.0, < 9.0)
     crass (1.0.8)
     date (3.6.0)
     diff-lcs (1.6.2)
@@ -158,6 +162,8 @@ GEM
     net-smtp (0.5.2)
       net-protocol
     nio4r (2.7.5)
+    nokogiri (1.19.7-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.19.7-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.19.7-x86_64-linux-gnu)
@@ -170,6 +176,7 @@ GEM
     pp (0.6.4)
       prettyprint
     prettyprint (0.2.1)
+    prism (2.1.0-arm64-darwin)
     prism (2.1.0-x86_64-darwin)
     prism (2.1.0-x86_64-linux-gnu)
     public_suffix (7.0.5)
@@ -275,6 +282,7 @@ GEM
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
     simplecov (1.3.2)
+    sqlite3 (2.10.2-arm64-darwin)
     sqlite3 (2.10.2-x86_64-darwin)
     sqlite3 (2.10.2-x86_64-linux-gnu)
     thor (1.5.0)
@@ -282,6 +290,7 @@ GEM
     tsort (0.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unaccent (0.4.0)
     unicode-display_width (3.3.0)
       unicode-emoji (~> 4.3)
     unicode-emoji (4.3.0)
@@ -300,6 +309,7 @@ GEM
     zeitwerk (2.8.3)
 
 PLATFORMS
+  arm64-darwin-23
   x86_64-darwin-19
   x86_64-linux
 
@@ -309,6 +319,7 @@ DEPENDENCIES
   capybara
   combustion (~> 1.3.7)
   concurrent-ruby (= 1.3.7)
+  country_select
   generator_spec
   ostruct
   rails
