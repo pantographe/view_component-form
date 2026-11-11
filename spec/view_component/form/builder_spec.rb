@@ -189,6 +189,23 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     it_behaves_like "the default form builder", :select, :person_id, Person.pluck(:name, :id), { include_blank: true }
   end
 
+  context "when calling #error_message and #hint" do
+    let(:object) { Author.new.tap { |author| author.errors.add(:name_with_initial, "is missing") } }
+    # The builder's default options, as form_with sets some
+    let(:form) do
+      form_with(object, index: 1, namespace: "admin", skip_default_ids: true, allow_method_names_outside_object: true)
+    end
+
+    it "renders the error messages, without the builder's options as attributes" do
+      expect(form.error_message(:name_with_initial, class: "error")).to eq('<div class="error">Is missing</div>')
+    end
+
+    it "renders the hint, without the builder's options as attributes" do
+      expect(form.hint(:name_with_initial, "Initial included", class: "hint"))
+        .to eq('<div class="hint">Initial included</div>')
+    end
+  end
+
   context "when calling #select with a block" do
     let(:options_block) { proc { '<option value="admin">Admin</option>'.html_safe } }
     let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }

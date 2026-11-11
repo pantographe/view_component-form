@@ -3,6 +3,10 @@
 module ViewComponent
   module Form
     class BaseComponent < ViewComponent::Form.configuration.parent_component.constantize
+      # Options the builder passes for Rails' tag classes, which take them out (see `objectify_options` and
+      # `ActionView::Helpers::Tags::Base`): not HTML attributes.
+      BUILDER_OPTIONS = %i[object index namespace skip_default_ids allow_method_names_outside_object].freeze
+
       class << self
         attr_accessor :default_options
       end
@@ -49,6 +53,11 @@ module ViewComponent
         @options = (self.class.default_options.deep_dup || {}).deep_merge(options).tap do |opts|
           opts[:class] = class_names(options[:class], html_class) if (html_class || options[:class]).present?
         end
+      end
+
+      # The options as HTML attributes, for a component rendering its own tag rather than a Rails tag class
+      def html_attributes
+        options.except(*BUILDER_OPTIONS)
       end
     end
   end
