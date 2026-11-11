@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
     "rubygems_mfa_required" => "true"
   }
 
-  spec.files         = Dir["CHANGELOG.md", "LICENSE.txt", "README.md", "app/**/*", "lib/**/*"]
+  spec.files         = Dir["CHANGELOG.md", "LICENSE.txt", "README.md", "lib/**/*"]
   spec.require_paths = ["lib"]
 
   spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
