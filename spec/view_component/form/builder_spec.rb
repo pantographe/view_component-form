@@ -290,6 +290,12 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   describe "#field_name" do
     it_behaves_like "the default form builder", :field_name, :first_name
     it_behaves_like "the default form builder", :field_name, :tag_ids, multiple: true
+
+    it "names the field with the builder's index, like the default form builder" do
+      default_form_builder = form_with(object, builder: ActionView::Helpers::FormBuilder, index: 3)
+
+      expect(form_with(object, index: 3).field_name(:first_name)).to eq(default_form_builder.field_name(:first_name))
+    end
   end
 
   describe "#validation_context" do
