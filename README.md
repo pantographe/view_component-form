@@ -13,8 +13,8 @@ Development of this gem is sponsored by:
 
 This gem is tested on:
 
-- Rails 7.2+ (with or without ActionText)
-- Ruby 3.2+
+- Rails 8.1+ (with or without ActionText)
+- Ruby 3.3+
 
 ## Installation
 
