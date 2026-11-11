@@ -161,6 +161,20 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
       expect(form.label(:cost, &label_block)).to eq(default_form_builder.label(:cost, &label_block))
     end
 
+    it "translates with the tag value" do
+      label_block = proc(&:translation)
+
+      expect(form.label(:privacy, value: "public", &label_block))
+        .to eq(default_form_builder.label(:privacy, value: "public", &label_block))
+    end
+
+    it "translates with a string tag value key" do
+      label_block = proc(&:translation)
+
+      expect(form.label(:privacy, { "value" => "public" }, &label_block))
+        .to eq(default_form_builder.label(:privacy, { "value" => "public" }, &label_block))
+    end
+
     it "renders a block without argument" do
       label_block = proc { 'Accept <a href="/terms">Terms</a>.'.html_safe }
 

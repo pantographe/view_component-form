@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - Leave the builder's options (`object`, `index`…) out of the HTML attributes of `error_message` and `hint` (#255)
+- Translate the `label` block argument with its `value:`, and keep a string `"value"` key in the `for` attribute, like Rails (#266)
 
 ## [0.4.0] - 2026-11-11
 ### Added
