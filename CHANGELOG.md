@@ -5,8 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Render `country_select` through a `CountrySelectComponent`, when the country_select gem is installed (#256)
+- `form_with` test helper takes `model:` and `scope:`, like Rails' `form_with` (#264)
+### Changed
+- Rename the test helpers' top-level `TestView` to `ViewComponent::Form::TestView`, so requiring them no longer clashes with an app's own `TestView`. If you referenced `TestView` directly, use `ViewComponent::Form::TestView` (#263)
 ### Fixed
 - Render `weekday_select` through its `WeekdaySelectComponent`, which the builder never used (#260)
+- Keep the saved value of `rich_textarea`, or its `value:`, over its block, used only when there's no rich text yet, like Rails (#267)
+- Leave the builder's options (`object`, `index`…) out of the HTML attributes of `error_message` and `hint` (#255)
+- Translate the `label` block argument with its `value:`, and keep a string `"value"` key in the `for` attribute, like Rails (#266)
 
 ## [0.4.0] - 2026-11-11
 ### Added

@@ -39,6 +39,28 @@ RSpec.describe ViewComponent::Form do
     expect(output).to end_with("ViewComponent::Form::TestHelpers\n")
   end
 
+  it "requires the test helpers next to an app's own TestView" do
+    script = <<~RUBY
+      require "rails"
+      require "action_controller"
+      require "view_component"
+      require "view_component/form"
+
+      class TestView; end
+      class ApplicationController < ActionController::Base; end
+
+      require "view_component/form/test_helpers"
+
+      puts TestView.superclass
+      puts Class.new { include ViewComponent::Form::TestHelpers }.new.template.class.name
+    RUBY
+
+    output, status = run_in_clean_process(script)
+
+    expect(status).to be_success, output
+    expect(output).to end_with("Object\nViewComponent::Form::TestView\n")
+  end
+
   it "autoloads the test helpers" do
     script = <<~RUBY
       require "rails"

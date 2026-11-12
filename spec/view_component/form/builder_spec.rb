@@ -80,6 +80,16 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   end
 
   it_behaves_like "the default form builder", :color_field, :favorite_color
+
+  context "with the country_select gem" do
+    let(:object) { Struct.new(:country).new("FR") }
+
+    it_behaves_like "the default form builder", :country_select, :country
+    it_behaves_like "the default form builder", :country_select, :country,
+                    { priority_countries: %w[FR BE], include_blank: true }, { class: "countries" }
+    it_behaves_like "it renders a component", ViewComponent::Form::CountrySelectComponent, :country_select, :country
+  end
+
   it_behaves_like "the default form builder", :date_field, :born_on
   it_behaves_like "the default form builder", :date_select, :birth_date
   it_behaves_like "the default form builder", :datetime_field, :graduation_day
@@ -161,6 +171,20 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
       expect(form.label(:cost, &label_block)).to eq(default_form_builder.label(:cost, &label_block))
     end
 
+    it "translates with the tag value" do
+      label_block = proc(&:translation)
+
+      expect(form.label(:privacy, value: "public", &label_block))
+        .to eq(default_form_builder.label(:privacy, value: "public", &label_block))
+    end
+
+    it "translates with a string tag value key" do
+      label_block = proc(&:translation)
+
+      expect(form.label(:privacy, { "value" => "public" }, &label_block))
+        .to eq(default_form_builder.label(:privacy, { "value" => "public" }, &label_block))
+    end
+
     it "renders a block without argument" do
       label_block = proc { 'Accept <a href="/terms">Terms</a>.'.html_safe }
 
@@ -187,6 +211,23 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     end
 
     it_behaves_like "the default form builder", :select, :person_id, Person.pluck(:name, :id), { include_blank: true }
+  end
+
+  context "when calling #error_message and #hint" do
+    let(:object) { Author.new.tap { |author| author.errors.add(:name_with_initial, "is missing") } }
+    # The builder's default options, as form_with sets some
+    let(:form) do
+      form_with(object, index: 1, namespace: "admin", skip_default_ids: true, allow_method_names_outside_object: true)
+    end
+
+    it "renders the error messages, without the builder's options as attributes" do
+      expect(form.error_message(:name_with_initial, class: "error")).to eq('<div class="error">Is missing</div>')
+    end
+
+    it "renders the hint, without the builder's options as attributes" do
+      expect(form.hint(:name_with_initial, "Initial included", class: "hint"))
+        .to eq('<div class="hint">Initial included</div>')
+    end
   end
 
   context "when calling #select with a block" do
@@ -217,6 +258,24 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
                       data: { direct_upload_url: ".", blob_url_template: "." }
       it_behaves_like "it renders a component", ViewComponent::Form::RichTextAreaComponent, :rich_textarea, :foo,
                       data: { direct_upload_url: ".", blob_url_template: "." }
+
+      context "when calling #rich_textarea with a block" do
+        let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
+        let(:data) { { direct_upload_url: ".", blob_url_template: "." } }
+        let(:value_block) { proc { "<p>Default</p>".html_safe } }
+
+        it "renders the block as the value of an empty field, like the default form builder" do
+          expect(form.rich_textarea(:foo, data:, &value_block))
+            .to eq(default_form_builder.rich_textarea(:foo, data:, &value_block))
+        end
+
+        it "keeps the saved value over the block, like the default form builder" do
+          object.foo = "<p>Saved</p>"
+
+          expect(form.rich_textarea(:foo, data:, &value_block))
+            .to eq(default_form_builder.rich_textarea(:foo, data:, &value_block))
+        end
+      end
     end
   end
 
@@ -287,6 +346,15 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
   describe "#field_id" do
     it_behaves_like "the default form builder", :field_id, :first_name, :hint
+  end
+
+  describe "#field_name" do
+    it_behaves_like "the default form builder", :field_name, :first_name
+    it_behaves_like "the default form builder", :field_name, :tag_ids, multiple: true
+
+    it "names the field with the builder's index" do
+      expect(form_with(object, index: 3).field_name(:first_name)).to eq("user[3][first_name]")
+    end
   end
 
   describe "#validation_context" do
