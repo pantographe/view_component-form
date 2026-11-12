@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Render `country_select` through a `CountrySelectComponent`, when the country_select gem is installed (#256)
 - `form_with` test helper takes `model:` and `scope:`, like Rails' `form_with` (#264)
 ### Changed
+- Move the components from `app/components` to `lib`, loaded by the gem's own Zeitwerk loader rather than the app's through an engine, so gems can build on them (#261). **Upgrade note:** `ViewComponent::Form::Engine` is removed; overriding components in your builder's namespace is unchanged
 - Render `checkbox`, `textarea` and `rich_textarea` through `check_box`, `text_area` and `rich_text_area`, so a builder overriding those changes both spellings (#254)
 - Rename the test helpers' top-level `TestView` to `ViewComponent::Form::TestView`, so requiring them no longer clashes with an app's own `TestView`. If you referenced `TestView` directly, use `ViewComponent::Form::TestView` (#263)
 ### Fixed
