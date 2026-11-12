@@ -14,10 +14,13 @@ RSpec.describe ViewComponent::Form::CollectionCheckBoxesComponent, type: :compon
                   ))
   end
 
-  let(:object) { OpenStruct.new }
+  let(:object) { Object.new }
   let(:component_html_attributes) { component.css("input").last.attributes }
-  let(:form)         { form_with(object) }
-  let(:collection)   { [OpenStruct.new(name: "Belgium", code: "BE"), OpenStruct.new(name: "France", code: "FR")] }
+  let(:form) { form_with(object) }
+  let(:collection) do
+    country = Struct.new(:name, :code)
+    [country.new("Belgium", "BE"), country.new("France", "FR")]
+  end
   let(:options)      { {} }
   let(:html_options) { {} }
 

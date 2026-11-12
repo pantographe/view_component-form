@@ -3,7 +3,6 @@
 source "https://rubygems.org"
 
 gem "generator_spec"
-gem "ostruct"
 gem "rails", "~> 8.1.0"
 gem "rake", "~> 13.0"
 gem "sqlite3", "~> 2.9", group: :test
