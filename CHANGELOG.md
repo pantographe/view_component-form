@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Rename the test helpers' top-level `TestView` to `ViewComponent::Form::TestView`, so requiring them no longer clashes with an app's own `TestView`. If you referenced `TestView` directly, use `ViewComponent::Form::TestView` (#263)
 ### Fixed
+- Keep the saved value of `rich_textarea`, or its `value:`, over its block, used only when there's no rich text yet, like Rails (#267)
 - Leave the builder's options (`object`, `index`…) out of the HTML attributes of `error_message` and `hint` (#255)
 
 ## [0.4.0] - 2026-11-11
