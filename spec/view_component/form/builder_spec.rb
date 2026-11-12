@@ -161,6 +161,20 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
       expect(form.label(:cost, &label_block)).to eq(default_form_builder.label(:cost, &label_block))
     end
 
+    it "translates with the tag value" do
+      label_block = proc(&:translation)
+
+      expect(form.label(:privacy, value: "public", &label_block))
+        .to eq(default_form_builder.label(:privacy, value: "public", &label_block))
+    end
+
+    it "translates with a string tag value key" do
+      label_block = proc(&:translation)
+
+      expect(form.label(:privacy, { "value" => "public" }, &label_block))
+        .to eq(default_form_builder.label(:privacy, { "value" => "public" }, &label_block))
+    end
+
     it "renders a block without argument" do
       label_block = proc { 'Accept <a href="/terms">Terms</a>.'.html_safe }
 
@@ -234,6 +248,24 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
                       data: { direct_upload_url: ".", blob_url_template: "." }
       it_behaves_like "it renders a component", ViewComponent::Form::RichTextAreaComponent, :rich_textarea, :foo,
                       data: { direct_upload_url: ".", blob_url_template: "." }
+
+      context "when calling #rich_textarea with a block" do
+        let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
+        let(:data) { { direct_upload_url: ".", blob_url_template: "." } }
+        let(:value_block) { proc { "<p>Default</p>".html_safe } }
+
+        it "renders the block as the value of an empty field, like the default form builder" do
+          expect(form.rich_textarea(:foo, data:, &value_block))
+            .to eq(default_form_builder.rich_textarea(:foo, data:, &value_block))
+        end
+
+        it "keeps the saved value over the block, like the default form builder" do
+          object.foo = "<p>Saved</p>"
+
+          expect(form.rich_textarea(:foo, data:, &value_block))
+            .to eq(default_form_builder.rich_textarea(:foo, data:, &value_block))
+        end
+      end
     end
   end
 
@@ -302,6 +334,15 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
 
   describe "#field_id" do
     it_behaves_like "the default form builder", :field_id, :first_name, :hint
+  end
+
+  describe "#field_name" do
+    it_behaves_like "the default form builder", :field_name, :first_name
+    it_behaves_like "the default form builder", :field_name, :tag_ids, multiple: true
+
+    it "names the field with the builder's index" do
+      expect(form_with(object, index: 3).field_name(:first_name)).to eq("user[3][first_name]")
+    end
   end
 
   describe "#validation_context" do
