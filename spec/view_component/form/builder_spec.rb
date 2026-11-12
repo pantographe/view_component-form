@@ -286,6 +286,8 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :url_field, :homepage
   it_behaves_like "the default form builder", :week_field, :birthday_week
   it_behaves_like "the default form builder", :weekday_select, :weekday, { include_blank: true }
+  it_behaves_like "it renders a component", ViewComponent::Form::WeekdaySelectComponent, :weekday_select, :weekday,
+                  { include_blank: true }
 
   describe "#render_component" do
     let(:builder) { CustomFormBuilder.new(object_name, object, template, options) }
