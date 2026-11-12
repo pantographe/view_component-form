@@ -27,7 +27,7 @@ module ViewComponent
         set_html_options!
       end
 
-      def call # rubocop:disable Metrics/MethodLength
+      def call
         ActionView::Helpers::Tags::CollectionRadioButtons.new(
           object_name,
           method_name,
@@ -36,8 +36,7 @@ module ViewComponent
           value_method,
           text_method,
           options,
-          html_options,
-          &content
+          html_options
         ).render(&element_proc)
       end
 

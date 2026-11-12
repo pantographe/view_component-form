@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Support blocks in `collection_check_boxes` and `collection_radio_buttons`, like Rails (#237)
 - Render `country_select` through a `CountrySelectComponent`, when the country_select gem is installed (#256)
 - `form_with` test helper takes `model:` and `scope:`, like Rails' `form_with` (#264)
 ### Changed
