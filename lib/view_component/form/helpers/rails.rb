@@ -158,6 +158,13 @@ module ViewComponent
           )
         end
 
+        def weekday_select(method, options = {}, html_options = {})
+          render_component(
+            :weekday_select, @object_name, method,
+            objectify_options(options), @default_html_options.merge(html_options)
+          )
+        end
+
         if defined?(ActionView::Helpers::Tags::ActionText)
           def rich_text_area(method, options = {})
             render_component(:rich_text_area, @object_name, method, objectify_options(options))
