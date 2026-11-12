@@ -4,21 +4,21 @@ require "action_controller"
 require "action_controller/test_case"
 require "action_view"
 
-class TestView < ActionView::Base
-  if defined?(ActionText)
-    include ActionText::TagHelper
-    # Rails 8.2+ `rich_textarea_tag` calls `main_app`; requires the Rails app to be initialized
-    include Rails.application.routes.mounted_helpers
-  end
-end
-
-module ViewComponent # rubocop:disable Style/OneClassPerFile
+module ViewComponent
   module Form
-    module TestHelpers
-      def form_with(object, builder: ViewComponent::Form::Builder, **options)
-        name = object.class.respond_to?(:model_name) ? object.class.model_name.param_key : object_name
+    class TestView < ActionView::Base
+      if defined?(ActionText)
+        include ActionText::TagHelper
+        # Rails 8.2+ `rich_textarea_tag` calls `main_app`; requires the Rails app to be initialized
+        include Rails.application.routes.mounted_helpers
+      end
+    end
 
-        builder.new(name, object, template, options)
+    module TestHelpers
+      def form_with(object = nil, model: object, scope: nil, builder: ViewComponent::Form::Builder, **options)
+        scope ||= model.class.respond_to?(:model_name) ? model.class.model_name.param_key : object_name
+
+        builder.new(scope, model, template, options)
       end
 
       def object_name
