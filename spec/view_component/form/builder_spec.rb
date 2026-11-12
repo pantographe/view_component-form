@@ -304,6 +304,15 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     it_behaves_like "the default form builder", :field_id, :first_name, :hint
   end
 
+  describe "#field_name" do
+    it_behaves_like "the default form builder", :field_name, :first_name
+    it_behaves_like "the default form builder", :field_name, :tag_ids, multiple: true
+
+    it "names the field with the builder's index" do
+      expect(form_with(object, index: 3).field_name(:first_name)).to eq("user[3][first_name]")
+    end
+  end
+
   describe "#validation_context" do
     let(:builder) { described_class.new(object_name, object, template, options) }
 
