@@ -12,14 +12,15 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
       :name, :person_id, :phone, :receive_newsletter, :role, :time_zone, :validated, :weekday
     ) { def persisted? = false }.new
   end
-  let(:form)    { form_with(object) }
+  let(:builder_options) { {} }
+  let(:form)    { form_with(object, **builder_options) }
   let(:options) { {} }
 
   shared_examples "the default form builder" do |method_name, *args, rspec_around: lambda(&:run), **kwargs, &block|
     around(&rspec_around)
     subject { form.public_send(method_name, *args, **kwargs, &block) }
 
-    let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
+    let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder, **builder_options) }
     let(:default_form_builder_output) { default_form_builder.public_send(method_name, *args, **kwargs, &block) }
 
     context "when calling ##{method_name}" do
@@ -95,6 +96,17 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   it_behaves_like "the default form builder", :datetime_field, :graduation_day
   it_behaves_like "the default form builder", :datetime_local_field, :graduation_day
   it_behaves_like "the default form builder", :datetime_select, :last_request_at
+
+  context "with the builder's default options" do
+    # Set by form_with's namespace: or fields_for's index:, for instance
+    let(:builder_options) { { index: 3, namespace: "admin" } }
+
+    it_behaves_like "the default form builder", :date_select, :birth_date
+    it_behaves_like "the default form builder", :datetime_select, :last_request_at
+    it_behaves_like "the default form builder", :time_select, :average_lap
+    it_behaves_like "the default form builder", :select, :role, %w[admin editor]
+  end
+
   it_behaves_like "the default form builder", :email_field, :address
   it_behaves_like "the default form builder", :file_field, :avatar
   it_behaves_like "the default form builder", :file_field, :image, { multiple: true }
