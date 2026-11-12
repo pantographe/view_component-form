@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Render `country_select` through a `CountrySelectComponent`, when the country_select gem is installed (#256)
 - `form_with` test helper takes `model:` and `scope:`, like Rails' `form_with` (#264)
 ### Changed
 - Rename the test helpers' top-level `TestView` to `ViewComponent::Form::TestView`, so requiring them no longer clashes with an app's own `TestView`. If you referenced `TestView` directly, use `ViewComponent::Form::TestView` (#263)

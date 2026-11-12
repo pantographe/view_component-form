@@ -80,6 +80,16 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   end
 
   it_behaves_like "the default form builder", :color_field, :favorite_color
+
+  context "with the country_select gem" do
+    let(:object) { Struct.new(:country).new("FR") }
+
+    it_behaves_like "the default form builder", :country_select, :country
+    it_behaves_like "the default form builder", :country_select, :country,
+                    { priority_countries: %w[FR BE], include_blank: true }, { class: "countries" }
+    it_behaves_like "it renders a component", ViewComponent::Form::CountrySelectComponent, :country_select, :country
+  end
+
   it_behaves_like "the default form builder", :date_field, :born_on
   it_behaves_like "the default form builder", :date_select, :birth_date
   it_behaves_like "the default form builder", :datetime_field, :graduation_day

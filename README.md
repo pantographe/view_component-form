@@ -414,6 +414,8 @@ The following helpers are currently supported by `ViewComponent::Form`.
 
 **Supported:** `error_message` `hint`
 
+**With the [`country_select`](https://github.com/countries/country_select) gem:** `country_select` (rendered by a `ViewComponent::Form::CountrySelectComponent`)
+
 ## Testing your components
 
 ### RSpec
