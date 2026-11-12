@@ -5,8 +5,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Render `country_select` through a `CountrySelectComponent`, when the country_select gem is installed (#256)
+- `form_with` test helper takes `model:` and `scope:`, like Rails' `form_with` (#264)
 ### Changed
 - Move the components from `app/components` to `lib`, loaded by the gem's own Zeitwerk loader rather than the app's through an engine, so gems can build on them (#261). **Upgrade note:** `ViewComponent::Form::Engine` is removed; overriding components in your builder's namespace is unchanged
+- Render `checkbox`, `textarea` and `rich_textarea` through `check_box`, `text_area` and `rich_text_area`, so a builder overriding those changes both spellings (#254)
+- Rename the test helpers' top-level `TestView` to `ViewComponent::Form::TestView`, so requiring them no longer clashes with an app's own `TestView`. If you referenced `TestView` directly, use `ViewComponent::Form::TestView` (#263)
+### Fixed
+- Pass the block of `rich_text_area` to the component, like Rails (#254)
+- Don't render the builder's index and namespace as attributes of `date_select`, `datetime_select` and `time_select`, like Rails (#259)
+- Render `weekday_select` through its `WeekdaySelectComponent`, which the builder never used (#260)
+- Keep the saved value of `rich_textarea`, or its `value:`, over its block, used only when there's no rich text yet, like Rails (#267)
+- Leave the builder's options (`object`, `index`…) out of the HTML attributes of `error_message` and `hint` (#255)
+- Translate the `label` block argument with its `value:`, and keep a string `"value"` key in the `for` attribute, like Rails (#266)
 
 ## [0.4.0] - 2026-11-11
 ### Added

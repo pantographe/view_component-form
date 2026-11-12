@@ -137,25 +137,18 @@ module ViewComponent
         end
         # rubocop:enable Metrics/ParameterLists
 
+        # Unlike the other selects, Rails' date and time selects don't take the builder's default HTML options (its
+        # index and namespace), which would be rendered as attributes
         def date_select(method, options = {}, html_options = {})
-          render_component(
-            :date_select, @object_name, method,
-            objectify_options(options), @default_html_options.merge(html_options)
-          )
+          render_component(:date_select, @object_name, method, objectify_options(options), html_options)
         end
 
         def datetime_select(method, options = {}, html_options = {})
-          render_component(
-            :datetime_select, @object_name, method,
-            objectify_options(options), @default_html_options.merge(html_options)
-          )
+          render_component(:datetime_select, @object_name, method, objectify_options(options), html_options)
         end
 
         def time_select(method, options = {}, html_options = {})
-          render_component(
-            :time_select, @object_name, method,
-            objectify_options(options), @default_html_options.merge(html_options)
-          )
+          render_component(:time_select, @object_name, method, objectify_options(options), html_options)
         end
 
         def time_zone_select(method, priority_zones = nil, options = {}, html_options = {})
@@ -165,9 +158,16 @@ module ViewComponent
           )
         end
 
+        def weekday_select(method, options = {}, html_options = {})
+          render_component(
+            :weekday_select, @object_name, method,
+            objectify_options(options), @default_html_options.merge(html_options)
+          )
+        end
+
         if defined?(ActionView::Helpers::Tags::ActionText)
-          def rich_text_area(method, options = {})
-            render_component(:rich_text_area, @object_name, method, objectify_options(options))
+          def rich_text_area(method, options = {}, &)
+            render_component(:rich_text_area, @object_name, method, objectify_options(options), &)
           end
         end
       end
