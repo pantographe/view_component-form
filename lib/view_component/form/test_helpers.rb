@@ -15,10 +15,10 @@ module ViewComponent
     end
 
     module TestHelpers
-      def form_with(object, builder: ViewComponent::Form::Builder, **options)
-        name = object.class.respond_to?(:model_name) ? object.class.model_name.param_key : object_name
+      def form_with(object = nil, model: object, scope: nil, builder: ViewComponent::Form::Builder, **options)
+        scope ||= model.class.respond_to?(:model_name) ? model.class.model_name.param_key : object_name
 
-        builder.new(name, object, template, options)
+        builder.new(scope, model, template, options)
       end
 
       def object_name

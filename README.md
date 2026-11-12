@@ -489,6 +489,16 @@ end
 
 `form_with` names the form after the object's model (e.g. `user` for a `User`), like Rails' `form_with(model:)`. For objects that aren't models, it falls back to `object_name`, which returns `:user`. With another model than `User`, pass `form.object_name` to your components instead of `object_name`.
 
+Like Rails' `form_with`, it also takes the object as `model:`, and a `scope:` that names the form instead; pass `form.object_name` to your components:
+
+```rb
+form = form_with(model: User.new, scope: :signup)
+render_inline(Form::TextFieldComponent.new(form, form.object_name, :first_name, {})) # name="signup[first_name]"
+
+form = form_with(scope: :search) # without an object
+render_inline(Form::TextFieldComponent.new(form, form.object_name, :query, {}))      # name="search[query]"
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
