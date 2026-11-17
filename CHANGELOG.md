@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Render `checkbox`, `textarea` and `rich_textarea` through `check_box`, `text_area` and `rich_text_area`, so a builder overriding those changes both spellings (#254)
 - Rename the test helpers' top-level `TestView` to `ViewComponent::Form::TestView`, so requiring them no longer clashes with an app's own `TestView`. If you referenced `TestView` directly, use `ViewComponent::Form::TestView` (#263)
+- Render a default id on `hint` and `error_message` (`f.field_id(:password, :hint)`, `f.field_id(:password, :error)`) for the field's `aria-describedby`. If you already give that id to an element wrapping them, as Rails' `field_id` documentation does, remove it from the wrapper. To keep the previous HTML, pass `id: nil`; a builder with `skip_default_ids` renders no id either (#265)
 ### Fixed
 - Pass the block of `rich_text_area` to the component, like Rails (#254)
 - Don't render the builder's index and namespace as attributes of `date_select`, `datetime_select` and `time_select`, like Rails (#259)
