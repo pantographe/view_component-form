@@ -67,6 +67,12 @@ RSpec.describe ViewComponent::Form::ErrorMessageComponent, type: :component do
       it { expect(component_html_attributes["id"].value).to eq("first_name_problems") }
     end
 
+    context "with a nil id" do
+      let(:options) { { id: nil } }
+
+      it { expect(component_html_attributes).not_to have_key("id") }
+    end
+
     context "with the builder's skip_default_ids" do
       let(:options) { { skip_default_ids: true } }
 
