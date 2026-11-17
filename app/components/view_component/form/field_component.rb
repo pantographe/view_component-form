@@ -88,7 +88,8 @@ module ViewComponent
 
       protected
 
-      # An id the field can reference in aria-describedby: `aria: { describedby: f.field_id(:title, :hint) }`
+      # An id the field can reference in aria-describedby: `aria: { describedby: f.field_id(:title, :hint) }`.
+      # An explicit id wins, and `id: nil` renders none.
       def html_attributes_with_default_id(suffix)
         return html_attributes if options[:skip_default_ids] || options.key?(:id) || options.key?("id")
 

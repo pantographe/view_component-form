@@ -25,6 +25,12 @@ RSpec.describe ViewComponent::Form::HintComponent, type: :component do
     it { is_expected.to eq_html '<div id="birth_date_help">this is my hint for you</div>' }
   end
 
+  context "with a nil id" do
+    let(:options) { { id: nil } }
+
+    it { is_expected.to eq_html "<div>this is my hint for you</div>" }
+  end
+
   context "with the builder's skip_default_ids" do
     let(:options) { { skip_default_ids: true } }
 
