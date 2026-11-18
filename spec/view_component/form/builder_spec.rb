@@ -9,7 +9,8 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
     Struct.new(
       :accepted, :address, :age, :author_id, :author_ids, :average_lap, :birth_date, :birthday_month, :birthday_week,
       :born_at, :born_on, :category, :detail, :favorite_color, :gooddog, :graduation_day, :homepage, :last_request_at,
-      :name, :person_id, :phone, :receive_newsletter, :role, :time_zone, :validated, :weekday
+      :name, :nationalities, :nationality, :person_id, :phone, :receive_newsletter, :role, :time_zone,
+      :validated, :weekday
     ) { def persisted? = false }.new
   end
   let(:builder_options) { {} }
@@ -83,6 +84,11 @@ RSpec.describe ViewComponent::Form::Builder, type: :builder do
   context "when calling collection helpers with a block" do
     let(:countries) { [%w[BE Belgium], %w[FR France]] }
     let(:default_form_builder) { form_with(object, builder: ActionView::Helpers::FormBuilder) }
+
+    before do
+      object.nationalities = %w[FR]
+      object.nationality = "FR"
+    end
 
     it "yields each item builder to #collection_check_boxes, like the default form builder" do
       item_block = proc { |b| b.label(class: "item") { b.check_box + b.text } }
