@@ -23,4 +23,9 @@ group :development, :test do
   gem "simplecov", require: false, group: :test
 end
 
+group :development do
+  gem "lookbook", "~> 2.3"
+  gem "puma"
+end
+
 gemspec path: "../"

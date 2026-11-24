@@ -20,6 +20,12 @@ group :development, :test do
   gem "simplecov", require: false, group: :test
 end
 
+# Component previews: `bundle exec rackup`, then http://localhost:9292
+group :development do
+  gem "lookbook", "~> 2.3"
+  gem "puma"
+end
+
 gem "generator_spec"
 gem "rails"
 gem "rake", "~> 13.0"
