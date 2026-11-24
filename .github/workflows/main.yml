@@ -41,6 +41,7 @@ jobs:
 
     env:
       BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.versions.rails }}.gemfile
+      BUNDLE_WITHOUT: development # Lookbook and Puma, for the component previews only
       VIEW_COMPONENT_FORM_USE_ACTIONTEXT: ${{ matrix.action_text == 'with' && 'true' || 'false' }}
 
     steps:
