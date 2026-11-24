@@ -6,6 +6,8 @@ ENV["RAILS_ENV"] = "development" # Combustion then requires the :development gro
 require "bundler/setup"
 require "combustion"
 
+Dir.chdir(__dir__) # Combustion finds spec/internal from the current directory
+
 Combustion.initialize! :active_model, :action_controller, :action_view do
   config.load_defaults Rails::VERSION::STRING.to_f
   config.enable_reloading = true

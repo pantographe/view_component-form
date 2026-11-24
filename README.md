@@ -515,7 +515,7 @@ render_inline(Form::TextFieldComponent.new(form, form.object_name, :query, {})) 
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To browse the components and the HTML they render, run `bundle exec rackup`, then open http://localhost:9292. The [Lookbook](https://lookbook.build) previews are in `spec/internal/previews`; `rich_textarea`, which needs Action Text, has none.
+To browse the components and the HTML they render, run `bundle exec rackup`, then open http://localhost:9292. The [Lookbook](https://lookbook.build) previews are in `spec/internal/previews`; `rich_textarea`, which needs Action Text, has none. Changes to the previews are reloaded; restart the server after changing the gem itself.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, run `bin/release x.x.x`, which will update the `version.rb` file, open the changelog for edition, create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 

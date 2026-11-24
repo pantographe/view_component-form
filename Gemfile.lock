@@ -333,7 +333,6 @@ GEM
 
 PLATFORMS
   arm64-darwin-23
-  arm64-darwin-27
   x86_64-darwin-19
   x86_64-linux
 
@@ -345,7 +344,7 @@ DEPENDENCIES
   concurrent-ruby (= 1.3.7)
   country_select
   generator_spec
-  lookbook (~> 2.3)
+  lookbook (~> 2.3, >= 2.3.10)
   puma
   rails
   rake (~> 13.0)

@@ -22,7 +22,7 @@ end
 
 # Component previews: `bundle exec rackup`, then http://localhost:9292
 group :development do
-  gem "lookbook", "~> 2.3"
+  gem "lookbook", "~> 2.3", ">= 2.3.10"
   gem "puma"
 end
 
